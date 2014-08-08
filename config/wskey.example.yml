@@ -1,0 +1,6 @@
+production:
+  key: ''
+  secret: ''
+  authenticating_institution_id:
+  context_institution_id:
+  redirect_uri: ''
