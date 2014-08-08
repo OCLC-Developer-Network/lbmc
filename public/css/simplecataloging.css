@@ -1,0 +1,154 @@
+body {
+	font-family: ;"Helvetica Neue",Arial,Helvetica,sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	color: inherit;
+	font-family: inherit;
+	font-weight: bold;
+/*	margin: 0;*/
+	text-rendering: optimizelegibility;
+}
+
+h1 { font-size: 2.5em; }
+h2 { font-size: 1.75em; }
+h3 { font-size: 1.5em; }
+
+.text-right {
+	text-align: right;
+}
+
+#header {
+	margin: 10px 0 0 0;
+}
+
+#header h1 {
+    margin-bottom: 2px;
+}
+
+#header p {
+    margin-top: 1px;
+}
+
+#content-wrapper {
+	min-height: 400px;
+}
+
+#footer {
+	padding: 20px 0;
+}
+
+.field {
+    font-weight: bold;
+    text-align: right;
+}
+
+.record {
+	margin-bottom: .5em;
+}
+
+.record .title {
+	font-size: 1.25em;
+}
+
+.record .title a {
+	text-decoration: none;
+}
+
+.record .series {
+	color: #555;
+}
+
+#facets {
+	padding-left: 0;
+}
+
+#facets li {
+	list-style: none;
+}
+
+#facets li a {
+	text-decoration: none;
+}
+
+#marc td {
+	vertical-align: top;
+	background: #fff;
+}
+
+#marc td.tag {
+	text-align: center;
+	color: #226622;
+}
+
+#marc td.indicators {
+	color: #CC5511;
+}
+
+#marc td pre {
+	margin: 0;
+}
+
+#marc td span.subfield-code {
+	color: #225599;
+}
+
+.inactive-link {
+	color: #777;
+}
+
+.search-page-navigation {
+	margin-bottom: 1em;
+}
+
+.search-page-navigation .numbering {
+	text-align: center;
+}
+
+.search-page-navigation .next {
+	text-align: right;
+}
+
+span.label {
+	font-weight: bold;
+}
+
+#search-results h3.title {
+	font-size: 1.35em;
+	margin-bottom: .5em;
+}
+
+#search-results h3.title a {
+	text-decoration: none;
+}
+
+#search-results h3.title span.date-published {
+	font-weight: normal;
+}
+
+.search-result p.author {
+	margin-bottom: .5em;
+}
+
+#facets ul {
+	padding: 0;
+}
+
+#facets ul li {
+	font-size: 1.1em;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

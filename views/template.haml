@@ -1,0 +1,31 @@
+!!! 5
+%html
+  %head
+    %title
+      = "#{@title} - " if @title
+      LBMC Pilot
+    %link{ :rel=>"icon", :href=>"/images/favicon.ico", :type=>"image/x-icon" }
+    %link{ :rel=>"shortcut icon", :href=>"/images/favicon.ico", :type=>"image/x-icon" }
+    %link{ :href=>"//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css", :rel=>"stylesheet" }
+  %body
+    %div.container
+      %div.row
+        %div{ :class=>"col-xs-12 col-sm-9 col-md-6" }
+          %h1
+            %a{ :href => "/", :title => "Visit the home page" } LBMC Pilot
+        %div{ :class=>"col-xs-12 col-sm-3 col-md-6" }
+          %div{ :class=>"pull-right", :style=>"padding-top: 20px" }
+            %img{ :src=>"http://www.oclc.org/content/dam/developer-network/badges/wc_badge1.png", :width=>88, :height=>31, :alt=>"Some library data on this site is provided by WorldCat, the world's largest library catalog [WorldCat.org]" }
+
+      %div.row
+        %div{ :class=>"col-xs-12 col-sm-12 col-md-12" }
+          = yield 
+      
+      %div.row
+        %div{ :class=>"col-xs-12 col-sm-12 col-md-12" }
+          
+        
+    %script{:src=>"//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"}
+    %script{:src=>"/javascript/helpers.js"}
+    %script{:src=>"//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"}
+
