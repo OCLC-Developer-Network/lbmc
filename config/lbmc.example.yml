@@ -1,0 +1,6 @@
+production:
+  base_url: 'https://worldcat.org/bib/data'
+  institutions:
+    128807: 
+      symbol: OCPSB
+      name: "OCLC WorldShare Platform Sandbox Institution"
