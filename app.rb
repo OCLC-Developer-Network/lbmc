@@ -1,8 +1,11 @@
 set :public_folder, File.dirname(__FILE__) + '/public'
 
 before do
-  pass if %w[catch_auth_code].include? request.path_info.split('/')[1]
-  session[:path] = request.path
+  # The home page is unauthenticated, it is where the user chooses an institution to login against
+  # The user's session does not yet have an access token in his/her session when the app catches an
+  # auth code.
+  pass if request.path_info == '/' or request.path_info == '/catch_auth_code'
+  session[:path] = request.path unless request.path == '/authenticate'
   authenticate
 end
 
@@ -44,18 +47,25 @@ end
 
 get '/catch_auth_code' do
   if params and params[:code]
-    session[:token] = WSKEY.auth_code_token(params[:code], 128807, 128807)
+    session[:token] = WSKEY.auth_code_token(params[:code], session[:registry_id], session[:registry_id])
     redirect session[:path]
   else
-    "This view will only render if there is an error in the login flow. " + 
-    "This page renders after the browser is redirected  back to the this app with an " + 
-    "error message as a URL parameter."
+    redirect '/'
+    # "This view will only render if there is an error in the login flow. " +
+    # "This page renders after the browser is redirected  back to the this app with an " +
+    # "error message as a URL parameter."
   end
 end
 
+get '/authenticate' do
+  authenticate
+  redirect session[:path]
+end
+
 def authenticate
+  session[:registry_id] = params[:registry_id] if params[:registry_id] 
   if session[:token].nil? or session[:token].expired?
-    login_url = WSKEY.login_url(128807, 128807)
+    login_url = WSKEY.login_url(session[:registry_id], session[:registry_id])
     redirect login_url
   end
 end
