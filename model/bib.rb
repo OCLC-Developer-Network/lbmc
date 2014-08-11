@@ -26,7 +26,7 @@ class Bib
   
   def create
     url = "#{base_url}/#{@id}?classificationScheme=LibraryOfCongress"
-    auth = "Bearer #{access_token.value}, principalID=\"#{access_token.principal_id}\", principalIDNS=\"#{access_token.principal_idns}\""
+    auth = "Bearer #{access_token.value}"
     payload = "<?xml version=\"1.0\"?>\n" + @marc_record.to_xml.to_s
     
     resource = RestClient::Resource.new(url)
@@ -50,15 +50,15 @@ class Bib
   
   def read
     url = "#{base_url}/#{@id}?classificationScheme=LibraryOfCongress"
-    auth = "Bearer #{access_token.value}, principalID=\"#{access_token.principal_id}\", principalIDNS=\"#{access_token.principal_idns}\""
+    auth = "Bearer #{access_token.value}" 
     
     resource = RestClient::Resource.new(url)
     resource.get(:authorization => auth, 
         :accept => 'application/atom+xml;content="application/vnd.oclc.marc21+xml"') do |response, request, result|
-      # puts ; puts request.inspect ; puts
-      # puts ; puts response ; puts
-      # puts ; puts result.inspect ; puts
-      # puts ; puts response.headers ; puts
+      puts ; puts request.inspect ; puts
+      puts ; puts response ; puts
+      puts ; puts result.inspect ; puts
+      puts ; puts response.headers ; puts
       @response_body = response
       @response_code = result.code
     end
@@ -68,17 +68,17 @@ class Bib
   
   def update
     url = "#{base_url}?classificationScheme=LibraryOfCongress"
-    auth = "Bearer #{access_token.value}, principalID=\"#{access_token.principal_id}\", principalIDNS=\"#{access_token.principal_idns}\""
+    auth = "Bearer #{access_token.value}" 
     payload = "<?xml version=\"1.0\"?>\n" + @marc_record.to_xml.to_s
     
     resource = RestClient::Resource.new(url)
     resource.put(payload, :authorization => auth, 
         :content_type => 'application/vnd.oclc.marc21+xml',
         :accept => 'application/atom+xml;content="application/vnd.oclc.marc21+xml"') do |response, request, result|
-      # puts ; puts request.inspect ; puts
-      # puts ; puts response ; puts
-      # puts ; puts result.inspect ; puts
-      # puts ; puts response.headers ; puts
+      puts ; puts request.inspect ; puts
+      puts ; puts response ; puts
+      puts ; puts result.inspect ; puts
+      puts ; puts response.headers ; puts
       @response_body = response
       @response_code = result.code
     end
