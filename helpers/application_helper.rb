@@ -94,15 +94,15 @@ helpers do
   def marc_record_from_params(params)
     record = create_book_record
     record << book_fixed_length_data
-    
-    # Hard coded institution affiliation (symbol: OCPSB)
-    record << MARC::DataField.new('040', ' ', ' ', MARC::Subfield.new('a', 'OCPSB'), MARC::Subfield.new('c', 'OCPSB'))
+
+    # OCLC Symbol
+    record << MARC::DataField.new('040', ' ', ' ', MARC::Subfield.new('a', params[:oclc_symbol]), MARC::Subfield.new('c', params[:oclc_symbol]))
     
     # Author
     record << MARC::DataField.new('100', '0', ' ', MARC::Subfield.new('a', params[:author]))
     
     # Title
-    record << title_statement
+    record << title_statement(params)
     
     # Extent
     if params[:extent] and params[:extent].strip != ''
@@ -113,10 +113,12 @@ helpers do
     if params[:subject] and params[:subject].strip != ''
       record << MARC::DataField.new('650', '1', '4', MARC::Subfield.new('a', params[:subject]))
     end
+    
+    record
   end
   
   def title_statement(params)
-    title_stmt = MARC::DataField.new('245', ' ', ' ')
+    title_stmt = MARC::DataField.new('245', '0', '0')
     title_stmt.subfields << MARC::Subfield.new('a', params[:title])
     title_stmt.subfields << MARC::Subfield.new('b', params[:subtitle]) if params[:subtitle] and params[:subtitle].strip != ''
     title_stmt
@@ -150,8 +152,8 @@ helpers do
     fde.value[30,1] = '0'
     fde.value[31,1] = '|'
     fde.value[32,1] = ' '
-    fde.value[33,1] = '|'
-    fde.value[34,1] = '|'
+    fde.value[33,1] = '0'
+    fde.value[34,1] = 'a'
     fde.value[35,3] = 'eng'
     fde.value[38,1] = ' '
     fde.value[39,1] = 'd'

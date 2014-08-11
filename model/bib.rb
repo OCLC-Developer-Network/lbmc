@@ -5,14 +5,14 @@ class Bib
   def initialize(id, access_token = nil)
     @errors = Array.new
     @access_token = access_token
-    @wskey = WSKEY
     @id = id
     read if id != nil
   end
   
   def self.new_from_marc(marc_record, access_token)
-    bib = Bib.new(nil)
+    bib = Bib.new(nil, access_token)
     bib.marc_record = marc_record
+    bib.access_token = access_token
     bib
   end
   
@@ -24,9 +24,32 @@ class Bib
     end
   end
   
+  def create
+    url = "#{base_url}/#{@id}?classificationScheme=LibraryOfCongress"
+    auth = "Bearer #{access_token.value}, principalID=\"#{access_token.principal_id}\", principalIDNS=\"#{access_token.principal_idns}\""
+    payload = "<?xml version=\"1.0\"?>\n" + @marc_record.to_xml.to_s
+    
+    resource = RestClient::Resource.new(url)
+    resource.post(payload, :authorization => auth, 
+        :content_type => 'application/vnd.oclc.marc21+xml',
+        :accept => 'application/atom+xml;content="application/vnd.oclc.marc21+xml"') do |response, request, result|
+      # puts ; puts request.inspect ; puts
+      # puts ; puts response ; puts
+      # puts ; puts result.inspect ; puts
+      # puts ; puts response.headers ; puts
+      @response_body = response
+      @response_code = result.code
+    end
+    
+    if @response_code == '200' or @response_code == '201' or @response_code == '409'
+      load_doc
+      parse_marc
+      parse_errors
+    end
+  end
+  
   def read
     url = "#{base_url}/#{@id}?classificationScheme=LibraryOfCongress"
-    # auth = @wskey.hmac_signature('GET', url, :principal_id => access_token.principal_id, :principal_idns => access_token.principal_idns)
     auth = "Bearer #{access_token.value}, principalID=\"#{access_token.principal_id}\", principalIDNS=\"#{access_token.principal_idns}\""
     
     resource = RestClient::Resource.new(url)
@@ -45,7 +68,7 @@ class Bib
   
   def update
     url = "#{base_url}?classificationScheme=LibraryOfCongress"
-    auth = @wskey.hmac_signature('PUT', url, :principal_id => access_token.principal_id, :principal_idns => access_token.principal_idns)
+    auth = "Bearer #{access_token.value}, principalID=\"#{access_token.principal_id}\", principalIDNS=\"#{access_token.principal_idns}\""
     payload = "<?xml version=\"1.0\"?>\n" + @marc_record.to_xml.to_s
     
     resource = RestClient::Resource.new(url)

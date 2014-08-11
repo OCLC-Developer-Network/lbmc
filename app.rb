@@ -13,6 +13,10 @@ get '/' do
   haml :index, :layout => :template
 end
 
+get '/record/new' do
+  haml :new, :layout => :template
+end
+
 post '/create' do
   record = marc_record_from_params(params)
   @bib = Bib.new_from_marc(record, session[:token])
@@ -20,7 +24,7 @@ post '/create' do
   if @bib.response_code == '201'
     redirect "/record/#{@bib.marc_record['001'].value.gsub(/\D/, '')}"
   else
-    haml :index, :layout => :template
+    haml :new, :layout => :template
   end
 end
 
