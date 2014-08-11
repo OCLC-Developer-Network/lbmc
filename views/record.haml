@@ -1,7 +1,9 @@
-- oclcnum = @bib.id 
+- oclcnum = @bib.id
 - extent = @bib.marc_record['300'].nil? ? '' : @bib.marc_record['300']['a']
 - publisher = @bib.marc_record['260'].nil? ? '' : @bib.marc_record['260']['b'] 
+- published = @bib.marc_record['260'].nil? ? '' : @bib.marc_record['260']['c']
 - subject = @bib.marc_record['650'].nil? ? '' : @bib.marc_record['650']['a'] 
+
 
 %h3
   %span{ :class=>"glyphicon glyphicon-pencil"}
@@ -36,6 +38,11 @@
     %label{ :for=>'publisher', :class=>'col-sm-2 control-label' } Published by
     %div{ :class=>'col-sm-10' }  
       %input{ :type => 'text', :name => 'publisher', :value => publisher, :size => 40, :class => 'form-control' }
+
+  %div{ :class => 'form-group'}
+    %label{ :for=>'published', :class=>'col-sm-2 control-label' } Publication date
+    %div{ :class=>'col-sm-10' }  
+      %input{ :type => 'text', :name => 'publisher', :value => published, :size => 4, :class => 'form-control' }
 
   %div{ :class => 'form-group'}
     %label{ :for=>'extent', :class=>'col-sm-2 control-label' } Physical Description
