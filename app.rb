@@ -33,10 +33,6 @@ get '/record/:oclc_number' do
   haml :record, :layout => :template
 end
 
-get '/detect/:term' do
-  JSON.parse(detect_language(params[:term]).inspect).to_json
-end
-
 post '/update' do
   @bib = Bib.new(params[:oclc_number], session[:token])
   record = update_marc_record_from_params(@bib.marc_record, params)
