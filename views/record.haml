@@ -1,15 +1,14 @@
 - oclcnum = @bib.id
+- author = @bib.marc_record['100'].nil? ? '' : @bib.marc_record['100']['a']
 - extent = @bib.marc_record['300'].nil? ? '' : @bib.marc_record['300']['a']
 - publisher = @bib.marc_record['260'].nil? ? '' : @bib.marc_record['260']['b'] 
-- published = @bib.marc_record['260'].nil? ? '' : @bib.marc_record['260']['c']
 - subject = @bib.marc_record['650'].nil? ? '' : @bib.marc_record['650']['a'] 
-
 
 %h3
   %span{ :class=>"glyphicon glyphicon-pencil"}
   Editing Record 
   %a{ :href => @bib.link, :target => 'blank', :title => "View me in WorldCat.org" }= @bib.id
-
+  
 %form{ :action => url('/update'), :method => 'POST', :role => 'form', :class => 'form-horizontal'}
   %div
     %input{ :type => 'hidden', :name => 'oclc_number', :value => @bib.id }
@@ -27,22 +26,12 @@
   %div{ :class => 'form-group'}
     %label{ :for=>'author', :class=>'col-sm-2 control-label' } Author
     %div{ :class=>'col-sm-10' }
-      %input{ :type => 'text', :name => 'author', :value => @bib.marc_record['100']['a'], :size => 40, :class => 'form-control' }
-      
-  %div{ :class => 'form-group'}
-    %label{ :for=>'languages', :class=>'col-sm-2 control-label' } Language
-    %div{ :class=>'col-sm-10' }
-      %input{ :type => 'text', :id => 'languages', :name => 'languages', :size => 40, :class => 'form-control' }
+      %input{ :type => 'text', :name => 'author', :value => author, :size => 40, :class => 'form-control' }
       
   %div{ :class => 'form-group'}
     %label{ :for=>'publisher', :class=>'col-sm-2 control-label' } Published by
     %div{ :class=>'col-sm-10' }  
       %input{ :type => 'text', :name => 'publisher', :value => publisher, :size => 40, :class => 'form-control' }
-
-  %div{ :class => 'form-group'}
-    %label{ :for=>'published', :class=>'col-sm-2 control-label' } Publication date
-    %div{ :class=>'col-sm-10' }  
-      %input{ :type => 'text', :name => 'publisher', :value => published, :size => 4, :class => 'form-control' }
 
   %div{ :class => 'form-group'}
     %label{ :for=>'extent', :class=>'col-sm-2 control-label' } Physical Description
