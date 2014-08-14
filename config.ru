@@ -12,6 +12,7 @@ require './app'
 require './model/bib'
 require './model/error'
 require './helpers/application_helper'
+require './lib/constants'
 
 enable :sessions
 set :session_secret, '406c8f30ee92'
