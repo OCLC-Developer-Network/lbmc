@@ -1,96 +1,6 @@
 # encoding: utf-8
 helpers do
   
-  def languages
-    {
-      "Arabic" => /\p{Arabic}/, 
-      "Armenian" => /\p{Armenian}/, 
-      "Balinese" => /\p{Balinese}/, 
-      "Bengali" => /\p{Bengali}/, 
-      "Bopomofo" => /\p{Bopomofo}/, 
-      "Braille" => /\p{Braille}/, 
-      "Buginese" => /\p{Buginese}/, 
-      "Buhid" => /\p{Buhid}/, 
-      "Canadian_Aboriginal" => /\p{Canadian_Aboriginal}/, 
-      "Carian" => /\p{Carian}/, 
-      "Cham" => /\p{Cham}/, 
-      "Cherokee" => /\p{Cherokee}/, 
-      "Common" => /\p{Common}/, 
-      "Coptic" => /\p{Coptic}/, 
-      "Cuneiform" => /\p{Cuneiform}/, 
-      "Cypriot" => /\p{Cypriot}/, 
-      "Cyrillic" => /\p{Cyrillic}/, 
-      "Deseret" => /\p{Deseret}/, 
-      "Devanagari" => /\p{Devanagari}/, 
-      "Ethiopic" => /\p{Ethiopic}/, 
-      "Georgian" => /\p{Georgian}/, 
-      "Glagolitic" => /\p{Glagolitic}/, 
-      "Gothic" => /\p{Gothic}/, 
-      "Greek" => /\p{Greek}/, 
-      "Gujarati" => /\p{Gujarati}/, 
-      "Gurmukhi" => /\p{Gurmukhi}/, 
-      "Han" => /\p{Han}/, 
-      "Hangul" => /\p{Hangul}/, 
-      "Hanunoo" => /\p{Hanunoo}/, 
-      "Hebrew" => /\p{Hebrew}/, 
-      "Hiragana" => /\p{Hiragana}/, 
-      "Inherited" => /\p{Inherited}/, 
-      "Kannada" => /\p{Kannada}/, 
-      "Katakana" => /\p{Katakana}/, 
-      "Kayah_Li" => /\p{Kayah_Li}/, 
-      "Kharoshthi" => /\p{Kharoshthi}/, 
-      "Khmer" => /\p{Khmer}/, 
-      "Lao" => /\p{Lao}/, 
-      "Latin" => /\p{Latin}/, 
-      "Lepcha" => /\p{Lepcha}/, 
-      "Limbu" => /\p{Limbu}/, 
-      "Linear_B" => /\p{Linear_B}/, 
-      "Lycian" => /\p{Lycian}/, 
-      "Lydian" => /\p{Lydian}/, 
-      "Malayalam" => /\p{Malayalam}/, 
-      "Mongolian" => /\p{Mongolian}/, 
-      "Myanmar" => /\p{Myanmar}/, 
-      "New_Tai_Lue" => /\p{New_Tai_Lue}/, 
-      "Nko" => /\p{Nko}/, 
-      "Ogham" => /\p{Ogham}/, 
-      "Ol_Chiki" => /\p{Ol_Chiki}/, 
-      "Old_Italic" => /\p{Old_Italic}/, 
-      "Old_Persian" => /\p{Old_Persian}/, 
-      "Oriya" => /\p{Oriya}/, 
-      "Osmanya" => /\p{Osmanya}/, 
-      "Phags_Pa" => /\p{Phags_Pa}/, 
-      "Phoenician" => /\p{Phoenician}/, 
-      "Rejang" => /\p{Rejang}/, 
-      "Runic" => /\p{Runic}/, 
-      "Saurashtra" => /\p{Saurashtra}/, 
-      "Shavian" => /\p{Shavian}/, 
-      "Sinhala" => /\p{Sinhala}/, 
-      "Sundanese" => /\p{Sundanese}/, 
-      "Syloti_Nagri" => /\p{Syloti_Nagri}/, 
-      "Syriac" => /\p{Syriac}/, 
-      "Tagalog" => /\p{Tagalog}/, 
-      "Tagbanwa" => /\p{Tagbanwa}/, 
-      "Tai_Le" => /\p{Tai_Le}/, 
-      "Tamil" => /\p{Tamil}/, 
-      "Telugu" => /\p{Telugu}/, 
-      "Thaana" => /\p{Thaana}/, 
-      "Thai" => /\p{Thai}/, 
-      "Tibetan" => /\p{Tibetan}/, 
-      "Tifinagh" => /\p{Tifinagh}/, 
-      "Ugaritic" => /\p{Ugaritic}/, 
-      "Vai" => /\p{Vai}/, 
-      "Yi" => /\p{Yi}/
-    }
-  end
-  
-  def detect_language(str)
-    matches = Array.new
-    languages.each do |lang, lang_regex|
-      matches << lang if str =~ lang_regex
-    end
-    matches
-  end
-  
   def marc_record_from_params(params)
     record = create_book_record
     record << book_fixed_length_data
@@ -108,6 +18,9 @@ helpers do
     if params[:extent] and params[:extent].strip != ''
       record << MARC::DataField.new('300', ' ', ' ', MARC::Subfield.new('a', params[:extent]))
     end
+    
+    # Note
+    record << MARC::DataField.new('500', ' ', ' ', MARC::Subfield.new('a', LBMC::SOURCE_NOTE))
 
     # Topic
     if params[:subject] and params[:subject].strip != ''
@@ -130,9 +43,8 @@ helpers do
     record.leader[5] = 'n'
     record.leader[6] = 'a'
     record.leader[7] = 'm'
-    record.leader[9] = 'a'
     record.leader[17] = '3'
-    record.leader[18] = 'a'
+    record.leader[18] = 'u'
     record
   end
   
@@ -148,12 +60,17 @@ helpers do
     fde.value[7,4] = now.year.to_s
     fde.value[11,4] = '    '
     fde.value[15,3] = 'xx '
+    fde.value[18,1] = ' '
+    fde.value[19,1] = ' '
+    fde.value[22,1] = ' '
+    fde.value[23,1] = ' '
+    fde.value[24,1] = ' '
+    fde.value[28,1] = ' '
     fde.value[29,1] = '0'
     fde.value[30,1] = '0'
-    fde.value[31,1] = '|'
-    fde.value[32,1] = ' '
-    fde.value[33,1] = '0'
-    fde.value[34,1] = 'a'
+    fde.value[31,1] = '0'
+    fde.value[33,1] = 'u'
+    fde.value[34,1] = ' '
     fde.value[35,3] = 'eng'
     fde.value[38,1] = ' '
     fde.value[39,1] = 'd'
@@ -165,6 +82,11 @@ helpers do
     title_stmt = marc_record['245']
     title = title_stmt.find_all {|subfield| subfield.code == 'a'}.first
     title.value = params[:title]
+    if params[:author].nil? or params[:author].strip == ''
+      title_stmt.indicator1 = '0'
+    else
+      title_stmt.indicator1 = '1'
+    end
     subtitle = title_stmt.find_all {|subfield| subfield.code == 'b'}.first
     if params[:subtitle].nil? or params[:subtitle].strip == ''
       title_stmt.subfields.delete(subtitle)
