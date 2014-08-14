@@ -5,7 +5,9 @@
 - extent = params[:extent].nil? ? '' : params[:extent]
 - subject = params[:subject].nil? ? '' : params[:subject]
 
-%h3 Create a New Record 
+%h3
+  %span{ :class=>"glyphicon glyphicon-pencil"}
+  Create a New Record 
 
 %div{ :style => "margin-top: 2em;" }
 
@@ -27,11 +29,6 @@
       %label{ :for=>'author', :class=>'col-sm-2 control-label' } Author
       %div{ :class=>'col-sm-10' }
         %input{ :type => 'text', :name => 'author', :value => author, :size => 40, :class => 'form-control' }
-      
-    %div{ :class => 'form-group'}
-      %label{ :for=>'languages', :class=>'col-sm-2 control-label' } Language
-      %div{ :class=>'col-sm-10' }
-        %input{ :type => 'text', :id => 'languages', :name => 'languages', :size => 40, :class => 'form-control' }
       
     %div{ :class => 'form-group'}
       %label{ :for=>'publisher', :class=>'col-sm-2 control-label' } Published by
