@@ -3,8 +3,8 @@
 %p.content This is a prototype interface for quickly creating simple bibliographic records in WorldCat.
 
 %div
-  - if session[:token].nil?
-    %form{ :action => url('authenticate'), :method => 'GET'}
+  - if session[:token].nil? or session[:token].expired?
+    %form{ :action => url('authenticate'), :method => 'GET' }
       %p Let's begin by logging in. Please select your institution:
       %p
         %select{ :name => 'registry_id' }
