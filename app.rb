@@ -30,7 +30,11 @@ end
 
 get '/record/:oclc_number' do
   @bib = Bib.new(params[:oclc_number], session[:token])
-  haml :record, :layout => :template
+  if @bib.response_code == '200' or @bib.response_code == '201'
+    haml :record, :layout => :template
+  else 
+    haml :error, :layout => :template
+  end
 end
 
 post '/update' do
