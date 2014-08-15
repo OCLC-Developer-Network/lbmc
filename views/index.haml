@@ -2,16 +2,16 @@
 
 %p.content This is a prototype interface for quickly creating simple bibliographic records in WorldCat.
 
-%div
+%div#get-started
   - if session[:token].nil? or session[:token].expired?
     %form{ :action => url('authenticate'), :method => 'GET' }
       %p Let's begin by logging in. Please select your institution:
       %p
         %select{ :name => 'registry_id' }
-          = INSTITUTIONS.each do |registry_id, info| 
+          - INSTITUTIONS.each do |registry_id, info| 
             %option{ :value => registry_id }= "#{info['name']} (#{info['symbol']})"
       %p
-        %button{ :type => 'submit', :class => 'btn btn-success' } Login
+        %button#login{ :type => 'submit', :class => 'btn btn-success' } Login
   - else
     %p
-      %a{ :href => url("/record/883876185") } Get started with a test record
+      %a#test-record{ :href => url("/record/883876185") } Get started with a test record

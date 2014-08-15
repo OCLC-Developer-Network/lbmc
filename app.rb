@@ -69,4 +69,3 @@ def authenticate
     redirect login_url
   end
 end
-
