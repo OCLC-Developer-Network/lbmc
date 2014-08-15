@@ -1,0 +1,17 @@
+%div{ :class=>"alert alert-warning"}
+  %span{ :class=>"glyphicon glyphicon-exclamation-sign"}
+  LBMC application error  
+
+%div{ :style=>"padding-bottom: 1em;"}
+  The error has been logged in the LBMC system and will be reported to the LBMC development team.
+
+%div{ :style=>"padding-bottom: 1em;"}
+  - if session[:token].nil?
+    It doesn't look like you are logged in.  You can log in from the 
+    %a{ :href => url("/") } LBMC home page
+  - else
+    You can try getting started with a
+    %a{ :href => url("/record/883876185") } test record
+
+%div{ :style=>"padding-bottom: 1em;"}
+  If you continue to see this error, please contact us for help.
