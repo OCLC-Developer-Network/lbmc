@@ -50,10 +50,19 @@ def session
   SessionData.new(rack_test_session.instance_variable_get(:@rack_mock_session).cookie_jar)
 end
 
+wskey_config = YAML::load(File.read("#{File.expand_path(File.dirname(__FILE__))}/../config/wskey.yml"))
+key = wskey_config[settings.environment.to_s]['key']
+secret = wskey_config[settings.environment.to_s]['secret']
+redirect_uri = wskey_config[settings.environment.to_s]['redirect_uri']
+WSKEY = OCLC::Auth::WSKey.new(key, secret, :services => ['WorldCatMetadataAPI'], :redirect_uri => redirect_uri)
+
+config = YAML::load(File.read("#{File.expand_path(File.dirname(__FILE__))}/../config/lbmc.yml"))
+BASE_URL = config[settings.environment.to_s]['base_url']
+INSTITUTIONS = config[settings.environment.to_s]['institutions']
+
+
 RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
 
   config.include Rack::Test::Methods
 end
-
-
