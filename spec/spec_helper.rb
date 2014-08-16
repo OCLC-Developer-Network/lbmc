@@ -66,3 +66,7 @@ RSpec.configure do |config|
 
   config.include Rack::Test::Methods
 end
+
+def body_content(filename)
+  File.new("#{File.expand_path(File.dirname(__FILE__))}/mocks/#{filename}")
+end
