@@ -43,11 +43,11 @@ describe "the home page" do
 
   describe "after logging in when an access token is present in the user session" do
     before do
-      @access_token = OCLC::Auth::AccessToken.new('grant_type', ['FauxService'], 128807, 128807)
-      @access_token.value = 'tk_faux_token'
-      @access_token.expires_at = DateTime.parse("9999-01-01 00:00:00Z")
+      access_token = OCLC::Auth::AccessToken.new('grant_type', ['FauxService'], 128807, 128807)
+      access_token.value = 'tk_faux_token'
+      access_token.expires_at = DateTime.parse("9999-01-01 00:00:00Z")
 
-      get '/', params={}, rack_env={ 'rack.session' => {:token => @access_token} }
+      get '/', params={}, rack_env={ 'rack.session' => {:token => access_token} }
       @doc = Nokogiri::HTML(last_response.body)
     end
 
