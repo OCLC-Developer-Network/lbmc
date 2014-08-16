@@ -8,6 +8,9 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
+    addressable (2.3.6)
+    crack (0.4.2)
+      safe_yaml (~> 1.0.0)
     diff-lcs (1.2.5)
     ensure_valid_encoding (0.5.3)
     haml (4.0.5)
@@ -43,6 +46,7 @@ GEM
     rspec-mocks (3.0.4)
       rspec-support (~> 3.0.0)
     rspec-support (3.0.4)
+    safe_yaml (1.0.3)
     sinatra (1.4.5)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -51,6 +55,9 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.6)
+    webmock (1.18.0)
+      addressable (>= 2.3.6)
+      crack (>= 0.3.2)
 
 PLATFORMS
   ruby
@@ -65,3 +72,4 @@ DEPENDENCIES
   rest_client
   rspec
   sinatra
+  webmock

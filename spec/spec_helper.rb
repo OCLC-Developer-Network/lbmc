@@ -1,6 +1,19 @@
-require 'rubygems'
 require 'sinatra'
-# require 'webmock/rspec'
+require 'haml'
+require 'yaml'
+require 'rest_client'
+require 'marc'
+require 'nokogiri'
+require 'json'
+require 'oclc/auth'
+require 'rspec'
+require 'rack/test'
+require 'webmock/rspec'
+
+require File.join(File.dirname(__FILE__), '..', 'app.rb')
+require File.join(File.dirname(__FILE__), '..', 'helpers/application_helper.rb')
+require File.join(File.dirname(__FILE__), '..', 'model/bib.rb')
+require File.join(File.dirname(__FILE__), '..', 'model/error.rb')
 
 ENV['RACK_ENV'] = 'test'                    # force the environment to 'test'
 
@@ -37,60 +50,10 @@ def session
   SessionData.new(rack_test_session.instance_variable_get(:@rack_mock_session).cookie_jar)
 end
 
-# Spork.prefork do
-#   require File.join(File.dirname(__FILE__), '..', 'lbmc_app.rb')
-#   require File.join(File.dirname(__FILE__), '..', 'helpers/application_helper.rb')
-#   require File.join(File.dirname(__FILE__), '..', 'model/bib.rb')
-#   require File.join(File.dirname(__FILE__), '..', 'model/error.rb')
-#
-#   require 'sinatra'
-#   require 'haml'
-#   require 'yaml'
-#   require 'rest_client'
-#   require 'marc'
-#   require 'nokogiri'
-#   require 'json'
-#   require 'oclc/auth'
-#   require 'rspec'
-#   require 'rack/test'
-#   require 'capybara'
-#   require 'capybara/dsl'
-#   require "awesome_print"
-#
-#   wskey_config = YAML::load(File.read("#{File.expand_path(File.dirname(__FILE__))}/../config/wskey.yml"))
-#   key = wskey_config[settings.environment.to_s]['key']
-#   secret = wskey_config[settings.environment.to_s]['secret']
-#   redirect_uri = wskey_config[settings.environment.to_s]['redirect_uri']
-#   WSKEY = OCLC::Auth::WSKey.new(key, secret, :services => ['WorldCatMetadataAPI'], :redirect_uri => redirect_uri)
-#
-#   puts ; puts WSKEY.inspect ; puts
-#
-#   config = YAML::load(File.read("#{File.expand_path(File.dirname(__FILE__))}/../config/lbmc.yml"))
-#   BASE_URL = config[settings.environment.to_s]['base_url']
-#   INSTITUTIONS = config[settings.environment.to_s]['institutions']
-#
-#   Capybara.app = LBMCApp # Sinatra::Application       # in order to make Capybara work
-#   # Capybara.default_driver = :selenium
-#
-#   # set test environments
-#   # set :environment, :test
-#   # set :run, false
-#   # set :raise_errors, true
-#   # set :logging, false
-#
-#   RSpec.configure do |config|
-#     config.run_all_when_everything_filtered = true
-#
-#     config.include Rack::Test::Methods
-#     config.include Capybara::DSL
-#   end
-#
-#   def app
-#     # @app ||= Sinatra::Application
-#     @app ||= LBMCApp
-#   end
-# end
-#
-# Spork.each_run do
-# end
+RSpec.configure do |config|
+  config.run_all_when_everything_filtered = true
+
+  config.include Rack::Test::Methods
+end
+
 
