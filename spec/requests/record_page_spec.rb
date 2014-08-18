@@ -1,17 +1,18 @@
 require 'spec_helper'
 
 describe "the record page" do
+  before(:all) do
+    stub_request(:get, "http://cataloging-worldcatbib-qa.ent.oclc.org/bib/data/883876185?classificationScheme=LibraryOfCongress").
+        to_return(:status => 200, :body => body_content("ocn883876185.atomxml"))
+    
+    @access_token = OCLC::Auth::AccessToken.new('grant_type', ['FauxService'], 128807, 128807)
+    @access_token.value = 'tk_faux_token'
+    @access_token.expires_at = DateTime.parse("9999-01-01 00:00:00Z")
+  end
   
   context "when displaying a record" do
     before(:all) do
-      stub_request(:get, "http://cataloging-worldcatbib-qa.ent.oclc.org/bib/data/883876185?classificationScheme=LibraryOfCongress").
-          to_return(:status => 200, :body => body_content("ocn883876185.atomxml"))
-      
-      access_token = OCLC::Auth::AccessToken.new('grant_type', ['FauxService'], 128807, 128807)
-      access_token.value = 'tk_faux_token'
-      access_token.expires_at = DateTime.parse("9999-01-01 00:00:00Z")
-
-      get '/record/883876185', params={}, rack_env={ 'rack.session' => {:token => access_token} }
+      get '/record/883876185', params={}, rack_env={ 'rack.session' => {:token => @access_token} }
       @doc = Nokogiri::HTML(last_response.body)
       @form_element = @doc.xpath("//form[@id='record-form']").first
     end
@@ -73,6 +74,31 @@ describe "the record page" do
       marc_pre_element = @doc.xpath("//pre[@id='marc-view']").first
       expect(marc_pre_element.text).to eq(marc_str)
     end
+  end
+  
+  context "when submitting an update to change the author name" do
+    before(:all) do
+      stub_request(:put, "http://cataloging-worldcatbib-qa.ent.oclc.org/bib/data?classificationScheme=LibraryOfCongress").
+          to_return(:status => 201, :body => body_content("ocn883876185-updated.atomxml"))
+      stub_request(:get, "http://cataloging-worldcatbib-qa.ent.oclc.org/bib/data/883876185?classificationScheme=LibraryOfCongress").
+          to_return(:status => 200, :body => body_content("ocn883876185-updated.atomxml"))
 
+      p = { 
+            :oclc_number => '883876185',
+            :title => 'Testing metadata APIs',
+            :subtitle => 'A comparative analysis',
+            :author => 'Meyer, Steve',
+            :publisher => 'OCLC Press',
+            :extent => '190 p.',
+            :subject => 'Application Programming Interfaces (APIs)'
+          }
+      post( '/update', params=p, rack_env={ 'rack.session' => {:token => @access_token} } )
+    end
+    
+    it "should respond with a redirect back to the record display page" do
+      expect(last_response.redirect?)
+      expect(last_response.header['Location']).to eq("http://example.org/record/883876185")
+    end
+    
   end
 end

@@ -75,10 +75,10 @@ class Bib
     resource.put(payload, :authorization => auth, 
         :content_type => 'application/vnd.oclc.marc21+xml',
         :accept => 'application/atom+xml;content="application/vnd.oclc.marc21+xml"') do |response, request, result|
-      puts ; puts request.inspect ; puts
-      puts ; puts response ; puts
-      puts ; puts result.inspect ; puts
-      puts ; puts response.headers ; puts
+      # puts ; puts request.inspect ; puts
+      # puts ; puts response ; puts
+      # puts ; puts result.inspect ; puts
+      # puts ; puts response.headers ; puts
       @response_body = response
       @response_code = result.code
     end
