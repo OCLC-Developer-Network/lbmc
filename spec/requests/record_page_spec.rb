@@ -99,6 +99,29 @@ describe "the record page" do
       expect(last_response.redirect?)
       expect(last_response.header['Location']).to eq("http://example.org/record/883876185")
     end
+  end
+  
+  context "when submitting a new record" do
+    before(:all) do
+      stub_request(:post, "http://cataloging-worldcatbib-qa.ent.oclc.org/bib/data?classificationScheme=LibraryOfCongress").
+          to_return(:status => 201, :body => body_content("ocn883876185.atomxml"))
+      stub_request(:get, "http://cataloging-worldcatbib-qa.ent.oclc.org/bib/data/883876185?classificationScheme=LibraryOfCongress").
+          to_return(:status => 200, :body => body_content("ocn883876185.atomxml"))
+
+      p = { 
+            :title => 'Testing metadata APIs',
+            :subtitle => 'A comparative analysis',
+            :author => 'Meyer, Stephen',
+            :publisher => 'OCLC Press',
+            :extent => '190 p.',
+            :subject => 'Application Programming Interfaces (APIs)'
+          }
+      post( '/create', params=p, rack_env={ 'rack.session' => {:token => @access_token} } )
+    end
     
+    it "should respond with a redirect to the record display page" do
+      expect(last_response.redirect?)
+      expect(last_response.header['Location']).to eq("http://example.org/record/883876185")
+    end
   end
 end
