@@ -1,6 +1,6 @@
 class Bib
   attr_accessor :id, :institution_id, :request_body, :response_code,
-      :response_body, :access_token, :wskey, :doc, :marc_record, :errors
+      :response_body, :access_token, :wskey, :doc, :marc_record, :errors, :is_app_created
       
   def initialize(id, access_token = nil)
     @errors = Array.new
@@ -25,7 +25,7 @@ class Bib
   end
   
   def create
-    url = "#{base_url}?classificationScheme=LibraryOfCongress"
+    url = "#{base_url}/#{@id}?classificationScheme=LibraryOfCongress"
     auth = "Bearer #{access_token.value}"
     payload = "<?xml version=\"1.0\"?>\n" + @marc_record.to_xml.to_s
     
@@ -55,15 +55,19 @@ class Bib
     resource = RestClient::Resource.new(url)
     resource.get(:authorization => auth, 
         :accept => 'application/atom+xml;content="application/vnd.oclc.marc21+xml"') do |response, request, result|
-      # puts ; puts request.inspect ; puts
-      # puts ; puts response ; puts
-      # puts ; puts result.inspect ; puts
-      # puts ; puts response.headers ; puts
+      puts ; puts request.inspect ; puts
+      puts ; puts response ; puts
+      puts ; puts result.inspect ; puts
+      puts ; puts response.headers ; puts
       @response_body = response
       @response_code = result.code
     end
     
-    parse_marc if @response_code == '200'
+    if @response_code == '200'
+      parse_marc
+      is_app_created
+    end
+    
   end
   
   def update
@@ -75,10 +79,10 @@ class Bib
     resource.put(payload, :authorization => auth, 
         :content_type => 'application/vnd.oclc.marc21+xml',
         :accept => 'application/atom+xml;content="application/vnd.oclc.marc21+xml"') do |response, request, result|
-      # puts ; puts request.inspect ; puts
-      # puts ; puts response ; puts
-      # puts ; puts result.inspect ; puts
-      # puts ; puts response.headers ; puts
+      puts ; puts request.inspect ; puts
+      puts ; puts response ; puts
+      puts ; puts result.inspect ; puts
+      puts ; puts response.headers ; puts
       @response_body = response
       @response_code = result.code
     end
@@ -86,7 +90,18 @@ class Bib
     if @response_code == '200' or @response_code == '201' or @response_code == '409'
       load_doc
       parse_marc
+      is_app_created
       parse_errors
+    end
+  end
+  
+  def is_app_created
+    if @marc_record['500']
+      @marc_record['500'].inject(false) { |result, element| 
+        if element.to_s.include? LBMC::SOURCE_NOTE.to_s
+          result = true
+        end
+      }
     end
   end
   
@@ -114,4 +129,5 @@ class Bib
   def parse_errors
     
   end
+    
 end
