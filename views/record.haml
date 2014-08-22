@@ -1,72 +1,36 @@
-- oclcnum = @bib.id
-- author = @bib.marc_record['100'].nil? ? '' : @bib.marc_record['100']['a']
-- extent = @bib.marc_record['300'].nil? ? '' : @bib.marc_record['300']['a']
-- publisher = @bib.marc_record['260'].nil? ? '' : @bib.marc_record['260']['b'] 
-- subject = @bib.marc_record['650'].nil? ? '' : @bib.marc_record['650']['a'] 
-- lbmc_record = false
-- @bib.marc_record.fields("500").each {|field| if field = LBMC::SOURCE_NOTE then lbmc_record = true end }
+-# record.haml 
 
-%h3
-  %span{:class => "field_value"}= @bib.marc_record['245']['a'] 
-  %span{:class => "field_value"}= @bib.marc_record['245']['b'] 
-  %span{:class => "field_value"}= author
+- @data = Hash.new
+- @data['id'] = @bib.id
+- @data['title'] = @bib.marc_record['245']['a'].nil? ? '' : @bib.marc_record['245']['a']
+- @data['subtitle'] = @bib.marc_record['245']['b'].nil? ? '' : @bib.marc_record['245']['b']
+- @data['author'] = @bib.marc_record['100'].nil? ? '' : @bib.marc_record['100']['a']
+- @data['publisher'] = @bib.marc_record['260'].nil? ? '' : @bib.marc_record['260']['b']
+- @data['extent'] = @bib.marc_record['300'].nil? ? '' : @bib.marc_record['300']['a']
+- @data['subject'] = @bib.marc_record['650'].nil? ? '' : @bib.marc_record['650']['a']
 
-- if lbmc_record == false
-
-  %div{ :class=>"alert alert-warning"}
-    %span{ :class=>"glyphicon glyphicon-exclamation-sign"}
-    Sorry, but the record for OCLC number 
-    %a{ :href => @bib.link, :target => 'blank', :title => "View me in WorldCat.org" }= @bib.id
-    is not available for editing in this application.
-    
-- else 
+- if @bib.is_app_created and INSTITUTIONS[session[:registry_id].to_i]['symbol'] == @bib.marc_record['040']['a']
 
   %h3
     %span{ :class=>"glyphicon glyphicon-pencil"}
     Edit Record 
     %a{ :href => @bib.link, :target => 'blank', :title => "View me in WorldCat.org" }= @bib.id
     
-  %form{ :action => url('/update'), :method => 'POST', :role => 'form', :class => 'form-horizontal'}
-    %div
-      %input{ :type => 'hidden', :name => 'oclc_number', :value => @bib.id }
-      
-    %div{ :class => 'form-group'}
-      %label{ :for=>'title', :class=>'col-sm-2 control-label' } Title
-      %div{ :class=>'col-sm-10' }
-        %input{ :type => 'text', :id => 'title', :name => 'title', :value => @bib.marc_record['245']['a'], :size => 40, :class => 'form-control', :onkeypress=>"get_language()" }
-  
-    %div{ :class => 'form-group'}
-      %label{ :for=>'subtitle', :class=>'col-sm-2 control-label' } Sub-title
-      %div{ :class=>'col-sm-10' }
-        %input{ :type => 'text', :name => 'subtitle', :value => @bib.marc_record['245']['b'], :size => 40, :class => 'form-control' }
-  
-    %div{ :class => 'form-group'}
-      %label{ :for=>'author', :class=>'col-sm-2 control-label' } Author
-      %div{ :class=>'col-sm-10' }
-        %input{ :type => 'text', :name => 'author', :value => author, :size => 40, :class => 'form-control' }
-        
-    %div{ :class => 'form-group'}
-      %label{ :for=>'publisher', :class=>'col-sm-2 control-label' } Published by
-      %div{ :class=>'col-sm-10' }  
-        %input{ :type => 'text', :name => 'publisher', :value => publisher, :size => 40, :class => 'form-control' }
-  
-    %div{ :class => 'form-group'}
-      %label{ :for=>'extent', :class=>'col-sm-2 control-label' } Physical Description
-      %div{ :class=>'col-sm-10' }  
-        %input{ :type => 'text', :name => 'extent', :value => extent, :size => 40, :class => 'form-control' }
-        
-    %div{ :class => 'form-group'}
-      %label{ :for=>'subject', :class=>'col-sm-2 control-label' } Topic
-      %div{ :class=>'col-sm-10' } 
-        %input{ :type => 'text', :name => 'subject', :value => subject, :size => 40, :class => 'form-control' }
-        
-    %div{ :class => 'form-group'}
-      %div{ :class => 'col-sm-offset-2 col-sm-10'}
-        %button{ :type => 'submit', :class => 'btn btn-success' } Save
+  = partial :record_form, locals: {action: "/update", data: @data }
+
+- else
+
+  %div{ :class=>"alert alert-warning"}
+    %span{ :class=>"glyphicon glyphicon-exclamation-sign"}
+    Sorry, but the record for OCLC number 
+    %a{ :href => @bib.link, :target => 'blank', :title => "View me in WorldCat.org" }= @bib.id
+    is not available for editing in this application.
 
 %h3
   %span{ :class=>"glyphicon glyphicon-list"}
   MARC Record View
   
 %pre= @bib.marc_record
+
+
 
