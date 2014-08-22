@@ -2,6 +2,7 @@
 source 'https://rubygems.org'
  
 gem "sinatra"
+gem "sinatra-partial"
 gem "haml"
 gem "marc"
 gem "rest_client"
