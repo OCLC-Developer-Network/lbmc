@@ -14,8 +14,9 @@
           %h1
             %a{ :href => "/", :title => "Visit the home page" } LBMC Pilot
         %div{ :class=>"col-xs-12 col-sm-3 col-md-6" }
-          %div{ :class=>"pull-right", :style=>"padding-top: 20px" }
-            %img{ :src=>"http://www.oclc.org/content/dam/developer-network/badges/wc_badge1.png", :width=>88, :height=>31, :alt=>"Some library data on this site is provided by WorldCat, the world's largest library catalog [WorldCat.org]" }
+          %div{ :class=>"pull-right", :style=>"padding-top: 40px" }
+            - unless session[:token].nil? or session[:token].expired?
+              #{INSTITUTIONS[session[:registry_id].to_i]['name']}
 
       %div.row
         %div{ :class=>"col-xs-12 col-sm-12 col-md-12" }
@@ -23,6 +24,8 @@
       
       %div.row
         %div{ :class=>"col-xs-12 col-sm-12 col-md-12" }
+          %div{ :class=>"pull-right" }
+            %img{ :src=>"http://www.oclc.org/content/dam/developer-network/badges/wc_badge1.png", :width=>88, :height=>31, :alt=>"Some library data on this site is provided by WorldCat, the world's largest library catalog [WorldCat.org]" }
           
         
     %script{:src=>"//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"}
