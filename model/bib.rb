@@ -96,12 +96,10 @@ class Bib
   end
   
   def is_app_created
-    if @marc_record['500']
-      @marc_record['500'].inject(false) { |result, element| 
-        if element.to_s.include? LBMC::SOURCE_NOTE.to_s
-          result = true
-        end
-      }
+    @marc_record.fields('500').reduce(false) do |result, element|
+      if element['a'] == LBMC::SOURCE_NOTE
+        result = true
+      end
     end
   end
   
