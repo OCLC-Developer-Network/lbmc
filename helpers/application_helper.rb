@@ -99,7 +99,7 @@ helpers do
     end
     
     # Author
-    update_field_value(marc_record, '100', 'a', ' ', ' ', params[:author])
+    update_field_value(marc_record, '100', 'a', '1', ' ', params[:author])
 
     # Publisher
     update_field_value(marc_record, '260', 'b', ' ', ' ', params[:publisher])
