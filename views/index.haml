@@ -1,17 +1,17 @@
 %h2 Welcome!
 
-%p.content This is a prototype interface for quickly creating simple bibliographic records in WorldCat.
+%div#get-started{ :class => 'list-group' }
+  %a{ :href => '#', :class => 'list-group-item disabled', :style => 'background-color: #e9eed8; color: #000;' }
+    %h4{ :class => 'list-group-heading' }
+      The LBMC (Low Barrier Metadata Creation) Pilot is a prototype interface for quickly creating simple bibliographic records in WorldCat.  Select your institution to get started ...
 
-%div#get-started
   - if session[:token].nil? or session[:token].expired?
-    %form{ :action => url('authenticate'), :method => 'GET' }
-      %p Let's begin by logging in. Please select your institution:
-      %p
-        %select{ :name => 'registry_id' }
-          - INSTITUTIONS.each do |registry_id, info| 
-            %option{ :value => registry_id }= "#{info['name']} (#{info['symbol']})"
-      %p
-        %button#login{ :type => 'submit', :class => 'btn btn-success' } Login
+
+    - INSTITUTIONS.each do |registry_id, info|
+      %a{ :href => url('authenticate?registry_id='+registry_id.to_s), :style => 'font-size: 14pt; font-weight: bold;', :class => 'list-group-item'}
+        %img{ :src => url("/images/#{info['symbol']}.jpg"), :height => "80" }
+        %span{ :style => 'padding-left: 10px' }
+          #{info['name']}
+
   - else
-    %p
-      %a#test-record{ :href => url("/record/883876185") } Get started with a test record
+    %a#test-record{ :href => url("/record/883876185"), :class => 'list-group-item' } Get started with a test record
