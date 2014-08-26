@@ -14,9 +14,11 @@
           %h1
             %a{ :href => "/", :title => "Visit the home page" } LBMC Pilot
         %div{ :class=>"col-xs-12 col-sm-3 col-md-6" }
-          %div{ :class=>"pull-right", :style=>"padding-top: 40px" }
+          %div{ :class=>"pull-right" }
             - unless session[:token].nil? or session[:token].expired?
-              #{INSTITUTIONS[session[:registry_id].to_i]['name']}
+              %h4 
+                #{INSTITUTIONS[session[:registry_id].to_i]['name']}
+                %img{ :src => url("/images/#{INSTITUTIONS[session[:registry_id].to_i]['symbol']}.jpg"), :height => "50" }
 
       %div.row
         %div{ :class=>"col-xs-12 col-sm-12 col-md-12" }
