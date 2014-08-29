@@ -17,8 +17,10 @@
           %div{ :class=>"pull-right" }
             - unless session[:token].nil? or session[:token].expired?
               %h4 
+                %img{ :src => url("/images/#{INSTITUTIONS[session[:registry_id].to_i]['symbol']}.jpg"), :height => "50" } 
                 #{INSTITUTIONS[session[:registry_id].to_i]['name']}
-                %img{ :src => url("/images/#{INSTITUTIONS[session[:registry_id].to_i]['symbol']}.jpg"), :height => "50" }
+                |
+                %a{ :href => "/logoff", :title => "End your session" } Logoff
 
       %div.row
         %div{ :class=>"col-xs-12 col-sm-12 col-md-12" }
