@@ -1,5 +1,4 @@
 set :public_folder, File.dirname(__FILE__) + '/public'
-set :views, File.dirname(__FILE__) + '/views'
 
 before do
   # The home page is unauthenticated, it is where the user chooses an institution to login against
@@ -50,6 +49,11 @@ post '/update' do
   end
 end
 
+get '/logoff' do
+	session[:token] = nil
+	haml :index, :layout => :template
+end
+
 get '/catch_auth_code' do
   if params and params[:code]
     session[:token] = WSKEY.auth_code_token(params[:code], session[:registry_id], session[:registry_id])
@@ -74,3 +78,4 @@ def authenticate
     redirect login_url
   end
 end
+
