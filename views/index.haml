@@ -12,7 +12,7 @@
   %div#get-started{ :class => 'list-group' }
   - INSTITUTIONS.each do |registry_id, info|
     %a{ :href => url('authenticate?registry_id='+registry_id.to_s), :style => 'font-size: 14pt; font-weight: bold;', :class => 'list-group-item'}
-      %img{ :src => url("/images/#{info['symbol']}.jpg"), :height => "80" }
+      %img{ :src => url("/images/#{info['symbol']}.jpg"), :class => "logo_medium" }
       %span{ :style => 'padding-left: 10px' }
         #{info['name']}
 
