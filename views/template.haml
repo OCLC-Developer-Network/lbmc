@@ -1,4 +1,5 @@
 !!! 5
+
 %html
   %head
     %title
@@ -10,10 +11,10 @@
   %body
     %div.container
       %div.row
-        %div{ :class=>"col-xs-12 col-sm-9 col-md-6" }
+        %div{ :class=>"col-xs-12 col-sm-4 col-md-4" }
           %h1
             %a{ :href => "/", :title => "Visit the home page" } LBMC Pilot
-        %div{ :class=>"col-xs-12 col-sm-3 col-md-6" }
+        %div{ :class=>"col-xs-12 col-sm-8 col-md-8" }
           %div{ :class=>"pull-right" }
             - unless session[:token].nil? or session[:token].expired?
               %h4 
@@ -29,7 +30,8 @@
       %div.row
         %div{ :class=>"col-xs-12 col-sm-12 col-md-12" }
           %div{ :class=>"pull-right" }
-            %img{ :src=>"http://www.oclc.org/content/dam/developer-network/badges/wc_badge1.png", :width=>88, :height=>31, :alt=>"Some library data on this site is provided by WorldCat, the world's largest library catalog [WorldCat.org]" }
+            %a{ :href => "http://worldcat.org", :title => "Some library data on this site is provided by WorldCat, the world's largest library catalog [WorldCat.org]" }
+              %img{ :src=>"http://www.oclc.org/content/dam/developer-network/badges/wc_badge1.png", :width=>88, :height=>31, :alt=>"Some library data on this site is provided by WorldCat, the world's largest library catalog [WorldCat.org]" }
           
         
     %script{:src=>"//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"}
