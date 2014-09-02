@@ -5,7 +5,7 @@ before do
   # The user's session does not yet have an access token in his/her session when the app catches an
   # auth code.
   pass if request.path_info == '/' or request.path_info == '/catch_auth_code'
-  session[:path] = request.path unless request.path == '/authenticate'
+  session[:path] = request.path unless request.path == '/authenticate' or request.path == '/logoff'
   authenticate
 end
 
@@ -50,8 +50,9 @@ post '/update' do
 end
 
 get '/logoff' do
-	session[:token] = nil
-	haml :index, :layout => :template
+  session[:token] = nil
+  session[:path] = "/"
+  haml :index, :layout => :template
 end
 
 get '/catch_auth_code' do
