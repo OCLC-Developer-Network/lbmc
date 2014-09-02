@@ -3,11 +3,15 @@
 - @data = Hash.new
 - @data['id'] = @bib.id
 - @data['title'] = @bib.marc_record['245']['a'].nil? ? '' : @bib.marc_record['245']['a']
-- @data['subtitle'] = @bib.marc_record['245']['b'].nil? ? '' : @bib.marc_record['245']['b']
 - @data['author'] = @bib.marc_record['100'].nil? ? '' : @bib.marc_record['100']['a']
+- @data['author_is_person'] = @bib.marc_record['100'].nil? ? false : true
+- @data['author'] = @bib.marc_record['110'].nil? ? @data['author'] : @bib.marc_record['110']['a']
+- @data['author_is_organization'] = @bib.marc_record['110'].nil? ? false : true
 - @data['publisher'] = @bib.marc_record['260'].nil? ? '' : @bib.marc_record['260']['b']
+- @data['publicationdate'] = @bib.marc_record['260'].nil? ? '' : @bib.marc_record['260']['c']
 - @data['extent'] = @bib.marc_record['300'].nil? ? '' : @bib.marc_record['300']['a']
 - @data['subject'] = @bib.marc_record['650'].nil? ? '' : @bib.marc_record['650']['a']
+- @button_label = "Update this Record"
 
 - if @bib.is_app_created and INSTITUTIONS[session[:registry_id].to_i]['symbol'] == @bib.marc_record['040']['a']
 
