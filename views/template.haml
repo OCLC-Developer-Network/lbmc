@@ -8,6 +8,7 @@
     %link{ :rel=>"icon", :href=>"/images/favicon.ico", :type=>"image/x-icon" }
     %link{ :rel=>"shortcut icon", :href=>"/images/favicon.ico", :type=>"image/x-icon" }
     %link{ :href=>"//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css", :rel=>"stylesheet" }
+    %link{ :href=>"/css/layout.css", :rel=>"stylesheet" }
   %body
     %div.container
       %div.row
@@ -17,10 +18,10 @@
         %div{ :class=>"col-xs-12 col-sm-8 col-md-8" }
           %div{ :class=>"pull-right" }
             - unless session[:token].nil? or session[:token].expired?
-              %h4 
-                %img{ :src => url("/images/#{INSTITUTIONS[session[:registry_id].to_i]['symbol']}.jpg"), :height => "50" } 
-                #{INSTITUTIONS[session[:registry_id].to_i]['name']}
-                |
+              #{INSTITUTIONS[session[:registry_id].to_i]['name']}
+              %img{ :src => url("/images/#{INSTITUTIONS[session[:registry_id].to_i]['symbol']}.jpg"), :class => "logo_small" } 
+              %br
+              %div{ :class=>"pull-right" }
                 %a{ :href => "/logoff", :title => "End your session" } Logoff
 
       %div.row
