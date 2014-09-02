@@ -3,11 +3,14 @@
 - @data = Hash.new
 - @data['id'] = params[:id].nil? ? '' : params[:id].to_s
 - @data['title'] = params[:title].nil? ? '' : params[:title]
-- @data['subtitle'] = params[:subtitle].nil? ? '' : params[:subtitle]
 - @data['author'] = params[:author].nil? ? '' : params[:author]
+- @data['author_is_person'] = true
+- @data['author_is_organization'] = false
 - @data['publisher'] = params[:publisher].nil? ? '' : params[:publisher]
+- @data['publicationdate'] = params[:publicationdate].nil? ? '' : params[:publicationdate]
 - @data['extent'] = params[:extent].nil? ? '' : params[:extent]
 - @data['subject'] = params[:subject].nil? ? '' : params[:subject]
+- @button_label = "Create this Record"
 
 %h3
   %span{ :class=>"glyphicon glyphicon-pencil"}
