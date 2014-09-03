@@ -7,8 +7,8 @@ describe "the home page" do
   end
 
   it "should welcome the user" do
-    xpath = "//h2[text()='Welcome!']"
-    expect(@doc.xpath(xpath)).not_to be_nil
+    xpath = "//h4[text()='Welcome!']"
+    expect(@doc.xpath(xpath)).not_to be_empty
   end
   
   describe "before logging in" do
@@ -16,7 +16,7 @@ describe "the home page" do
       before do
         list_xpath = "//div[@id='get-started']"
         @inst_list_wrapper = @doc.xpath(list_xpath)
-        login_links = @inst_list_wrapper.xpath(".//a[@class='list-group-item']")
+        login_links = @inst_list_wrapper.xpath(".//a[@class='list-group-item pilot_list']")
         @ocpsb_login = login_links.find {|element| element if element.attr('id') == 'login-to-128807'}
         @ocwms_login = login_links.find {|element| element if element.attr('id') == 'login-to-91475'}
       end
@@ -26,7 +26,7 @@ describe "the home page" do
         expect(@inst_list_wrapper.size).to eq(1)
       end
 
-      it "should should let the user select the right institutions" do
+      it "should let the user select the right institutions" do
         expect(@ocpsb_login).to_not be_nil
         expect(@ocpsb_login.xpath(".//span").text).to eq('OCLC WorldShare Platform Sandbox Institution')
         expect(@ocwms_login).to_not be_nil
@@ -64,5 +64,11 @@ describe "the home page" do
       xpath = "//a[@id='new-record']"
       expect(@doc.xpath(xpath).size).to eq(1)
     end
+    
+    it "should have a link to logoff" do
+      xpath = "//a[@id='logoff']"
+      expect(@doc.xpath(xpath).size).to eq(1)
+    end
+    
   end
 end
