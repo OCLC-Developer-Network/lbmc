@@ -1,17 +1,23 @@
-%h2 Welcome!
 
-%p.content This is a prototype interface for quickly creating simple bibliographic records in WorldCat.
+- if session[:token].nil? or session[:token].expired?
 
-%div#get-started
-  - if session[:token].nil? or session[:token].expired?
-    %form{ :action => url('authenticate'), :method => 'GET' }
-      %p Let's begin by logging in. Please select your institution:
-      %p
-        %select{ :name => 'registry_id' }
-          - INSTITUTIONS.each do |registry_id, info| 
-            %option{ :value => registry_id }= "#{info['name']} (#{info['symbol']})"
-      %p
-        %button#login{ :type => 'submit', :class => 'btn btn-success' } Login
-  - else
-    %p
-      %a#test-record{ :href => url("/record/883876185") } Get started with a test record
+  %div.row 
+    %div{ :class => "col-md-12" }
+      %div{ :class => "well" }
+        %div{ :class => "text" }
+          The LBMC (Low-Barrier Metadata Creation) Pilot study will test a system for quickly creating simple cataloging records in WorldCat.
+        %div{ :class => "text" }
+          Pilot institutions can get started by selecting their institution link below.
+
+  %div#get-started{ :class => 'list-group' }
+  - INSTITUTIONS.each do |registry_id, info|
+    %a{ :href => url('authenticate?registry_id='+registry_id.to_s), :style => 'font-size: 14pt; font-weight: bold;', :class => 'list-group-item'}
+      %img{ :src => url("/images/#{info['symbol']}.jpg"), :class => "logo_medium" }
+      %span{ :style => 'padding-left: 10px' }
+        #{info['name']}
+
+- else
+  View a 
+  %a#test-record{ :href => url("/record/883876185")} test record
+  or create a  
+  %a#new-record{ :href => url("/record/new")} new record

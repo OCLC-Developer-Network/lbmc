@@ -1,12 +1,11 @@
 set :public_folder, File.dirname(__FILE__) + '/public'
-set :views, File.dirname(__FILE__) + '/views'
 
 before do
   # The home page is unauthenticated, it is where the user chooses an institution to login against
   # The user's session does not yet have an access token in his/her session when the app catches an
   # auth code.
   pass if request.path_info == '/' or request.path_info == '/catch_auth_code'
-  session[:path] = request.path unless request.path == '/authenticate'
+  session[:path] = request.path unless request.path == '/authenticate' or request.path == '/logoff'
   authenticate
 end
 
@@ -31,7 +30,11 @@ end
 
 get '/record/:oclc_number' do
   @bib = Bib.new(params[:oclc_number], session[:token])
-  haml :record, :layout => :template
+  if @bib.response_code == '200' or @bib.response_code == '201'
+    haml :record, :layout => :template
+  else 
+    haml :error, :layout => :template
+  end
 end
 
 post '/update' do
@@ -44,6 +47,12 @@ post '/update' do
   else
     haml :record, :layout => :template
   end
+end
+
+get '/logoff' do
+  session[:token] = nil
+  session[:path] = "/"
+  haml :index, :layout => :template
 end
 
 get '/catch_auth_code' do
@@ -70,3 +79,4 @@ def authenticate
     redirect login_url
   end
 end
+

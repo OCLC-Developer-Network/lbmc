@@ -1,0 +1,42 @@
+-# record_form.haml
+
+%form{ :action => url(action), :method => 'POST', :role => 'form'}
+
+  %div
+    %input{ :type => 'hidden', :name => 'oclc_symbol', :value => INSTITUTIONS[session[:registry_id].to_i]['symbol'] }
+
+  %div
+    %input{ :type => 'hidden', :name => 'oclc_number', :value => data['id'] }
+    
+  %div{ :class => 'form-group'}
+    %label{ :for=>'title' } What is the title?
+    %input{ :type => 'text', :id => 'title', :name => 'title', :value => @data['title'], :class => 'form-control', :placeholder => "This is a required field, the others are optional." }
+
+  %div{ :class => 'form-group'}
+    %label{ :for=>'author'} Who is the author?
+    %input{ :type => 'text', :name => 'author', :value => @data['author'], :class => 'form-control', :placeholder => "If the author is a person, enter the last name first." }
+    %label{ :class => 'radio-inline'}
+      %input{ :type => 'radio', :name => 'author_field', :id => 'author_is_person', :value => '100', :checked => @data['author_is_person'] ? true : nil } The author is a person
+    %label{ :class => 'radio-inline'}
+      %input{ :type => 'radio', :name => 'author_field', :id => 'author_is_organization', :value => '110', :checked => @data['author_is_organization'] ? true : nil } The author is an organization
+      
+  %div{ :class => 'form-group'}
+    %label{ :for=>'publisher' } Who is the publisher?
+    %input{ :type => 'text', :name => 'publisher', :value => @data['publisher'], :class => 'form-control', :placeholder => "For example HarperCollins, Acme University Press, etc."  }
+      
+  %div{ :class => 'form-group'}
+    %label{ :for=>'publicationdate' } When was it published?
+    %input{ :type => 'text', :name => 'publicationdate', :value => @data['publicationdate'], :maxlength => "4", :class => 'form-control', :placeholder => "Just the year will do." }
+
+  %div{ :class => 'form-group'}
+    %label{ :for=>'extent' } How many pages or volumes?
+    %input{ :type => 'text', :name => 'extent', :value => @data['extent'], :class => 'form-control', :placeholder => "For example 245 p., or 3 v., or 11 folded leaves"  }
+      
+  %div{ :class => 'form-group'}
+    %label{ :for=>'subject'} What is the book about?  
+    %input{ :type => 'text', :name => 'subject', :value => @data['subject'], :class => 'form-control', :placeholder => "Use general topical keywords, for example Nuclear Physics or Agriculture" }
+      
+  %div{ :class => 'form-group'}
+    %button{ :type => 'submit', :class => 'btn btn-success' } 
+      %span{ :class => 'glyphicon glyphicon-ok' } 
+      #{@button_label}

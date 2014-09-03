@@ -1,4 +1,5 @@
 require 'sinatra'
+require 'sinatra/partial'
 require 'haml'
 require 'yaml'
 require 'rest_client'

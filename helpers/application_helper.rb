@@ -9,7 +9,11 @@ helpers do
     record << MARC::DataField.new('040', ' ', ' ', MARC::Subfield.new('a', params[:oclc_symbol]), MARC::Subfield.new('c', params[:oclc_symbol]))
     
     # Author
-    record << MARC::DataField.new('100', '0', ' ', MARC::Subfield.new('a', params[:author]))
+    if params[:author_field] == "100"
+      record << MARC::DataField.new('100', '1', ' ', MARC::Subfield.new('a', params[:author]))
+    else
+      record << MARC::DataField.new('110', '2', ' ', MARC::Subfield.new('a', params[:author]))
+    end
     
     # Title
     record << title_statement(params)
@@ -78,6 +82,7 @@ helpers do
   end
   
   def update_marc_record_from_params(marc_record, params)
+  
     # Title Statement
     title_stmt = marc_record['245']
     title = title_stmt.find_all {|subfield| subfield.code == 'a'}.first
@@ -87,19 +92,15 @@ helpers do
     else
       title_stmt.indicator1 = '1'
     end
-    subtitle = title_stmt.find_all {|subfield| subfield.code == 'b'}.first
-    if params[:subtitle].nil? or params[:subtitle].strip == ''
-      title_stmt.subfields.delete(subtitle)
-    else
-      if subtitle.nil?
-        title_stmt.subfields << MARC::Subfield.new('b', params[:subtitle])
-      else
-        subtitle.value = params[:subtitle]
-      end
-    end
     
     # Author
-    update_field_value(marc_record, '100', 'a', ' ', ' ', params[:author])
+    if params[:author_field] == "100"
+      update_field_value(marc_record, '110', 'a', '2', ' ', '')
+      update_field_value(marc_record, '100', 'a', '1', ' ', params[:author])
+    else
+      update_field_value(marc_record, '100', 'a', '1', ' ', '')
+      update_field_value(marc_record, '110', 'a', '2', ' ', params[:author])
+    end
 
     # Publisher
     update_field_value(marc_record, '260', 'b', ' ', ' ', params[:publisher])

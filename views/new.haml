@@ -1,9 +1,16 @@
-- title = params[:title].nil? ? '' : params[:title]
-- subtitle = params[:subtitle].nil? ? '' : params[:subtitle]
-- author = params[:author].nil? ? '' : params[:author]
-- publisher = params[:publisher].nil? ? '' : params[:publisher]
-- extent = params[:extent].nil? ? '' : params[:extent]
-- subject = params[:subject].nil? ? '' : params[:subject]
+-# new.haml 
+
+- @data = Hash.new
+- @data['id'] = params[:id].nil? ? '' : params[:id].to_s
+- @data['title'] = params[:title].nil? ? '' : params[:title]
+- @data['author'] = params[:author].nil? ? '' : params[:author]
+- @data['author_is_person'] = true
+- @data['author_is_organization'] = false
+- @data['publisher'] = params[:publisher].nil? ? '' : params[:publisher]
+- @data['publicationdate'] = params[:publicationdate].nil? ? '' : params[:publicationdate]
+- @data['extent'] = params[:extent].nil? ? '' : params[:extent]
+- @data['subject'] = params[:subject].nil? ? '' : params[:subject]
+- @button_label = "Create this Record"
 
 %h3
   %span{ :class=>"glyphicon glyphicon-pencil"}
@@ -11,43 +18,6 @@
 
 %div{ :style => "margin-top: 2em;" }
 
-  %form{ :action => url('/create'), :method => 'POST', :role => 'form', :class => 'form-horizontal' }
-    %div
-      %input{ :type => 'hidden', :name => 'oclc_symbol', :value => INSTITUTIONS[session[:registry_id].to_i]['symbol'] }
-    
-    %div{ :class => 'form-group'}
-      %label{ :for=>'title', :class=>'col-sm-2 control-label' } Title
-      %div{ :class=>'col-sm-10' }
-        %input{ :type => 'text', :id => 'title', :name => 'title', :value => title, :size => 40, :class => 'form-control', :onkeypress=>"get_language()" }
+  = partial :record_form, locals: {action: "/create", data: @data }
 
-    %div{ :class => 'form-group'}
-      %label{ :for=>'subtitle', :class=>'col-sm-2 control-label' } Sub-title
-      %div{ :class=>'col-sm-10' }
-        %input{ :type => 'text', :name => 'subtitle', :value => subtitle, :size => 40, :class => 'form-control' }
-
-    %div{ :class => 'form-group'}
-      %label{ :for=>'author', :class=>'col-sm-2 control-label' } Author
-      %div{ :class=>'col-sm-10' }
-        %input{ :type => 'text', :name => 'author', :value => author, :size => 40, :class => 'form-control' }
-      
-    %div{ :class => 'form-group'}
-      %label{ :for=>'publisher', :class=>'col-sm-2 control-label' } Published by
-      %div{ :class=>'col-sm-10' }  
-        %input{ :type => 'text', :name => 'publisher', :value => publisher, :size => 40, :class => 'form-control' }
-
-    %div{ :class => 'form-group'}
-      %label{ :for=>'extent', :class=>'col-sm-2 control-label' } Physical Description
-      %div{ :class=>'col-sm-10' }  
-        %input{ :type => 'text', :name => 'extent', :value => extent, :size => 40, :class => 'form-control' }
-      
-    %div{ :class => 'form-group'}
-      %label{ :for=>'subject', :class=>'col-sm-2 control-label' } Topic
-      %div{ :class=>'col-sm-10' } 
-        %input{ :type => 'text', :name => 'subject', :value => subject, :size => 40, :class => 'form-control' }
-      
-    %div{ :class => 'form-group'}
-      %div{ :class => 'col-sm-offset-2 col-sm-10'}
-        %button{ :type => 'submit', :class => 'btn btn-success' } Save
-
-  
 
