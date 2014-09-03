@@ -18,12 +18,10 @@
           %div.pull-right.pad_above
             - unless session[:token].nil? or session[:token].expired?
               = INSTITUTIONS[session[:registry_id].to_i]['name']
-              %img{ :src => url("/images/#{INSTITUTIONS[session[:registry_id].to_i]['symbol']}.jpg"), :class => "logo_small" } 
+              %img.logo_small{ :src => url("/images/#{INSTITUTIONS[session[:registry_id].to_i]['symbol']}.jpg") } 
               %br
               %div.pull-right.pad_right
-                %a{ :href => "/record/new", :title => "Start creating a new record" } Create a New Record
-                |
-                %a{ :href => "/logoff", :title => "End your session" } Logoff
+                %a#logoff{ :href => "/logoff", :title => "End your session" } Logoff
 
       %div.row
         %div.col-xs-12.col-sm-12.col-md-12
