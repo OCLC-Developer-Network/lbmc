@@ -10,11 +10,13 @@
     
   %div{ :class => 'form-group'}
     %label{ :for=>'title' } What is the title?
-    %input{ :type => 'text', :id => 'title', :name => 'title', :value => @data['title'], :class => 'form-control', :placeholder => "This is a required field, the others are optional." }
+    %span.hint This is a required field, the others are optional.
+    %input{ :type => 'text', :id => 'title', :name => 'title', :value => @data['title'], :class => 'form-control' }
 
   %div{ :class => 'form-group'}
     %label{ :for=>'author'} Who is the author?
-    %input{ :type => 'text', :name => 'author', :value => @data['author'], :class => 'form-control', :placeholder => "If the author is a person, enter the last name first." }
+    %span.hint If the author is a person, enter the last name first.
+    %input{ :type => 'text', :name => 'author', :value => @data['author'], :class => 'form-control' }
     %label{ :class => 'radio-inline'}
       %input{ :type => 'radio', :name => 'author_field', :id => 'author_is_person', :value => '100', :checked => @data['author_is_person'] ? true : nil } The author is a person
     %label{ :class => 'radio-inline'}
@@ -22,19 +24,23 @@
       
   %div{ :class => 'form-group'}
     %label{ :for=>'publisher' } Who is the publisher?
-    %input{ :type => 'text', :name => 'publisher', :value => @data['publisher'], :class => 'form-control', :placeholder => "For example HarperCollins, Acme University Press, etc."  }
+    %span.hint For example HarperCollins, Acme University Press, etc.
+    %input{ :type => 'text', :name => 'publisher', :value => @data['publisher'], :class => 'form-control' }
       
   %div{ :class => 'form-group'}
     %label{ :for=>'publicationdate' } When was it published?
-    %input{ :type => 'text', :name => 'publicationdate', :value => @data['publicationdate'], :maxlength => "4", :class => 'form-control', :placeholder => "Just the year will do." }
+    %span.hint Just the year will do.
+    %input{ :type => 'text', :name => 'publicationdate', :value => @data['publicationdate'], :maxlength => "4", :class => 'form-control' }
 
   %div{ :class => 'form-group'}
     %label{ :for=>'extent' } How many pages or volumes?
-    %input{ :type => 'text', :name => 'extent', :value => @data['extent'], :class => 'form-control', :placeholder => "For example 245 p., or 3 v., or 11 folded leaves"  }
+    %span.hint For example 245 p., or 3 v., or 11 folded leaves
+    %input{ :type => 'text', :name => 'extent', :value => @data['extent'], :class => 'form-control'  }
       
   %div{ :class => 'form-group'}
     %label{ :for=>'subject'} What is the book about?  
-    %input{ :type => 'text', :name => 'subject', :value => @data['subject'], :class => 'form-control', :placeholder => "Use general topical keywords, for example Nuclear Physics or Agriculture" }
+    %span.hint Use general topical keywords, for example Nuclear Physics or Agriculture
+    %input{ :type => 'text', :name => 'subject', :value => @data['subject'], :class => 'form-control' }
       
   %div{ :class => 'form-group'}
     %button{ :type => 'submit', :class => 'btn btn-success' } 
