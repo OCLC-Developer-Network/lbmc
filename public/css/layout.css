@@ -1,6 +1,5 @@
 .logo_small {
   height: 50px;
-  border: 1px solid #999;
 }
 .logo_medium {
   height: 80px;
@@ -9,6 +8,15 @@
   width: 88;
   height: 31;
 }
+.pad_above {
+	padding-top: 1em;
+}
 .pad_below {
 	padding-bottom: 1em;
+}
+.pad_right {
+	padding-right: 1em;
+}
+.hint {
+	color: #999;
 }
