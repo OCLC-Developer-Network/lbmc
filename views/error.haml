@@ -1,11 +1,11 @@
-%div{ :class=>"alert alert-warning"}
-  %span{ :class=>"glyphicon glyphicon-exclamation-sign"}
+%div.alert.alert-warning
+  %span.glyphicon.glyphicon-exclamation-sign
   LBMC application error  
 
-%div{ :style=>"padding-bottom: 1em;"}
+%div.pad_below
   The error has been logged in the LBMC system and will be reported to the LBMC development team.
 
-%div{ :style=>"padding-bottom: 1em;"}
+%div.pad_below
   - if session[:token].nil?
     It doesn't look like you are logged in.  You can log in from the 
     %a{ :href => url("/") } LBMC home page
@@ -15,5 +15,5 @@
     or start creating a
     %a{ :href => url("/record/new") } new record.
 
-%div{ :style=>"padding-bottom: 1em;"}
+%div.pad_below
   If you continue to see this error, please contact us for help.
