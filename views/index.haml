@@ -1,18 +1,18 @@
+%div.row 
+  %div.col-md-12
+    %div.well
+      %div.text
+        %h4 Welcome!
+        The LBMC (Low-Barrier Metadata Creation) system is a simple interface for creating catalog records in WorldCat.
+        Selected pilot libraries are helping OCLC test this system.
+          
 - if session[:token].nil? or session[:token].expired?
-
-  %div.row 
-    %div.col-md-12
-      %div.well
-        %div.text
-          The LBMC (Low-Barrier Metadata Creation) Pilot study will test a system for quickly creating simple cataloging records in WorldCat.
-        %div.text
-          Pilot institutions can get started by selecting their institution link below.
 
   %div#get-started.list-group
     - INSTITUTIONS.each do |registry_id, info|
-      %a.list-group-item{ :id => "login-to-#{registry_id}", :href => url('/authenticate?registry_id='+registry_id.to_s), :style => 'font-size: 14pt; font-weight: bold;' }
+      %a.list-group-item.pilot_list{ :id => "login-to-#{registry_id}", :href => url('/authenticate?registry_id='+registry_id.to_s) }
         %img.logo_medium{ :src => url("/images/#{info['symbol']}.jpg") }
-        %span{ :style => 'padding-left: 10px' }= info['name']
+        %span.pad_left_wide= info['name']
 
 - else
   View a 
