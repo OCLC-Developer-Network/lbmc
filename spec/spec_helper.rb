@@ -12,9 +12,9 @@ require 'webmock/rspec'
 
 require File.join(File.dirname(__FILE__), '..', 'app.rb')
 require File.join(File.dirname(__FILE__), '..', 'helpers/application_helper.rb')
+require File.join(File.dirname(__FILE__), '..', 'lib/constants.rb')
 require File.join(File.dirname(__FILE__), '..', 'model/bib.rb')
 require File.join(File.dirname(__FILE__), '..', 'model/error.rb')
-require File.join(File.dirname(__FILE__), '..', 'lib/constants.rb')
 
 ENV['RACK_ENV'] = 'test'                    # force the environment to 'test'
 
