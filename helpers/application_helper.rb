@@ -141,10 +141,6 @@ helpers do
     end
   end
   
-  def get_data_field
-    data_field = MARC::DataField.new(data_field_number, ' ', ' ', MARC::Subfield.new(subfield_code, new_value))
-  end
-  
   # Escapes HTML
   def h(text)
     Rack::Utils.escape_html(text)
