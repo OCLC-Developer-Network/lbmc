@@ -1,6 +1,6 @@
 -# record_form.haml
 
-%form{ :action => url(action), :method => 'POST', :role => 'form'}
+%form#record-form{ :action => url(action), :method => 'POST', :role => 'form'}
 
   %div
     %input{ :type => 'hidden', :name => 'oclc_symbol', :value => INSTITUTIONS[session[:registry_id].to_i]['symbol'] }

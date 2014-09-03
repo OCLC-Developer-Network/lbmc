@@ -12,7 +12,7 @@ describe "the record page" do
   
   context "when displaying a record" do
     before(:all) do
-      get '/record/883876185', params={}, rack_env={ 'rack.session' => {:token => @access_token} }
+      get '/record/883876185', params={}, rack_env={ 'rack.session' => {:token => @access_token, :registry_id => 128807} }
       @doc = Nokogiri::HTML(last_response.body)
       @form_element = @doc.xpath("//form[@id='record-form']").first
     end
@@ -29,11 +29,6 @@ describe "the record page" do
     it "should have a title input field with the right value" do
       input = @form_element.xpath(".//input[@name='title']").first
       expect(input.attr('value')).to eq('Testing metadata APIs')
-    end
-
-    it "should have a sub-title input field with the right value" do
-      input = @form_element.xpath(".//input[@name='subtitle']").first
-      expect(input.attr('value')).to eq('A comparative analysis')
     end
 
     it "should have an author input field with the right value" do
@@ -116,7 +111,7 @@ describe "the record page" do
             :extent => '190 p.',
             :subject => 'Application Programming Interfaces (APIs)'
           }
-      post( '/create', params=p, rack_env={ 'rack.session' => {:token => @access_token} } )
+      post( '/create', params=p, rack_env={ 'rack.session' => {:token => @access_token, :registry_id => 128807} } )
     end
     
     it "should respond with a redirect to the record display page" do

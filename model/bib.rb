@@ -25,7 +25,7 @@ class Bib
   end
   
   def create
-    url = "#{base_url}/#{@id}?classificationScheme=LibraryOfCongress"
+    url = "#{base_url}#{@id}?classificationScheme=LibraryOfCongress"
     auth = "Bearer #{access_token.value}"
     payload = "<?xml version=\"1.0\"?>\n" + @marc_record.to_xml.to_s
     
