@@ -1,0 +1,16 @@
+%div.alert.alert-warning
+  %span.glyphicon.glyphicon-exclamation-sign
+  Page not found  
+
+%div.pad_below
+  Sorry, this page isn't available.
+
+%div.pad_below
+  - if session[:token].nil?
+    It doesn't look like you are logged in.  You can log in from the 
+    %a{ :href => url("/") } LBMC home page
+  - else
+    You can try getting started with a
+    %a{ :href => url("/record/883876185") } test record
+    or start creating a
+    %a{ :href => url("/record/new") } new record.
