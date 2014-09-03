@@ -1,6 +1,14 @@
 .logo_small {
   height: 50px;
+  border: 1px solid #999;
 }
 .logo_medium {
   height: 80px;
+}
+.powered_by_worldcat {
+  width: 88;
+  height: 31;
+}
+.pad_below {
+	padding-bottom: 1em;
 }
