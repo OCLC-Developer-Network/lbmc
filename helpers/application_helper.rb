@@ -94,6 +94,9 @@ helpers do
     end
     
     # Author
+    # First use update_field_value to delete an erroneously cataloged 
+    # 100 or 110 by sending the method a blank value.
+    # Then use the same method to add or update the 100 or 110 $a value.
     if params[:author_field] == "100"
       update_field_value(marc_record, '110', 'a', '2', ' ', '')
       update_field_value(marc_record, '100', 'a', '1', ' ', params[:author])
