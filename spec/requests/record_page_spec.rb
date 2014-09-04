@@ -132,6 +132,17 @@ describe "the record page" do
       expect(@form_element).to be_nil
     end
     
+    it "should display an alert warning message" do
+      xpath = "//div[@class='alert alert-warning']"
+      expect(@doc.xpath(xpath)).not_to be_empty
+    end
+    
+    it "should display the MARC record" do
+      marc_str = get_file_as_string("ocm09999999.marc")
+      marc_pre_element = @doc.xpath("//pre[@id='marc-view']").first
+      expect(marc_pre_element.text).to eq(marc_str)
+    end
+    
   end
   
 end
