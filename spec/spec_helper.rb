@@ -72,3 +72,12 @@ end
 def body_content(filename)
   File.new("#{File.expand_path(File.dirname(__FILE__))}/mocks/#{filename}")
 end
+
+def get_file_as_string(filename)
+  data = ''
+  f = File.open("#{File.expand_path(File.dirname(__FILE__))}/mocks/#{filename}", "r") 
+  f.each_line do |line|
+    data += line
+  end
+  return data
+end
