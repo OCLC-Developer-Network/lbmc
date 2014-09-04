@@ -1,0 +1,29 @@
+LEADER 00000cam a2200000Ia 4500
+001 ocm09999999
+003 OCoLC
+005 20140531143955.1
+008 831011s1981    caub         z000 0 eng d
+040    $a CRD $b eng $c CRD $d OCLCQ $d OCLCO $d OCLCA $d OCLCF 
+035    $a (OCoLC)9999999 
+043    $a n-us-ca 
+050  4 $a HF5679 $b .L6 
+049    $a MAIN 
+245 00 $a Patronage impact of possible future line extensions : $b Los Angeles metro rail project. 
+246 3  $a Los Angeles metro rail project 
+260    $a [Los Angeles] : $b Southern California Rapid Transit District, $c [1981] 
+300    $a vii, 161 leaves : $b maps ; $c 28 cm 
+336    $a text $b txt $2 rdacontent 
+337    $a unmediated $b n $2 rdamedia 
+338    $a volume $b nc $2 rdacarrier 
+500    $a Cover title. 
+500    $a "Prepared under contract to Southern California Rapid Transit District, Metro Rail Department, by Barton-Aschman Associates, Inc. in association with Jefferson Associates, Inc."--Page [i]. 
+500    $a "Final report"--Page [i]. 
+500    $a "June, 1981"--Page [i]. 
+650  0 $a Local transit $x Ridership $z California $z Los Angeles. 
+650  0 $a Subways $z California $z Los Angeles. 
+650  7 $a Local transit $x Ridership. $2 fast $0 (OCoLC)fst01001631 
+650  7 $a Subways. $2 fast $0 (OCoLC)fst01136975 
+651  7 $a California $z Los Angeles. $2 fast $0 (OCoLC)fst01204540 
+710 2  $a Southern California Rapid Transit District. $b Metro Rail Department. 
+710 2  $a Barton-Aschman Associates. 
+710 2  $a Jefferson Associates.
