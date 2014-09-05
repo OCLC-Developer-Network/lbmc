@@ -58,7 +58,7 @@ end
 get '/logoff' do
   session[:token] = nil
   session[:path] = "/"
-  haml :index, :layout => :template
+  redirect session[:path]
 end
 
 get '/catch_auth_code' do
