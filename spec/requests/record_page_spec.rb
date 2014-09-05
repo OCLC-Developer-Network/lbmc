@@ -10,7 +10,7 @@ describe "the record page" do
   context "when displaying a record" do
     before(:all) do
       stub_request(:get, "http://cataloging-worldcatbib-qa.ent.oclc.org/bib/data/883876185?classificationScheme=LibraryOfCongress").
-        to_return(:status => 200, :body => body_content("ocn883876185.atomxml"))
+        to_return(:status => 200, :body => mock_file_contents("ocn883876185.atomxml"))
       get '/record/883876185', params={}, rack_env={ 'rack.session' => {:token => @access_token, :registry_id => 128807} }
       @doc = Nokogiri::HTML(last_response.body)
       @form_element = @doc.xpath("//form[@id='record-form']").first
@@ -73,9 +73,9 @@ describe "the record page" do
   context "when submitting an update to change the author name" do
     before(:all) do
       stub_request(:put, "http://cataloging-worldcatbib-qa.ent.oclc.org/bib/data?classificationScheme=LibraryOfCongress").
-          to_return(:status => 201, :body => body_content("ocn883876185-updated.atomxml"))
+          to_return(:status => 201, :body => mock_file_contents("ocn883876185-updated.atomxml"))
       stub_request(:get, "http://cataloging-worldcatbib-qa.ent.oclc.org/bib/data/883876185?classificationScheme=LibraryOfCongress").
-          to_return(:status => 200, :body => body_content("ocn883876185-updated.atomxml"))
+          to_return(:status => 200, :body => mock_file_contents("ocn883876185-updated.atomxml"))
 
       p = { 
             :oclc_number => '883876185',
@@ -98,9 +98,9 @@ describe "the record page" do
   context "when submitting a new record" do
     before(:all) do
       stub_request(:post, "http://cataloging-worldcatbib-qa.ent.oclc.org/bib/data?classificationScheme=LibraryOfCongress").
-          to_return(:status => 201, :body => body_content("ocn883876185.atomxml"))
+          to_return(:status => 201, :body => mock_file_contents("ocn883876185.atomxml"))
       stub_request(:get, "http://cataloging-worldcatbib-qa.ent.oclc.org/bib/data/883876185?classificationScheme=LibraryOfCongress").
-          to_return(:status => 200, :body => body_content("ocn883876185.atomxml"))
+          to_return(:status => 200, :body => mock_file_contents("ocn883876185.atomxml"))
 
       p = { 
             :title => 'Testing metadata APIs',
@@ -122,7 +122,7 @@ describe "the record page" do
   context "when displaying a record not created in the LBMC application" do
     before(:all) do
       stub_request(:get, "http://cataloging-worldcatbib-qa.ent.oclc.org/bib/data/9999999?classificationScheme=LibraryOfCongress").
-        to_return(:status => 200, :body => body_content("ocm09999999.atomxml"))
+        to_return(:status => 200, :body => mock_file_contents("ocm09999999.atomxml"))
       get '/record/9999999', params={}, rack_env={ 'rack.session' => {:token => @access_token, :registry_id => 128807} }
       @doc = Nokogiri::HTML(last_response.body)
       @form_element = @doc.xpath("//form[@id='record-form']").first
@@ -138,7 +138,7 @@ describe "the record page" do
     end
     
     it "should display the MARC record" do
-      marc_str = get_file_as_string("ocm09999999.marc")
+      marc_str = mock_file_contents("ocm09999999.marc")
       marc_pre_element = @doc.xpath("//pre[@id='marc-view']").first
       expect(marc_pre_element.text).to eq(marc_str)
     end

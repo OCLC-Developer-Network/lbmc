@@ -10,7 +10,7 @@ describe ApplicationHelper do
   
   context "when updating a MARC record with no publication data" do
     before(:each) do
-      raw_marc = StringIO.new( body_content("no_publication_data.marcxml") )
+      raw_marc = StringIO.new( mock_file_contents("no_publication_data.marcxml") )
       @record = MARC::XMLReader.new(raw_marc).first
     end
     
@@ -34,7 +34,7 @@ describe ApplicationHelper do
   
   context "when updating a MARC record with publisher name only" do
     before(:each) do
-      raw_marc = StringIO.new( body_content("publisher_name_only.marcxml") )
+      raw_marc = StringIO.new( mock_file_contents("publisher_name_only.marcxml") )
       @record = MARC::XMLReader.new(raw_marc).first
     end
     
@@ -59,7 +59,7 @@ describe ApplicationHelper do
   
   context "when updating a MARC record with publication date only" do
     before(:each) do
-      raw_marc = StringIO.new( body_content("publication_date_only.marcxml") )
+      raw_marc = StringIO.new( mock_file_contents("publication_date_only.marcxml") )
       @record = MARC::XMLReader.new(raw_marc).first
     end
     
@@ -84,7 +84,7 @@ describe ApplicationHelper do
   
   context "when updating a MARC record with all publication data" do
     before(:each) do
-      raw_marc = StringIO.new( body_content("all_publication_data.marcxml") )
+      raw_marc = StringIO.new( mock_file_contents("all_publication_data.marcxml") )
       @record = MARC::XMLReader.new(raw_marc).first
     end
     
