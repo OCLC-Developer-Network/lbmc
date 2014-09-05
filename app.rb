@@ -2,6 +2,10 @@ set :public_folder, File.dirname(__FILE__) + '/public'
 set :views, File.dirname(__FILE__) + "/views"
 set :haml, :format => :html5
 
+helpers do
+  include ApplicationHelper
+end
+
 before do
   # The home page is unauthenticated, it is where the user chooses an institution to login against
   # The user's session does not yet have an access token in his/her session when the app catches an

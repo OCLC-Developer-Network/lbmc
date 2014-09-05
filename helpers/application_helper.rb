@@ -1,5 +1,5 @@
 # encoding: utf-8
-helpers do
+module ApplicationHelper
   
   def marc_record_from_params(params)
     record = create_book_record
@@ -108,6 +108,9 @@ helpers do
     # Publisher
     update_field_value(marc_record, '260', 'b', ' ', ' ', params[:publisher])
     
+    # Publication date
+    update_field_value(marc_record, '260', 'c', ' ', ' ', params[:publication_date])
+    
     # Extent
     update_field_value(marc_record, '300', 'a', ' ', ' ', params[:extent])
 
@@ -118,29 +121,54 @@ helpers do
   end
   
   def update_field_value(marc_record, data_field_number, subfield_code, i1, i2, new_value)
-
     data_field = marc_record[data_field_number]
     
-    if new_value.nil? or new_value.strip == ''
+    # Does the data_field currently exist?
+    if data_field.nil?
       
-      # Delete the value
-      marc_record.fields.delete data_field unless data_field.nil?
-      
-    else
-      # Add the new value
-      if data_field.nil?
-      
-        # Create the data field
-        data_field = MARC::DataField.new(data_field_number, i1, i2, MARC::Subfield.new(subfield_code, new_value))
-        marc_record << data_field
-        
-      else
-        
-        # Update the data field
-        subfield = data_field.find_all {|subfield| subfield.code == subfield_code}.first
-        subfield.value = new_value
-        
+      # if new_value is blank, there is nothing to delete
+      unless new_value.nil? or new_value.strip == ''
+
+        # otherwise, create the data field, add the subfield, add it to the record
+        marc_record << MARC::DataField.new(data_field_number, i1, i2, MARC::Subfield.new(subfield_code, new_value))
+
       end
+    else # data_field is not nil...
+      
+      # if new_value is blank, 
+      if new_value.nil? or new_value.strip == ''
+        
+        if field_is_deletable?(data_field, subfield_code) 
+          # delete the data_field from the record if the current subfield is the only one in the field
+          marc_record.fields.delete data_field 
+        else 
+          # Otherwise, delete just the subfield in question.
+          subfield = data_field.find_all {|subfield| subfield.code == subfield_code}.first
+          data_field.subfields.delete( subfield ) unless subfield.nil?
+        end
+        
+      else # new_value is not blank
+
+        # Update or the subfield data
+        subfield = data_field.find_all {|subfield| subfield.code == subfield_code}.first
+        if subfield
+          subfield.value = new_value
+        else
+          data_field.subfields << MARC::Subfield.new(subfield_code, new_value)
+        end
+
+      end
+    end
+  end
+  
+  # Will respond true if the data field is not null and the given subfield code 
+  # is the only subfield in the data field
+  def field_is_deletable?(data_field, subfield_code)
+    # Assume the given subfield_code matches the only subfield in the record.
+    # If any others are encounterd, return false.
+    data_field.subfields.reduce(true) do |deletable, subfield| 
+      deletable = false if subfield.code != subfield_code
+      deletable
     end
   end
   
