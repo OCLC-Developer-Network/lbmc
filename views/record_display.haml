@@ -1,0 +1,53 @@
+-# record_display.haml
+
+%table.table{ :id => "record_display" }
+
+  %tr
+    %td.field_label
+      %div.pull-right
+        OCLC number
+    %td{ :id => 'oclcnum' }
+      = data['id']
+      
+  %tr
+    %td.field_label
+      %div.pull-right
+        Title
+    %td{ :id => 'title' }
+      = data['title']
+      
+  %tr
+    %td.field_label
+      %div.pull-right
+        Author
+    %td{ :id => 'author' }
+      = data['author']
+      
+  %tr
+    %td.field_label
+      %div.pull-right
+        Publisher
+    %td{ :id => 'publisher' }
+      = data['publisher']
+      
+  %tr
+    %td.field_label
+      %div.pull-right
+        Publication Date
+    %td{ :id => 'publication_date' }
+      = data['publication_date']
+      
+  %tr
+    %td.field_label
+      %div.pull-right
+        Extent
+    %td{ :id => 'extent' }
+      = data['extent']
+      
+  %tr
+    %td.field_label
+      %div.pull-right
+        Topic
+    %td{ :id => 'subject' }
+      = data['subject']
+      
