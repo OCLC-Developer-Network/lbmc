@@ -6,39 +6,33 @@ module ApplicationHelper
     record << book_fixed_length_data
 
     # OCLC Symbol
-    record << MARC::DataField.new('040', ' ', ' ', MARC::Subfield.new('a', params[:oclc_symbol]), MARC::Subfield.new('c', params[:oclc_symbol]))
+    update_field_value(record, '040', 'a', ' ', ' ', params[:oclc_symbol])
+    update_field_value(record, '040', 'c', ' ', ' ', params[:oclc_symbol])
     
     # Author
     if params[:author_field] == "100"
-      record << MARC::DataField.new('100', '1', ' ', MARC::Subfield.new('a', params[:author]))
+      update_field_value(record, '100', 'a', '1', ' ', params[:author])
     else
-      record << MARC::DataField.new('110', '2', ' ', MARC::Subfield.new('a', params[:author]))
+      update_field_value(record, '110', 'a', '2', ' ', params[:author])
     end
     
     # Title
-    record << title_statement(params)
+    update_field_value(record, '245', 'a', ' ', ' ', params[:title])
+    
+    # Publication data
+    update_field_value(record, '260', 'b', ' ', ' ', params[:publisher])
+    update_field_value(record, '260', 'c', ' ', ' ', params[:publication_date])
     
     # Extent
-    if params[:extent] and params[:extent].strip != ''
-      record << MARC::DataField.new('300', ' ', ' ', MARC::Subfield.new('a', params[:extent]))
-    end
-    
+    update_field_value(record, '300', 'a', ' ', ' ', params[:extent])
+
     # Note
-    record << MARC::DataField.new('500', ' ', ' ', MARC::Subfield.new('a', LBMC::SOURCE_NOTE))
+    update_field_value(record, '500', 'a', ' ', ' ', LBMC::SOURCE_NOTE)
 
     # Topic
-    if params[:subject] and params[:subject].strip != ''
-      record << MARC::DataField.new('650', '1', '4', MARC::Subfield.new('a', params[:subject]))
-    end
+    update_field_value(record, '650', 'a', ' ', ' ', params[:subject])
     
     record
-  end
-  
-  def title_statement(params)
-    title_stmt = MARC::DataField.new('245', '0', '0')
-    title_stmt.subfields << MARC::Subfield.new('a', params[:title])
-    title_stmt.subfields << MARC::Subfield.new('b', params[:subtitle]) if params[:subtitle] and params[:subtitle].strip != ''
-    title_stmt
   end
   
   def create_book_record
