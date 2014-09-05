@@ -2,9 +2,6 @@ require 'spec_helper'
 
 describe "the record page" do
   before(:all) do
-    stub_request(:get, "http://cataloging-worldcatbib-qa.ent.oclc.org/bib/data/883876185?classificationScheme=LibraryOfCongress").
-        to_return(:status => 200, :body => body_content("ocn883876185.atomxml"))
-    
     @access_token = OCLC::Auth::AccessToken.new('grant_type', ['FauxService'], 128807, 128807)
     @access_token.value = 'tk_faux_token'
     @access_token.expires_at = DateTime.parse("9999-01-01 00:00:00Z")
@@ -12,6 +9,8 @@ describe "the record page" do
   
   context "when displaying a record" do
     before(:all) do
+      stub_request(:get, "http://cataloging-worldcatbib-qa.ent.oclc.org/bib/data/883876185?classificationScheme=LibraryOfCongress").
+        to_return(:status => 200, :body => body_content("ocn883876185.atomxml"))
       get '/record/883876185', params={}, rack_env={ 'rack.session' => {:token => @access_token, :registry_id => 128807} }
       @doc = Nokogiri::HTML(last_response.body)
       @form_element = @doc.xpath("//form[@id='record-form']").first
@@ -119,4 +118,31 @@ describe "the record page" do
       expect(last_response.header['Location']).to eq("http://example.org/record/883876185")
     end
   end
+  
+  context "when displaying a record not created in the LBMC application" do
+    before(:all) do
+      stub_request(:get, "http://cataloging-worldcatbib-qa.ent.oclc.org/bib/data/9999999?classificationScheme=LibraryOfCongress").
+        to_return(:status => 200, :body => body_content("ocm09999999.atomxml"))
+      get '/record/9999999', params={}, rack_env={ 'rack.session' => {:token => @access_token, :registry_id => 128807} }
+      @doc = Nokogiri::HTML(last_response.body)
+      @form_element = @doc.xpath("//form[@id='record-form']").first
+    end
+
+    it "should not display a form" do
+      expect(@form_element).to be_nil
+    end
+    
+    it "should display an alert warning message" do
+      xpath = "//div[@class='alert alert-warning']"
+      expect(@doc.xpath(xpath)).not_to be_empty
+    end
+    
+    it "should display the MARC record" do
+      marc_str = get_file_as_string("ocm09999999.marc")
+      marc_pre_element = @doc.xpath("//pre[@id='marc-view']").first
+      expect(marc_pre_element.text).to eq(marc_str)
+    end
+    
+  end
+  
 end

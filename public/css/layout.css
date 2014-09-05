@@ -4,3 +4,29 @@
 .logo_medium {
   height: 80px;
 }
+.powered_by_worldcat {
+  width: 88;
+  height: 31;
+}
+.pad_above {
+	padding-top: 1em;
+}
+.pad_below {
+	padding-bottom: 1em;
+}
+.pad_left {
+	padding-left: 1em;
+}
+.pad_left_wide {
+	padding-left: 10px;
+}
+.pad_right {
+	padding-right: 1em;
+}
+.hint {
+	color: #999;
+}
+.pilot_list {
+	font-size: 14pt; 
+	font-weight: bold;
+}

@@ -1,9 +1,9 @@
 %div.alert.alert-warning
   %span.glyphicon.glyphicon-exclamation-sign
-  LBMC application error  
+  Page not found  
 
 %div.pad_below
-  The error has been logged in the LBMC system and will be reported to the LBMC development team.
+  Sorry, this page isn't available.
 
 %div.pad_below
   - if session[:token].nil?
@@ -14,6 +14,3 @@
     %a{ :href => url("/record/883876185") } test record
     or start creating a
     %a{ :href => url("/record/new") } new record.
-
-%div.pad_below
-  If you continue to see this error, please contact us for help.

@@ -78,6 +78,14 @@ get '/authenticate' do
   redirect session[:path]
 end
 
+not_found do
+  haml :not_found, :layout => :template
+end
+
+error do
+  haml :error, :layout => :template
+end
+
 def authenticate
   session[:registry_id] = params[:registry_id] if params[:registry_id] 
   if session[:token].nil? or session[:token].expired?
