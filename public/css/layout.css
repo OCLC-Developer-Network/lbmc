@@ -30,3 +30,6 @@
 	font-size: 14pt; 
 	font-weight: bold;
 }
+.field_label {
+	color: #666;
+}
