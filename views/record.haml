@@ -26,9 +26,9 @@
 
   %div{ :class=>"alert alert-warning"}
     %span{ :class=>"glyphicon glyphicon-exclamation-sign"}
-    Sorry, but the record for OCLC number 
-    %a{ :href => @bib.link, :target => 'blank', :title => "View me in WorldCat.org" }= @bib.id
-    is not available for editing in this application.
+    Sorry, but this record is not available for editing in this application.
+    
+  = partial :record_display, locals: {data: @data }
 
 %h3
   %span{ :class=>"glyphicon glyphicon-list"}
