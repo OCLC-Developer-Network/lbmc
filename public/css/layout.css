@@ -24,20 +24,31 @@
 	padding-right: 1em;
 }
 .hint {
-	color: #999;
+	color: #666;
 }
 .pilot_list {
 	font-size: 14pt; 
 	font-weight: bold;
 }
+.header_institution_name {
+	font-size: 12pt;
+}
 .field_label {
 	color: #666;
-}
-.list_heading {
-	background-color: #EFEFEF;
+	width: 20%;
 }
 #marc-xml {
 	font-family: Courier;
 	font-size: 80%;
 	padding: 8px;
+}
+#record_display {
+	background-color: #FFF;
+}
+pre {
+	background-color: #FFF;
+}
+.list_heading {
+	background-color: #999;
+	color: #FFF;
 }
