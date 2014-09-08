@@ -16,15 +16,21 @@
         %div.row
           %div.col-md-12
             %div.pull-right.pad_above
-              %a#logoff{ :href => "/logoff", :title => "End your session" } Logoff
+              %a#home.btn.btn-sm.btn-primary{ :href => "/", :title => "Visit the LBMC Pilot home page" } 
+                %span.glyphicon.glyphicon-home
+                LBMC Home
+              %a#logoff.btn.btn-sm.btn-primary{ :href => "/logoff", :title => "End your session" } 
+                %span.glyphicon.glyphicon-off
+                Logoff
       %div.row
         %div.col-xs-12.col-sm-4.col-md-4
           %h1
-            %a{ :href => "/", :title => "Visit the home page" } LBMC Pilot
+            %a{ :href => "/", :title => "Visit the LBMC Pilot home page" } LBMC Pilot
         %div.col-xs-12.col-sm-8.col-md-8
           %div.pull-right.pad_above
             - unless session[:token].nil? or session[:token].expired?
-              = INSTITUTIONS[session[:registry_id].to_i]['name']
+              %span.header_institution_name
+                = INSTITUTIONS[session[:registry_id].to_i]['name']
               %img.logo_small{ :src => url("/images/#{INSTITUTIONS[session[:registry_id].to_i]['symbol']}.jpg") } 
 
 
