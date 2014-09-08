@@ -87,7 +87,7 @@ describe "the home page" do
     end
     
     it "should have hints for new users" do
-      xpath = "//h4[text()='Hints for new users']"
+      xpath = "//span[text()='Hints for new users']"
       expect(@doc.xpath(xpath)).not_to be_empty
     end
     
