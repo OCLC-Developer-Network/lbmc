@@ -3,7 +3,7 @@ module ApplicationHelper
   
   def marc_record_from_params(params)
     record = create_book_record
-    record << book_fixed_length_data
+    record << book_fixed_length_data(params)
 
     # OCLC Symbol
     update_field_value(record, '040', 'a', ' ', ' ', params[:oclc_symbol])
@@ -46,7 +46,7 @@ module ApplicationHelper
     record
   end
   
-  def book_fixed_length_data
+  def book_fixed_length_data(params)
     fde = MARC::ControlField.new('008')
     fde.value = ''.rjust(40, ' ')
     now = Time.now
@@ -55,7 +55,7 @@ module ApplicationHelper
     day = now.day.to_s.rjust(2, '0')
     fde.value[0,6] = "#{year}#{month}#{day}"
     fde.value[6,1] = 's'
-    fde.value[7,4] = now.year.to_s
+    fde.value[7,4] = publication_date_is_positive_number?(params[:publication_date]) ? params[:publication_date].rjust(4,'0') : now.year.to_s
     fde.value[11,4] = '    '
     fde.value[15,3] = 'xx '
     fde.value[18,1] = ' '
@@ -73,6 +73,10 @@ module ApplicationHelper
     fde.value[38,1] = ' '
     fde.value[39,1] = 'd'
     fde
+  end
+  
+  def publication_date_is_positive_number?(publication_date)
+    /^-?[1-9]\d*$/ =~ publication_date
   end
   
   def update_marc_record_from_params(marc_record, params)
@@ -104,6 +108,9 @@ module ApplicationHelper
     
     # Publication date
     update_field_value(marc_record, '260', 'c', ' ', ' ', params[:publication_date])
+    if publication_date_is_positive_number?(params[:publication_date]) 
+      marc_record['008'].value[7,4] = params[:publication_date].rjust(4,'0')
+    end
     
     # Extent
     update_field_value(marc_record, '300', 'a', ' ', ' ', params[:extent])
