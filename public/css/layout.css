@@ -2,7 +2,7 @@
   height: 50px;
 }
 .logo_medium {
-  height: 80px;
+  height: 60px;
 }
 .powered_by_worldcat {
   width: 88;
@@ -32,4 +32,12 @@
 }
 .field_label {
 	color: #666;
+}
+.list_heading {
+	background-color: #EFEFEF;
+}
+#marc-xml {
+	font-family: Courier;
+	font-size: 80%;
+	padding: 8px;
 }
