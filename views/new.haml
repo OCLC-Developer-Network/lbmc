@@ -12,12 +12,14 @@
 - @data['subject'] = params[:subject].nil? ? '' : params[:subject]
 - @button_label = "Create this Record"
 
-%h3
-  %span{ :class=>"glyphicon glyphicon-pencil"}
-  Create a New Record 
+%div.well
 
-%div{ :style => "margin-top: 2em;" }
+  %h3
+    %span{ :class=>"glyphicon glyphicon-pencil"}
+    Create a New Record 
 
-  = partial :record_form, locals: {action: "/create", data: @data }
+  %div{ :style => "margin-top: 2em;" }
+
+    = partial :record_form, locals: {action: "/create", data: @data }
 
 
