@@ -171,7 +171,7 @@ describe "the record page" do
     
   end
   
-  context "when displaying a record created in the LBMC application by another application" do
+  context "when displaying a record created in the LBMC application by another institution" do
     before(:all) do
       stub_request(:get, "http://cataloging-worldcatbib-qa.ent.oclc.org/bib/data/883880805?classificationScheme=LibraryOfCongress").
         to_return(:status => 200, :body => mock_file_contents("ocn883880805.atomxml"))
