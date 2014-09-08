@@ -10,6 +10,11 @@
     %link{ :href=>"/css/layout.css", :rel=>"stylesheet" }
   %body
     %div.container
+      - unless session[:token].nil? or session[:token].expired?
+        %div.row
+          %div.col-md-12
+            %div.pull-right.pad_above
+              %a#logoff{ :href => "/logoff", :title => "End your session" } Logoff
       %div.row
         %div.col-xs-12.col-sm-4.col-md-4
           %h1
@@ -19,9 +24,7 @@
             - unless session[:token].nil? or session[:token].expired?
               = INSTITUTIONS[session[:registry_id].to_i]['name']
               %img.logo_small{ :src => url("/images/#{INSTITUTIONS[session[:registry_id].to_i]['symbol']}.jpg") } 
-              %br
-              %div.pull-right.pad_right
-                %a#logoff{ :href => "/logoff", :title => "End your session" } Logoff
+
 
       %div.row
         %div.col-xs-12.col-sm-12.col-md-12
