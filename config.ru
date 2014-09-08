@@ -17,7 +17,7 @@ require './app'
 
 enable :sessions
 set :session_secret, '406c8f30ee92'
-set :environment, :development
+set :environment, :production
 set :run, true
 set :raise_errors, true
 
@@ -29,6 +29,7 @@ WSKEY = OCLC::Auth::WSKey.new(key, secret, :services => ['WorldCatMetadataAPI'],
 
 config = YAML::load(File.read("#{File.expand_path(File.dirname(__FILE__))}/config/lbmc.yml"))
 BASE_URL = config[settings.environment.to_s]['base_url']
+WSKEY_URL = config[settings.environment.to_s]['wskey_url']
 INSTITUTIONS = config[settings.environment.to_s]['institutions']
 
 run Sinatra::Application

@@ -52,8 +52,7 @@ module OCLC
       
       # The default URL for the OCLC OAuth server.
       def self.production_url
-        # 'https://authn.sd00.worldcat.org/oauth2/authorizeCode'
-        'https://wskeydev-ext.dev.oclc.org/oauth2/authorizeCode'
+        "#{WSKEY_URL}/authorizeCode"
       end
       
       # The login URL to redirect a user's web browser to to request an authorization code.

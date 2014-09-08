@@ -46,8 +46,7 @@ module OCLC
       
       # The default URL for the OCLC OAuth server.
       def self.production_url
-        # 'https://authn.sd00.worldcat.org/oauth2/accessToken'
-        'https://wskeydev-ext.dev.oclc.org/oauth2/accessToken'
+        "#{WSKEY_URL}/accessToken"
       end
       
       def create!(wskey, options = {})
