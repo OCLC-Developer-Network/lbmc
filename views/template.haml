@@ -8,6 +8,8 @@
     %link{ :rel=>"shortcut icon", :href=>"/images/favicon.ico", :type=>"image/x-icon" }
     %link{ :href=>"//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css", :rel=>"stylesheet" }
     %link{ :href=>"/css/layout.css", :rel=>"stylesheet" }
+    %script{:src=>"//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"}
+    %script{:src=>"/js/app.js"}
   %body
     %div.container
       - unless session[:token].nil? or session[:token].expired?
@@ -37,6 +39,5 @@
               %img{ :src=>"http://www.oclc.org/content/dam/developer-network/badges/wc_badge1.png", :class=>"powered_by_worldcat", :alt=>"Some library data on this site is provided by WorldCat, the world's largest library catalog [WorldCat.org]" }
           
         
-    %script{:src=>"//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"}
     %script{:src=>"//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"}
 
