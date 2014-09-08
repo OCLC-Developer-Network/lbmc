@@ -15,20 +15,21 @@
 
 - if @bib.is_app_created and INSTITUTIONS[session[:registry_id].to_i]['symbol'] == @bib.marc_record['040']['a']
 
-  %h3
-    %span.glyphicon.glyphicon-pencil
-    Edit Record 
-    %a{ :href => @bib.link, :target => 'blank', :title => "View me in WorldCat.org" }= @bib.id
-    
-  = partial :record_form, locals: {action: "/update", data: @data }
+  %div.well
+    %h3
+      %span.glyphicon.glyphicon-pencil
+      Edit Record 
+      %a{ :href => @bib.link, :target => 'blank', :title => "View me in WorldCat.org" }= @bib.id
+    = partial :record_form, locals: {action: "/update", data: @data }
 
 - else
-
-  %div.alert.alert-warning
-    %span.glyphicon.glyphicon-exclamation-sign
-    Sorry, but this record is not available for editing in this application.
+  
+  %div.well
+    %div.alert.alert-info
+      %span.glyphicon.glyphicon-exclamation-sign
+      Sorry, but this record is not available for editing in this application.
     
-  = partial :record_display, locals: {data: @data }
+    = partial :record_display, locals: {data: @data }
 
 %div.row
   %div.col-sm-12.col-md-6
