@@ -175,7 +175,7 @@ describe ApplicationHelper do
       helpers.update_marc_record_from_params(@record, @params)
     end
     
-    it "should update the publisher date and the the fixed length data date 1" do
+    it "should update the publisher date and the fixed length data date 1" do
       expect(@record['260']['c']).to eq('999')
       expect(@record['008'].value[7,4]).to eq('0999')
     end
