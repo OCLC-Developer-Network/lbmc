@@ -125,8 +125,8 @@ describe "the record page" do
       expect(@doc.xpath("//form[@id='record-form']").first).to be_nil
     end
     
-    it "should display an alert warning message" do
-      xpath = "//div[@class='alert alert-warning']"
+    it "should display an alert info message" do
+      xpath = "//div[@class='alert alert-info']"
       expect(@doc.xpath(xpath)).not_to be_empty
     end
     
@@ -196,8 +196,8 @@ describe "the record page" do
       expect(@doc.xpath("//form[@id='record-form']").first).to be_nil
     end
     
-    it "should display an alert warning message" do
-      xpath = "//div[@class='alert alert-warning']"
+    it "should display an alert info message" do
+      xpath = "//div[@class='alert alert-info']"
       expect(@doc.xpath(xpath)).not_to be_empty
     end
     
