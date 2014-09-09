@@ -37,10 +37,8 @@
 	color: #666;
 	width: 20%;
 }
-#marc-xml {
-	font-family: Courier;
-	font-size: 80%;
-	padding: 8px;
+#marc-view {
+	display: none;
 }
 #record_display {
 	background-color: #FFF;
@@ -52,3 +50,4 @@ pre {
 	background-color: #999;
 	color: #FFF;
 }
+
