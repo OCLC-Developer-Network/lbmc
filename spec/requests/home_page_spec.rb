@@ -17,13 +17,8 @@ describe "the home page" do
         list_xpath = "//div[@id='get-started']"
         @inst_list_wrapper = @doc.xpath(list_xpath)
         login_links = @inst_list_wrapper.xpath(".//a[@class='list-group-item pilot_list']")
-        @zcu_login = login_links.find {|element| element if element.attr('id') == 'login-to-4861'}
-        @coo_login = login_links.find {|element| element if element.attr('id') == 'login-to-3913'}
         @ocpsb_login = login_links.find {|element| element if element.attr('id') == 'login-to-128807'}
         @ocwms_login = login_links.find {|element| element if element.attr('id') == 'login-to-91475'}
-        @clu_login = login_links.find {|element| element if element.attr('id') == 'login-to-207'}
-        @uiu_login = login_links.find {|element| element if element.attr('id') == 'login-to-5415'}
-        @yus_login = login_links.find {|element| element if element.attr('id') == 'login-to-544'}
       end
       
       it "should be present only once" do
@@ -39,31 +34,14 @@ describe "the home page" do
       end
 
       it "should have links that log users in to the correct institutions" do
-        uri = URI.parse(@zcu_login.attr('href'))
-        expect(uri.path).to eq("/authenticate")
-        expect(uri.query).to eq("registry_id=4861")
-        uri = URI.parse(@coo_login.attr('href'))
-        expect(uri.path).to eq("/authenticate")
-        expect(uri.query).to eq("registry_id=3913")
         uri = URI.parse(@ocpsb_login.attr('href'))
         expect(uri.path).to eq("/authenticate")
         expect(uri.query).to eq("registry_id=128807")
         uri = URI.parse(@ocwms_login.attr('href'))
         expect(uri.path).to eq("/authenticate")
         expect(uri.query).to eq("registry_id=91475")
-        uri = URI.parse(@clu_login.attr('href'))
-        expect(uri.path).to eq("/authenticate")
-        expect(uri.query).to eq("registry_id=207")
-        uri = URI.parse(@uiu_login.attr('href'))
-        expect(uri.path).to eq("/authenticate")
-        expect(uri.query).to eq("registry_id=5415")
-        uri = URI.parse(@yus_login.attr('href'))
-        expect(uri.path).to eq("/authenticate")
-        expect(uri.query).to eq("registry_id=544")
       end
-      
     end
-    
   end
 
   describe "after logging in when an access token is present in the user session" do
