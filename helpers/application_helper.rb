@@ -182,6 +182,11 @@ module ApplicationHelper
     end
   end
   
+  # Will respond true if the 040 subfield a in the MARC record matches the provided OCLC symbol
+  def belongs_to_current_user?(marc_record, oclc_symbol)
+    oclc_symbol == marc_record['040']['a']
+  end
+  
   # Escapes HTML
   def h(text)
     Rack::Utils.escape_html(text)
