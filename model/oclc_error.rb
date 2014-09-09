@@ -1,8 +1,8 @@
 class OCLCError
-  attr_accessor :message, :validation_errors
+  attr_accessor :summary, :validation_errors
   
-  def initialize(message)
-    @message = message
+  def initialize(summary)
+    @summary = summary
     @validation_errors = Array.new
   end
 end

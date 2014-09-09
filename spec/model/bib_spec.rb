@@ -4,7 +4,7 @@ describe Bib do
   context "when loading an error response from the Metadata API" do
     before(:all) do
       stub_request(:post, "http://cataloging-worldcatbib-qa.ent.oclc.org/bib/data?classificationScheme=LibraryOfCongress").
-          to_return(:status => 201, :body => mock_file_contents("titleless-input-response.marcxml"))
+          to_return(:status => 409, :body => mock_file_contents("titleless-input-response.marcxml"))
       
       @access_token = OCLC::Auth::AccessToken.new('grant_type', ['FauxService'], 128807, 128807)
       @access_token.value = 'tk_faux_token'
@@ -20,8 +20,8 @@ describe Bib do
       expect(@bib.error).to be_instance_of(OCLCError)
     end
     
-    it "should have the right error message" do
-      expect(@bib.error.message).to eq('Record is invalid')
+    it "should have the right error summary" do
+      expect(@bib.error.summary).to eq('Record is invalid')
     end
     
     it "should have 2 validation errors" do

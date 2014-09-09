@@ -112,6 +112,50 @@ describe "the record page" do
       expect(last_response.header['Location']).to eq("http://example.org/record/883876185")
     end
   end
+
+  context "when trying to create a new record without a title" do
+    before(:all) do
+      stub_request(:post, "http://cataloging-worldcatbib-qa.ent.oclc.org/bib/data?classificationScheme=LibraryOfCongress").
+          to_return(:status => 409, :body => mock_file_contents("titleless-input-response.marcxml"))
+
+      p = { 
+            :subtitle => 'A comparative analysis',
+            :author => 'Meyer, Stephen',
+            :publisher => 'OCLC Press',
+            :extent => '190 p.',
+            :subject => 'Application Programming Interfaces (APIs)'
+          }
+      post( '/create', params=p, rack_env={ 'rack.session' => {:token => @access_token, :registry_id => 128807} } )
+      doc = Nokogiri::HTML(last_response.body)
+      @help_block = doc.xpath("//div[@id='errors']/div[@class='help-block']").first
+    end
+    
+    it "should not redirect to the record display page" do
+      expect(last_response.redirect?).to eq(false)
+    end
+    
+    it "should display the error section" do
+      expect(@help_block.xpath("./h3[text()='We Encountered Errors']").size).to eq(1)
+    end
+    
+    it "should display the error summary" do
+      summary_paragraph = @help_block.xpath("./p[@id='summary']")
+      expect(summary_paragraph.size).to eq(1)
+      expect(summary_paragraph.first.text).to eq('Error Summary: Record is invalid')
+    end
+
+    it "should display a list of validation errors" do
+      expect(@help_block.xpath("./ul/li").size).to eq(2)
+    end
+    
+    it "should display the correct validation message for the first error" do
+      expect(@help_block.xpath("./ul/li").first.text).to eq('$a in 245 or $k in 245 must be present.')
+    end
+    
+    it "should display the correct validation message for the second error" do
+      expect(@help_block.xpath("./ul/li").last.text).to eq('Invalid code in indicator 2 in 1st 650')
+    end
+  end
   
   context "when displaying a record not created in the LBMC application" do
     before(:all) do

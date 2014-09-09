@@ -1,5 +1,14 @@
 -# record_form.haml
 
+- if @bib and @bib.error
+  %div#errors.has-error
+    %div.help-block
+      %h3 We Encountered Errors
+      %p#summary= "Error Summary: #{@bib.error.summary}"
+      %ul
+        - @bib.error.validation_errors.each do |validation_error| 
+          %li= validation_error.message
+
 %form#record-form.pad_above{ :action => url(action), :method => 'POST', :role => 'form'}
 
   %div
