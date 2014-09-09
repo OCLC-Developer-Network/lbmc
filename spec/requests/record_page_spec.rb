@@ -56,10 +56,14 @@ describe "the record page" do
       expect(marc_pre_element.text).to eq(marc_str)
     end
     
-    it "should display the MARC XML view" do
-      marc_str = mock_file_contents("ocn883876185.marcxml")
-      marc_textarea_element = @doc.xpath("//textarea[@id='marc-xml']").first
-      expect(marc_textarea_element.inner_html).to eq(marc_str)
+    it "should have a link to download MARC XML" do
+      xpath = "//a[@id='marc-view-link']"
+      expect(@doc.xpath(xpath).size).to eq(1)
+    end
+    
+    it "should have a link to download MARC21" do
+      xpath = "//a[@id='marc-marc21-link']"
+      expect(@doc.xpath(xpath).size).to eq(1)
     end
     
   end
@@ -215,10 +219,14 @@ describe "the record page" do
       expect(marc_pre_element.text).to eq(marc_str)
     end
     
-    it "should display the MARC XML view" do
-      marc_str = mock_file_contents("ocm9999999.marcxml")
-      marc_textarea_element = @doc.xpath("//textarea[@id='marc-xml']").first
-      expect(marc_textarea_element.inner_html).to eq(marc_str)
+    it "should have a link to download MARC XML" do
+      xpath = "//a[@id='marc-view-link']"
+      expect(@doc.xpath(xpath).size).to eq(1)
+    end
+    
+    it "should have a link to download MARC21" do
+      xpath = "//a[@id='marc-marc21-link']"
+      expect(@doc.xpath(xpath).size).to eq(1)
     end
     
     it "should have a link to logoff" do
@@ -286,10 +294,14 @@ describe "the record page" do
       expect(marc_pre_element.text).to eq(marc_str)
     end
     
-    it "should display the MARC XML view" do
-      marc_str = mock_file_contents("ocn883880805.marcxml")
-      marc_textarea_element = @doc.xpath("//textarea[@id='marc-xml']").first
-      expect(marc_textarea_element.inner_html).to eq(marc_str)
+    it "should have a link to download MARC XML" do
+      xpath = "//a[@id='marc-view-link']"
+      expect(@doc.xpath(xpath).size).to eq(1)
+    end
+    
+    it "should have a link to download MARC21" do
+      xpath = "//a[@id='marc-marc21-link']"
+      expect(@doc.xpath(xpath).size).to eq(1)
     end
     
     it "should have a link to logoff" do
