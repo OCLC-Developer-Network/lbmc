@@ -1,3 +1,0 @@
-class Error
-  
-end

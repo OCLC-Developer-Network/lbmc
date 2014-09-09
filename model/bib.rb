@@ -1,9 +1,8 @@
 class Bib
   attr_accessor :id, :institution_id, :request_body, :response_code,
-      :response_body, :access_token, :wskey, :doc, :marc_record, :errors, :is_app_created
+      :response_body, :access_token, :wskey, :doc, :marc_record, :error, :is_app_created
       
   def initialize(id, access_token = nil)
-    @errors = Array.new
     @access_token = access_token
     @id = id
     read if id != nil
@@ -125,7 +124,23 @@ class Bib
   end
   
   def parse_errors
+    error = @doc.xpath('/atom:entry/oclc:error', 
+        'atom' => 'http://www.w3.org/2005/Atom', 
+        'oclc' => 'http://worldcat.org/xmlschemas/response')
     
+    if error.size > 0
+      message = error.xpath('./oclc:message').first.text
+      oclc_error = OCLCError.new(message)
+      error.xpath('./oclc:detail/validationErrors/validationError').each do |ve|
+        validation_error = ValidationError.new
+        validation_error.type = ve.attr('type')
+        validation_error.field = ve.xpath('./field').attr('name').value
+        validation_error.occurrence = ve.xpath('./field').attr('occurrence').value
+        validation_error.message = ve.xpath('./message').first.text
+        oclc_error.validation_errors << validation_error
+      end
+      self.error = oclc_error
+    end
   end
     
 end

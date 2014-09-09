@@ -12,7 +12,8 @@ require 'oclc/auth'
 require './helpers/application_helper'
 require './lib/constants'
 require './model/bib'
-require './model/error'
+require './model/oclc_error'
+require './model/validation_error'
 require './app'
 
 enable :sessions
