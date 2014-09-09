@@ -34,6 +34,24 @@ post '/create' do
   end
 end
 
+get '/record/:oclc_number.xml' do
+  @bib = Bib.new(params[:oclc_number], session[:token])
+  if @bib.response_code == '200' or @bib.response_code == '201'
+    haml :record_xml, :content_type => "text/xml"
+  else 
+    haml :error, :layout => :template
+  end
+end
+
+get '/record/:oclc_number.marc' do
+  @bib = Bib.new(params[:oclc_number], session[:token])
+  if @bib.response_code == '200' or @bib.response_code == '201'
+    haml :record_marc
+  else 
+    haml :error, :layout => :template
+  end
+end
+
 get '/record/:oclc_number' do
   @bib = Bib.new(params[:oclc_number], session[:token])
   if @bib.response_code == '200' or @bib.response_code == '201'
