@@ -19,8 +19,10 @@ module ApplicationHelper
     # Title
     # Set the first indicator value based on the presence or absence of a 1XX author
     update_field_value(record, '245', 'a', '1', '0', params[:title])
-    if params[:author].nil? or params[:author].strip == ''
-      record['245'].indicator1 = '0'
+    if !record['245'].nil?
+      if params[:author].nil? or params[:author].strip == ''
+        record['245'].indicator1 = '0'
+      end
     end
     
     # Publication data
