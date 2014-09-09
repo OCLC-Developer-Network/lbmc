@@ -66,6 +66,23 @@ describe ApplicationHelper do
       expect(@record['110']['a']).to eq('OCLC Research')
     end
     
+    it "should set 245 first indicator to 0 if there isn't an author" do
+      params = @params.dup
+      params[:author_field] = '100'
+      params[:author] = ''
+      @record = helpers.marc_record_from_params(params)
+      expect(@record['245'].indicator1).to eq('0')
+    end
+    
+    it "should set 245 first indicator to 1 if there is an author" do
+      params = @params.dup
+      params[:author_field] = '110'
+      params[:author] = 'OCLC Research'
+      @record = helpers.marc_record_from_params(params)
+      expect(@record['245'].indicator1).to eq('1')
+      expect(@record['110']['a']).to eq('OCLC Research')
+    end
+    
     context "and inspecting the 008 field value" do
       before(:each) do
         @flde_value = @record['008'].value
@@ -179,6 +196,24 @@ describe ApplicationHelper do
       expect(@record['260']['c']).to eq('999')
       expect(@record['008'].value[7,4]).to eq('0999')
     end
+
+    it "should set 245 first indicator to 0 if there isn't an author" do
+      params = @params.dup
+      params[:author_field] = '100'
+      params[:author] = ''
+      @record = helpers.update_marc_record_from_params(@record, params)
+      expect(@record['245'].indicator1).to eq('0')
+    end
+    
+    it "should set 245 first indicator to 1 if there is an author" do
+      params = @params.dup
+      params[:author_field] = '110'
+      params[:author] = 'OCLC Research'
+      @record = helpers.update_marc_record_from_params(@record, params)
+      expect(@record['245'].indicator1).to eq('1')
+      expect(@record['110']['a']).to eq('OCLC Research')
+    end
+    
   end
   
   context "when updating a MARC record with no publication data" do
