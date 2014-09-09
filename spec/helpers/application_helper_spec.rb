@@ -288,6 +288,12 @@ describe ApplicationHelper do
       helpers.update_field_value(@record, '260', 'c', ' ', ' ', '')
       expect(@record['260']).to be_nil
     end
+    
+    it "should put the imprint subfields alphabetical order" do
+      expect(@record['260'].subfields.first.code).to eq('c')
+      helpers.update_field_value(@record, '260', 'b', ' ', ' ', 'OCLC Press')
+      expect(@record['260'].subfields.first.code).to eq('b')
+    end
   end
   
   context "when updating a MARC record with all publication data" do

@@ -122,6 +122,10 @@ module ApplicationHelper
     marc_record
   end
   
+  def sort_subfields(marc_record, data_field_number)
+    marc_record[data_field_number].subfields.sort_by! {|subfield| subfield.code}
+  end
+  
   def update_field_value(marc_record, data_field_number, subfield_code, i1, i2, new_value)
     data_field = marc_record[data_field_number]
     
@@ -160,6 +164,10 @@ module ApplicationHelper
         end
 
       end
+    end
+    
+    if data_field_number == '260' and marc_record[data_field_number]
+      sort_subfields(marc_record, data_field_number)
     end
   end
   
