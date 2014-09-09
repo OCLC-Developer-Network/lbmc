@@ -4,8 +4,8 @@
 - @data['id'] = @bib.id
 - @data['title'] = @bib.marc_record['245']['a'].nil? ? '' : @bib.marc_record['245']['a']
 - @data['author'] = @bib.marc_record['100'].nil? ? '' : @bib.marc_record['100']['a']
-- @data['author_is_person'] = @bib.marc_record['100'].nil? ? false : true
 - @data['author'] = @bib.marc_record['110'].nil? ? @data['author'] : @bib.marc_record['110']['a']
+- @data['author_is_person'] = @bib.marc_record['110'].nil? ? true : false
 - @data['author_is_organization'] = @bib.marc_record['110'].nil? ? false : true
 - @data['publisher'] = @bib.marc_record['260'].nil? ? '' : @bib.marc_record['260']['b']
 - @data['publication_date'] = @bib.marc_record['260'].nil? ? '' : @bib.marc_record['260']['c']
