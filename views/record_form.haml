@@ -1,6 +1,6 @@
 -# record_form.haml
 
-%form#record-form{ :action => url(action), :method => 'POST', :role => 'form'}
+%form#record-form.pad_above{ :action => url(action), :method => 'POST', :role => 'form'}
 
   %div
     %input{ :type => 'hidden', :name => 'oclc_symbol', :value => INSTITUTIONS[session[:registry_id].to_i]['symbol'] }
@@ -8,40 +8,41 @@
   %div
     %input{ :type => 'hidden', :name => 'oclc_number', :value => data['id'] }
     
-  %div{ :class => 'form-group'}
+  %div.form-group
     %label{ :for=>'title' } What is the title?
     %span.hint This is a required field, the others are optional.
-    %input{ :type => 'text', :id => 'title', :name => 'title', :value => @data['title'], :class => 'form-control' }
+    %input.form-control{ :type => 'text', :id => 'title', :name => 'title', :value => @data['title'] }
 
-  %div{ :class => 'form-group'}
+  %div.form-group
     %label{ :for=>'author'} Who is the author?
     %span.hint If the author is a person, enter the last name first.
-    %input{ :type => 'text', :name => 'author', :value => @data['author'], :class => 'form-control' }
-    %label{ :class => 'radio-inline'}
+    %input.form-control{ :type => 'text', :name => 'author', :value => @data['author'] }
+    %label.radio-inline
       %input{ :type => 'radio', :name => 'author_field', :id => 'author_is_person', :value => '100', :checked => @data['author_is_person'] ? true : nil } The author is a person
-    %label{ :class => 'radio-inline'}
+    %label.radio-inline
       %input{ :type => 'radio', :name => 'author_field', :id => 'author_is_organization', :value => '110', :checked => @data['author_is_organization'] ? true : nil } The author is an organization
       
-  %div{ :class => 'form-group'}
+  %div.form-group
     %label{ :for=>'publisher' } Who is the publisher?
     %span.hint For example HarperCollins, Acme University Press, etc.
-    %input{ :type => 'text', :name => 'publisher', :value => @data['publisher'], :class => 'form-control' }
+    %input.form-control{ :type => 'text', :name => 'publisher', :value => @data['publisher'] }
       
-  %div{ :class => 'form-group'}
+  %div.form-group
     %label{ :for=>'publicationdate' } When was it published?
-    %input{ :type => 'text', :name => 'publication_date', :value => @data['publication_date'], :maxlength => "4", :class => 'form-control', :placeholder => "Just the year will do." }
+    %span.hint Just the year will do.
+    %input.form-control{ :type => 'text', :name => 'publication_date', :value => @data['publication_date'], :maxlength => "4"}
 
-  %div{ :class => 'form-group'}
+  %div.form-group
     %label{ :for=>'extent' } How many pages or volumes?
     %span.hint For example 245 p., or 3 v., or 11 folded leaves
-    %input{ :type => 'text', :name => 'extent', :value => @data['extent'], :class => 'form-control'  }
+    %input.form-control{ :type => 'text', :name => 'extent', :value => @data['extent'] }
       
-  %div{ :class => 'form-group'}
+  %div.form-group
     %label{ :for=>'subject'} What is the book about?  
     %span.hint Use general topical keywords, for example Nuclear Physics or Agriculture
-    %input{ :type => 'text', :name => 'subject', :value => @data['subject'], :class => 'form-control' }
+    %input.form-control{ :type => 'text', :name => 'subject', :value => @data['subject'] }
       
-  %div{ :class => 'form-group'}
-    %button{ :type => 'submit', :class => 'btn btn-success' } 
-      %span{ :class => 'glyphicon glyphicon-ok' } 
+  %div.form-group
+    %button.btn.btn-success{ :type => 'submit' } 
+      %span.glyphicon.glyphicon-ok 
       #{@button_label}

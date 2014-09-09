@@ -10,10 +10,10 @@
     It doesn't look like you are logged in.  You can log in from the 
     %a{ :href => url("/") } LBMC home page
   - else
-    You can try getting started with a
-    %a{ :href => url("/record/883876185") } test record
-    or start creating a
-    %a{ :href => url("/record/new") } new record.
+    %a#new-record.btn.btn-success{ :href => url("/record/new")} 
+      %span.glyphicon.glyphicon-pencil
+      Create a New Record
+
 
 %div.pad_below
   If you continue to see this error, please contact us for help.

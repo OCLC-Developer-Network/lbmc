@@ -17,7 +17,11 @@ module ApplicationHelper
     end
     
     # Title
-    update_field_value(record, '245', 'a', ' ', ' ', params[:title])
+    # Set the first indicator value based on the presence or absence of a 1XX author
+    update_field_value(record, '245', 'a', '1', '0', params[:title])
+    if params[:author].nil? or params[:author].strip == ''
+      record['245'].indicator1 = '0'
+    end
     
     # Publication data
     update_field_value(record, '260', 'b', ' ', ' ', params[:publisher])
@@ -81,14 +85,11 @@ module ApplicationHelper
   
   def update_marc_record_from_params(marc_record, params)
   
-    # Title Statement
-    title_stmt = marc_record['245']
-    title = title_stmt.find_all {|subfield| subfield.code == 'a'}.first
-    title.value = params[:title]
+    # Title
+    # Set the first indicator value based on the presence or absence of a 1XX author
+    update_field_value(marc_record, '245', 'a', '1', '0', params[:title])
     if params[:author].nil? or params[:author].strip == ''
-      title_stmt.indicator1 = '0'
-    else
-      title_stmt.indicator1 = '1'
+      marc_record['245'].indicator1 = '0'
     end
     
     # Author

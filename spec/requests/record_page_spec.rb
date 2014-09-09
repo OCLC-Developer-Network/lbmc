@@ -7,7 +7,7 @@ describe "the record page" do
     @access_token.expires_at = DateTime.parse("9999-01-01 00:00:00Z")
   end
   
-  context "when displaying a record" do
+  context "when displaying a record created in the LBMC application by the institution" do
     before(:all) do
       stub_request(:get, "http://cataloging-worldcatbib-qa.ent.oclc.org/bib/data/883876185?classificationScheme=LibraryOfCongress").
         to_return(:status => 200, :body => mock_file_contents("ocn883876185.atomxml"))
@@ -55,6 +55,13 @@ describe "the record page" do
       marc_pre_element = @doc.xpath("//pre[@id='marc-view']").first
       expect(marc_pre_element.text).to eq(marc_str)
     end
+    
+    it "should display the MARC XML view" do
+      marc_str = mock_file_contents("ocn883876185.marcxml")
+      marc_textarea_element = @doc.xpath("//textarea[@id='marc-xml']").first
+      expect(marc_textarea_element.inner_html).to eq(marc_str)
+    end
+    
   end
   
   context "when submitting an update to change the author name" do
@@ -118,8 +125,8 @@ describe "the record page" do
       expect(@doc.xpath("//form[@id='record-form']").first).to be_nil
     end
     
-    it "should display an alert warning message" do
-      xpath = "//div[@class='alert alert-warning']"
+    it "should display an alert info message" do
+      xpath = "//div[@class='alert alert-info']"
       expect(@doc.xpath(xpath)).not_to be_empty
     end
     
@@ -164,6 +171,12 @@ describe "the record page" do
       expect(marc_pre_element.text).to eq(marc_str)
     end
     
+    it "should display the MARC XML view" do
+      marc_str = mock_file_contents("ocm9999999.marcxml")
+      marc_textarea_element = @doc.xpath("//textarea[@id='marc-xml']").first
+      expect(marc_textarea_element.inner_html).to eq(marc_str)
+    end
+    
     it "should have a link to logoff" do
       xpath = "//a[@id='logoff']"
       expect(@doc.xpath(xpath).size).to eq(1)
@@ -183,8 +196,8 @@ describe "the record page" do
       expect(@doc.xpath("//form[@id='record-form']").first).to be_nil
     end
     
-    it "should display an alert warning message" do
-      xpath = "//div[@class='alert alert-warning']"
+    it "should display an alert info message" do
+      xpath = "//div[@class='alert alert-info']"
       expect(@doc.xpath(xpath)).not_to be_empty
     end
     
@@ -223,10 +236,16 @@ describe "the record page" do
       expect(td.text.strip).to eq('Test Driven Development Practices')
     end
     
-    it "should display the MARC record" do
+    it "should display the MARC record view" do
       marc_str = mock_file_contents("ocn883880805.marc")
       marc_pre_element = @doc.xpath("//pre[@id='marc-view']").first
       expect(marc_pre_element.text).to eq(marc_str)
+    end
+    
+    it "should display the MARC XML view" do
+      marc_str = mock_file_contents("ocn883880805.marcxml")
+      marc_textarea_element = @doc.xpath("//textarea[@id='marc-xml']").first
+      expect(marc_textarea_element.inner_html).to eq(marc_str)
     end
     
     it "should have a link to logoff" do
