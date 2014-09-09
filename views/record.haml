@@ -33,13 +33,13 @@
 
 %div.row
   %div.col-md-12
-    %a.btn.btn-default.btn-sm{ :href => '#', :onClick => '$("#marc-view").toggle()', :title => "View the record in MARC format" }
+    %a#marc-view-link.btn.btn-default.btn-sm{ :href => '#', :onClick => '$("#marc-view").toggle()', :title => "View the record in MARC format" }
       %span.glyphicon.glyphicon-list
       View the MARC Record
-    %a.btn.btn-default.btn-sm{ :href => '/record/'+@bib.id+'.xml', :title => "Download the record in MARC XML format" }
+    %a#marc-xml-link.btn.btn-default.btn-sm{ :href => '/record/'+@bib.id+'.xml', :title => "Download the record in MARC XML format" }
       %span.glyphicon.glyphicon-download
       Download the record in MARC XML
-    %a.btn.btn-default.btn-sm{ :href => '/record/'+@bib.id+'.marc', :title => "Download the record in MARC21 transmission format" }
+    %a#marc-marc21-link.btn.btn-default.btn-sm{ :href => '/record/'+@bib.id+'.marc', :title => "Download the record in MARC21 transmission format" }
       %span.glyphicon.glyphicon-download
       Download the record in MARC21
     %div.pad_above
