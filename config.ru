@@ -17,7 +17,7 @@ require './app'
 
 enable :sessions
 set :session_secret, '406c8f30ee92'
-set :environment, :production
+set :environment, :development
 set :run, true
 set :raise_errors, true
 
