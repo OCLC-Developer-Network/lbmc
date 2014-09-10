@@ -11,11 +11,12 @@ before do
   # The user's session does not yet have an access token in his/her session when the app catches an
   # auth code.
   pass unless request.path_info =~ /record/
-  session[:path] = request.path unless request.path == '/authenticate' or request.path == '/logoff'
+  session[:path] = request.path
   authenticate
 end
 
 get '/' do
+  session[:path] = request.path
   haml :index, :layout => :template
 end
 
@@ -74,10 +75,8 @@ get '/catch_auth_code' do
     session[:token] = WSKEY.auth_code_token(params[:code], session[:registry_id], session[:registry_id])
     redirect session[:path]
   else
-    redirect '/'
-    # "This view will only render if there is an error in the login flow. " +
-    # "This page renders after the browser is redirected  back to the this app with an " +
-    # "error message as a URL parameter."
+    # If the user's session is gone, go to the home page and have them reselect the authenticating inst ID.
+    redirect url('/')
   end
 end
 
