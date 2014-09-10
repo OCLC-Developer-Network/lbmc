@@ -343,4 +343,30 @@ describe ApplicationHelper do
     end
   end
   
+  context "when displaying a MARC record created by my institution" do
+  
+    before(:each) do
+      raw_marc = StringIO.new( mock_file_contents("ocn883876185.marcxml") )
+      @record = MARC::XMLReader.new(raw_marc).first
+    end
+    
+    it "should have my OCLC symbol in 040 subfield a" do
+      expect(helpers.belongs_to_current_user?(@record, 'OCPSB')).to be true
+    end
+
+  end # when displaying a MARC record created by my institution
+  
+  context "when displaying a MARC record created by another institution" do
+  	
+    before(:each) do
+      raw_marc = StringIO.new( mock_file_contents("ocn883880805.marcxml") )
+      @record = MARC::XMLReader.new(raw_marc).first
+    end
+    
+    it "should not have my OCLC symbol in 040 subfield a" do
+      expect(helpers.belongs_to_current_user?(@record, 'OCPSB')).not_to be true
+    end
+
+  end # when displaying a MARC record created by my institution
+  
 end
