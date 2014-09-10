@@ -34,10 +34,18 @@ post '/create' do
   end
 end
 
-get '/record/:oclc_number' do
+get '/record/:oclc_number.?:format?' do
   @bib = Bib.new(params[:oclc_number], session[:token])
   if @bib.response_code == '200' or @bib.response_code == '201'
-    haml :record, :layout => :template
+    if params[:format] == 'xml'
+      content_type :xml
+      @bib.marc_record.to_xml.to_s
+    elsif params[:format] == 'mrc'
+      content_type 'application/marc'
+      @bib.marc_record.to_marc
+    else
+      haml :record, :layout => :template
+    end
   else 
     haml :error, :layout => :template
   end

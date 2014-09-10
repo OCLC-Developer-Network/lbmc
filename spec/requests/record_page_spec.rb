@@ -62,6 +62,18 @@ describe "the record page" do
       expect(marc_textarea_element.inner_html).to eq(marc_str)
     end
     
+    it "should provide a download link to the MARC/XML version" do
+      marc_xml_link = @doc.xpath("//p[@id='download-record']/a").first
+      uri = URI.parse(marc_xml_link.attr('href'))
+      expect(uri.path).to eq('/record/883876185.xml')
+    end
+    
+    it "should provide a download link to the MARC21 version" do
+      marc21_link = @doc.xpath("//p[@id='download-record']/a").last
+      uri = URI.parse(marc21_link.attr('href'))
+      expect(uri.path).to eq('/record/883876185.mrc')
+    end
+    
   end
   
   context "when submitting an update to change the author name" do
@@ -299,4 +311,50 @@ describe "the record page" do
     
   end
   
+  context "when downloading a MARC record" do  
+    context "as MARC/XML" do
+      before(:all) do
+        stub_request(:get, "http://cataloging-worldcatbib-qa.ent.oclc.org/bib/data/883876185?classificationScheme=LibraryOfCongress").
+          to_return(:status => 200, :body => mock_file_contents("ocn883876185.atomxml"))
+        get '/record/883876185.xml', params={}, rack_env={ 'rack.session' => {:token => @access_token, :registry_id => 128807} }
+        raw_marc = StringIO.new( last_response.body )
+        @record = MARC::XMLReader.new(raw_marc).first
+      end
+    
+      it "should have a content type of application/xml" do
+        expect(last_response.header["Content-Type"]).to eq("application/xml;charset=utf-8")
+      end
+    
+      it "should return a parseable MARC record" do
+        expect(@record).to be_instance_of(MARC::Record)
+      end
+    
+      it "should return a MARC record with the right data" do
+        expect(@record['001'].value).to eq('ocn883876185')
+      end
+    end
+    
+    context "as MARC21" do
+      before(:all) do
+        stub_request(:get, "http://cataloging-worldcatbib-qa.ent.oclc.org/bib/data/883876185?classificationScheme=LibraryOfCongress").
+          to_return(:status => 200, :body => mock_file_contents("ocn883876185.atomxml"))
+        get '/record/883876185.mrc', params={}, rack_env={ 'rack.session' => {:token => @access_token, :registry_id => 128807} }
+        raw_marc = StringIO.new( last_response.body )
+        @record = MARC::Reader.new(raw_marc).first
+      end
+    
+      it "should have a content type of application/xml" do
+        expect(last_response.header["Content-Type"]).to eq("application/marc")
+      end
+    
+      it "should return a parseable MARC record" do
+        expect(@record).to be_instance_of(MARC::Record)
+      end
+    
+      it "should return a MARC record with the right data" do
+        expect(@record['001'].value).to eq('ocn883876185')
+      end
+      
+    end
+  end
 end

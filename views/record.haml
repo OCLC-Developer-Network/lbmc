@@ -37,6 +37,10 @@
       %span.glyphicon.glyphicon-list
       MARC Record View
     %pre#marc-view= @bib.marc_record
+    %p#download-record
+      Download as:
+      %a{ :href => url("/record/#{@bib.id}.xml")} MARC/XML
+      %a{ :href => url("/record/#{@bib.id}.mrc")} MARC21
   %div.col-sm-12.col-md-6
     %h4
       %span.glyphicon.glyphicon-wrench
