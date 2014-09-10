@@ -66,7 +66,7 @@ describe Bib do
     end
     
     it "should not indicate it is LBMC app created" do
-      expect(@bib.is_app_created).to be_nil
+      expect(@bib.is_app_created?).to be_nil
     end
   end
   
@@ -82,7 +82,7 @@ describe Bib do
     end
     
     it "should indicate it is LBMC app created" do
-      expect(@bib.is_app_created).to be true
+      expect(@bib.is_app_created?).to be true
     end
   end
   
