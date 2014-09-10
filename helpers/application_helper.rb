@@ -36,7 +36,7 @@ module ApplicationHelper
     update_field_value(record, '500', 'a', ' ', ' ', LBMC::SOURCE_NOTE)
 
     # Topic
-    update_field_value(record, '650', 'a', ' ', ' ', params[:subject])
+    update_field_value(record, '650', 'a', '1', '4', params[:subject])
     
     record
   end
