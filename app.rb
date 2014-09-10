@@ -10,7 +10,7 @@ before do
   # The home page is unauthenticated, it is where the user chooses an institution to login against
   # The user's session does not yet have an access token in his/her session when the app catches an
   # auth code.
-  pass if request.path_info == '/' or request.path_info == '/catch_auth_code'
+  pass unless request.path_info =~ /record/
   session[:path] = request.path unless request.path == '/authenticate' or request.path == '/logoff'
   authenticate
 end
@@ -23,7 +23,7 @@ get '/record/new' do
   haml :new, :layout => :template
 end
 
-post '/create' do
+post '/record/create' do
   record = marc_record_from_params(params)
   @bib = Bib.new_from_marc(record, session[:token])
   @bib.create
@@ -51,7 +51,7 @@ get '/record/:oclc_number.?:format?' do
   end
 end
 
-post '/update' do
+post '/record/update' do
   @bib = Bib.new(params[:oclc_number], session[:token])
   record = update_marc_record_from_params(@bib.marc_record, params)
   @bib.marc_record = record

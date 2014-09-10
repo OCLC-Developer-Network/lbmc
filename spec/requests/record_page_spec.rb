@@ -7,6 +7,20 @@ describe "the record page" do
     @access_token.expires_at = DateTime.parse("9999-01-01 00:00:00Z")
   end
   
+  context "when displaying the form for a new record" do
+    before(:all) do
+      get '/record/new', params={}, rack_env={ 'rack.session' => {:token => @access_token, :registry_id => 128807} }
+      @doc = Nokogiri::HTML(last_response.body)
+      @form_element = @doc.xpath("//form[@id='record-form']").first
+    end
+    
+    it "should have a form that submits the correct action" do
+      submit_location = @form_element.attr('action')
+      uri = URI.parse(submit_location)
+      expect(uri.path).to eq('/record/create')
+    end
+  end
+  
   context "when displaying a record created in the LBMC application by the institution" do
     before(:all) do
       stub_request(:get, "http://cataloging-worldcatbib-qa.ent.oclc.org/bib/data/883876185?classificationScheme=LibraryOfCongress").
@@ -18,6 +32,12 @@ describe "the record page" do
 
     it "should display a form" do
       expect(@form_element).not_to be_nil
+    end
+    
+    it "should display a form with the correct action" do
+      submit_location = @form_element.attr('action')
+      uri = URI.parse(submit_location)
+      expect(uri.path).to eq('/record/update')
     end
     
     it "should have a hidden input field containing the OCLC number" do
@@ -101,7 +121,7 @@ describe "the record page" do
             :extent => '190 p.',
             :subject => 'Application Programming Interfaces (APIs)'
           }
-      post( '/update', params=p, rack_env={ 'rack.session' => {:token => @access_token} } )
+      post( '/record/update', params=p, rack_env={ 'rack.session' => {:token => @access_token} } )
     end
     
     it "should respond with a redirect back to the record display page" do
@@ -125,7 +145,7 @@ describe "the record page" do
             :extent => '190 p.',
             :subject => 'Application Programming Interfaces (APIs)'
           }
-      post( '/create', params=p, rack_env={ 'rack.session' => {:token => @access_token, :registry_id => 128807} } )
+      post( '/record/create', params=p, rack_env={ 'rack.session' => {:token => @access_token, :registry_id => 128807} } )
     end
     
     it "should respond with a redirect to the record display page" do
@@ -146,7 +166,7 @@ describe "the record page" do
             :extent => '190 p.',
             :subject => 'Application Programming Interfaces (APIs)'
           }
-      post( '/create', params=p, rack_env={ 'rack.session' => {:token => @access_token, :registry_id => 128807} } )
+      post( '/record/create', params=p, rack_env={ 'rack.session' => {:token => @access_token, :registry_id => 128807} } )
       doc = Nokogiri::HTML(last_response.body)
       @help_block = doc.xpath("//div[@id='errors']/div[@class='help-block']").first
     end

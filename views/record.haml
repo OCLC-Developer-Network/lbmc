@@ -20,7 +20,7 @@
       %span.glyphicon.glyphicon-pencil
       Edit Record 
       %a{ :href => @bib.link, :target => 'blank', :title => "View this record in WorldCat.org" }= @bib.id
-    = partial :record_form, locals: {action: "/update", data: @data }
+    = partial :record_form, locals: {action: "/record/update", data: @data }
 
 - else
   
