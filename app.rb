@@ -66,8 +66,7 @@ end
 
 get '/logoff' do
   session[:token] = nil
-  session[:path] = "/"
-  redirect session[:path]
+  redirect url("/")
 end
 
 get '/catch_auth_code' do
