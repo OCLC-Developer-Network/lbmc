@@ -66,6 +66,11 @@ describe "the record page" do
       expect(@doc.xpath(xpath).size).to eq(1)
     end
     
+    it "should have a link to logoff" do
+      xpath = "//a[@id='logoff']"
+      expect(@doc.xpath(xpath).size).to eq(1)
+    end
+    
   end
   
   context "when submitting an update to change the author name" do
