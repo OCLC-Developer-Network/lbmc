@@ -72,13 +72,13 @@ describe "the record page" do
     end
     
     it "should provide a download link to the MARC/XML version" do
-      marc_xml_link = @doc.xpath("//p[@id='download-record']/a").first
+      marc_xml_link = @doc.xpath("//a[@id='marc-xml-link']").first
       uri = URI.parse(marc_xml_link.attr('href'))
       expect(uri.path).to eq('/record/883876185.xml')
     end
     
     it "should provide a download link to the MARC21 version" do
-      marc21_link = @doc.xpath("//p[@id='download-record']/a").last
+      marc21_link = @doc.xpath("//a[@id='marc-marc21-link']").last
       uri = URI.parse(marc21_link.attr('href'))
       expect(uri.path).to eq('/record/883876185.mrc')
     end

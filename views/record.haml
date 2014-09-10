@@ -36,25 +36,10 @@
     %a#marc-view-link.btn.btn-default.btn-sm{ :href => '#', :onClick => '$("#marc-view").toggle()', :title => "View the record in MARC format" }
       %span.glyphicon.glyphicon-list
       MARC Record View
-    %pre#marc-view= @bib.marc_record
-    %p#download-record
-      Download as:
-      %a{ :href => url("/record/#{@bib.id}.xml")} MARC/XML
-      %a{ :href => url("/record/#{@bib.id}.mrc")} MARC21
-  %div.col-sm-12.col-md-6
-    %h4
-      %span.glyphicon.glyphicon-wrench
-      MARC XML View
-    %textarea#marc-xml.col-md-12 
-      = @bib.doc.xpath('/atom:entry/atom:content/rb:response/marc:record', 
-        'atom' => 'http://www.w3.org/2005/Atom', 
-        'rb' => 'http://worldcat.org/rb', 
-        'marc' => 'http://www.loc.gov/MARC21/slim').to_xml
-      View the MARC Record
-    %a#marc-xml-link.btn.btn-default.btn-sm{ :href => '/record/'+@bib.id+'.xml', :title => "Download the record in MARC XML format" }
+    %a#marc-xml-link.btn.btn-default.btn-sm{ :href => url('/record/'+@bib.id+'.xml'), :title => "Download the record in MARC XML format" }
       %span.glyphicon.glyphicon-download
       Download the record in MARC XML
-    %a#marc-marc21-link.btn.btn-default.btn-sm{ :href => '/record/'+@bib.id+'.mrc', :title => "Download the record in MARC21 transmission format" }
+    %a#marc-marc21-link.btn.btn-default.btn-sm{ :href => url('/record/'+@bib.id+'.mrc'), :title => "Download the record in MARC21 transmission format" }
       %span.glyphicon.glyphicon-download
       Download the record in MARC21
     %div.pad_above
