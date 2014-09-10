@@ -37,7 +37,7 @@ end
 get '/record/:oclc_number.xml' do
   @bib = Bib.new(params[:oclc_number], session[:token])
   if @bib.response_code == '200' or @bib.response_code == '201'
-    haml :record_xml, :content_type => "text/xml"
+    haml :record_xml, :content_type => "application/xml"
   else 
     haml :error, :layout => :template
   end
@@ -46,7 +46,7 @@ end
 get '/record/:oclc_number.marc' do
   @bib = Bib.new(params[:oclc_number], session[:token])
   if @bib.response_code == '200' or @bib.response_code == '201'
-    haml :record_marc
+    haml :record_marc, :content_type => "application/marc"
   else 
     haml :error, :layout => :template
   end
