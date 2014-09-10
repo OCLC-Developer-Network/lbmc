@@ -380,7 +380,7 @@ describe "the record page" do
         @record = MARC::Reader.new(raw_marc).first
       end
     
-      it "should have a content type of application/xml" do
+      it "should have a content type of application/marc" do
         expect(last_response.header["Content-Type"]).to eq("application/marc")
       end
     
