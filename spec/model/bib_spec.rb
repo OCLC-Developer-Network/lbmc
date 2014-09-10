@@ -1,14 +1,17 @@
 require 'spec_helper'
 
 describe Bib do
+
+  before(:all) do
+    @access_token = OCLC::Auth::AccessToken.new('grant_type', ['FauxService'], 128807, 128807)
+    @access_token.value = 'tk_faux_token'
+    @access_token.expires_at = DateTime.parse("9999-01-01 00:00:00Z")
+  end
+  
   context "when loading an error response from the Metadata API" do
     before(:all) do
       stub_request(:post, "http://cataloging-worldcatbib-qa.ent.oclc.org/bib/data?classificationScheme=LibraryOfCongress").
           to_return(:status => 409, :body => mock_file_contents("titleless-input-response.marcxml"))
-      
-      @access_token = OCLC::Auth::AccessToken.new('grant_type', ['FauxService'], 128807, 128807)
-      @access_token.value = 'tk_faux_token'
-      @access_token.expires_at = DateTime.parse("9999-01-01 00:00:00Z")
       
       raw_marc = StringIO.new( mock_file_contents("titleless-input.marcxml") )
       record = MARC::XMLReader.new(raw_marc).first
@@ -53,11 +56,34 @@ describe Bib do
   
   context "when testing a record that did not originate in LBMC" do
     before(:all) do
-      # Set up @record
+      stub_request(:post, "http://cataloging-worldcatbib-qa.ent.oclc.org/bib/data?classificationScheme=LibraryOfCongress").
+          to_return(:status => 200, :body => mock_file_contents("ocm09999999.atomxml"))
+      
+      raw_marc = StringIO.new( mock_file_contents("ocm9999999.marcxml") )
+      record = MARC::XMLReader.new(raw_marc).first
+      @bib = Bib.new_from_marc(record, @access_token)
+      @bib.create
     end
     
     it "should not indicate it is LBMC app created" do
-      # expect(@record.is_app_created?).to be_false
+      expect(@bib.is_app_created).to be_nil
     end
   end
+  
+  context "when testing a record that did originate in LBMC" do
+    before(:all) do
+      stub_request(:post, "http://cataloging-worldcatbib-qa.ent.oclc.org/bib/data?classificationScheme=LibraryOfCongress").
+          to_return(:status => 200, :body => mock_file_contents("ocn883876185.atomxml"))
+      
+      raw_marc = StringIO.new( mock_file_contents("ocn883876185.marcxml") )
+      record = MARC::XMLReader.new(raw_marc).first
+      @bib = Bib.new_from_marc(record, @access_token)
+      @bib.create
+    end
+    
+    it "should indicate it is LBMC app created" do
+      expect(@bib.is_app_created).to be true
+    end
+  end
+  
 end

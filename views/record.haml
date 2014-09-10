@@ -13,13 +13,13 @@
 - @data['subject'] = @bib.marc_record['650'].nil? ? '' : @bib.marc_record['650']['a']
 - @button_label = "Update this Record"
 
-- if @bib.is_app_created and INSTITUTIONS[session[:registry_id].to_i]['symbol'] == @bib.marc_record['040']['a']
+- if @bib.is_app_created and belongs_to_current_user?(@bib.marc_record, INSTITUTIONS[session[:registry_id].to_i]['symbol'])
 
   %div.well
     %h3
       %span.glyphicon.glyphicon-pencil
       Edit Record 
-      %a{ :href => @bib.link, :target => 'blank', :title => "View me in WorldCat.org" }= @bib.id
+      %a{ :href => @bib.link, :target => 'blank', :title => "View this record in WorldCat.org" }= @bib.id
     = partial :record_form, locals: {action: "/update", data: @data }
 
 - else
@@ -32,8 +32,8 @@
     = partial :record_display, locals: {data: @data }
 
 %div.row
-  %div.col-sm-12.col-md-6
-    %h4
+  %div.col-md-12
+    %a#marc-view-link.btn.btn-default.btn-sm{ :href => '#', :onClick => '$("#marc-view").toggle()', :title => "View the record in MARC format" }
       %span.glyphicon.glyphicon-list
       MARC Record View
     %pre#marc-view= @bib.marc_record
@@ -50,3 +50,12 @@
         'atom' => 'http://www.w3.org/2005/Atom', 
         'rb' => 'http://worldcat.org/rb', 
         'marc' => 'http://www.loc.gov/MARC21/slim').to_xml
+      View the MARC Record
+    %a#marc-xml-link.btn.btn-default.btn-sm{ :href => '/record/'+@bib.id+'.xml', :title => "Download the record in MARC XML format" }
+      %span.glyphicon.glyphicon-download
+      Download the record in MARC XML
+    %a#marc-marc21-link.btn.btn-default.btn-sm{ :href => '/record/'+@bib.id+'.mrc', :title => "Download the record in MARC21 transmission format" }
+      %span.glyphicon.glyphicon-download
+      Download the record in MARC21
+    %div.pad_above
+      %pre#marc-view= @bib.marc_record
