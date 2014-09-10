@@ -7,16 +7,16 @@
     %link{ :rel=>"icon", :href=>"/images/favicon.ico", :type=>"image/x-icon" }
     %link{ :rel=>"shortcut icon", :href=>"/images/favicon.ico", :type=>"image/x-icon" }
     %link{ :href=>"//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css", :rel=>"stylesheet" }
-    %link{ :href=>"/css/layout.css", :rel=>"stylesheet" }
+    %link{ :href=>url("/css/layout.css"), :rel=>"stylesheet" }
     %script{:src=>"//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"}
-    %script{:src=>"/js/app.js"}
+    %script{:src=>url("/js/app.js")}
   %body
     %div.container
       - unless session[:token].nil? or session[:token].expired?
         %div.row
           %div.col-md-12
             %div.pull-right.pad_above
-              %a#home.btn.btn-sm.btn-primary{ :href => "/", :title => "Visit the LBMC Pilot home page" } 
+              %a#home.btn.btn-sm.btn-primary{ :href => url("/"), :title => "Visit the LBMC Pilot home page" } 
                 %span.glyphicon.glyphicon-home
                 LBMC Home
               %a#logoff.btn.btn-sm.btn-primary{ :href => "/logoff", :title => "End your session" } 
@@ -25,7 +25,7 @@
       %div.row
         %div.col-xs-12.col-sm-4.col-md-4
           %h1
-            %a{ :href => "/", :title => "Visit the LBMC Pilot home page" } LBMC Pilot
+            %a{ :href => url("/"), :title => "Visit the LBMC Pilot home page" } LBMC Pilot
         %div.col-xs-12.col-sm-8.col-md-8
           %div.pull-right.pad_above
             - unless session[:token].nil? or session[:token].expired?
