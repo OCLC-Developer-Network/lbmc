@@ -59,6 +59,16 @@ describe "the home page" do
       expect(@doc.xpath(xpath).size).to eq(1)
     end
     
+    it "should have a link to the home page" do
+      xpath = "//a[@id='home']"
+      expect(@doc.xpath(xpath).size).to eq(1)
+    end
+    
+    it "should have a link to create a new record" do
+      xpath = "//a[@id='create']"
+      expect(@doc.xpath(xpath).size).to eq(1)
+    end
+    
     it "should have a link to logoff" do
       xpath = "//a[@id='logoff']"
       expect(@doc.xpath(xpath).size).to eq(1)
