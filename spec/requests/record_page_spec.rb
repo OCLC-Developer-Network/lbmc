@@ -394,4 +394,19 @@ describe "the record page" do
       
     end
   end
+  
+  context "when trying to display an OCLC number that does not exist" do
+    before(:all) do
+      stub_request(:get, "http://cataloging-worldcatbib-qa.ent.oclc.org/bib/data/99999999999999?classificationScheme=LibraryOfCongress").
+        to_return(:status => 404, :body => mock_file_contents("record_not_found.xml"))
+      get '/record/99999999999999', params={}, rack_env={ 'rack.session' => {:token => @access_token, :registry_id => 128807} }
+      doc = Nokogiri::HTML(last_response.body)
+      @help_block = doc.xpath("//div[@id='errors']/div[@class='help-block']").first
+    end
+
+    it "should display the error section" do
+      expect(@help_block.xpath("./h3[text()='We Encountered Errors']").size).to eq(1)
+    end
+
+  end
 end

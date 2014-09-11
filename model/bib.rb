@@ -1,6 +1,6 @@
 class Bib
   attr_accessor :id, :institution_id, :request_body, :response_code,
-      :response_body, :access_token, :wskey, :doc, :marc_record, :error, :is_app_created
+      :response_body, :access_token, :wskey, :doc, :marc_record, :error
       
   def initialize(id, access_token = nil)
     @access_token = access_token
@@ -64,9 +64,10 @@ class Bib
     
     if @response_code == '200'
       parse_marc
-      is_app_created
+    elsif @response_code == '404'
+      load_doc
+      parse_errors
     end
-    
   end
   
   def update
@@ -89,7 +90,6 @@ class Bib
     if @response_code == '200' or @response_code == '201' or @response_code == '409'
       load_doc
       parse_marc
-      is_app_created
       parse_errors
     end
   end
@@ -124,14 +124,16 @@ class Bib
   end
   
   def parse_errors
-    error = @doc.xpath('/atom:entry/oclc:error', 
+    error = @doc.xpath('//oclc:error', 
         'atom' => 'http://www.w3.org/2005/Atom', 
         'oclc' => 'http://worldcat.org/xmlschemas/response')
-    
+
     if error.size > 0
-      message = error.xpath('./oclc:message').first.text
+      message = error.xpath('./oclc:message', 
+          'oclc' => 'http://worldcat.org/xmlschemas/response').first.text
       oclc_error = OCLCError.new(message)
-      error.xpath('./oclc:detail/validationErrors/validationError').each do |ve|
+      error.xpath('./oclc:detail/validationErrors/validationError', 
+          'oclc' => 'http://worldcat.org/xmlschemas/response').each do |ve|
         validation_error = ValidationError.new
         validation_error.type = ve.attr('type')
         validation_error.field = ve.xpath('./field').attr('name').value
