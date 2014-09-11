@@ -1,8 +1,10 @@
 - if @bib and @bib.error
-  %div#errors.has-error
-    %div.help-block
-      %h3 We Encountered Errors
-      %p#summary= "Error Summary: #{@bib.error.summary}"
-      %ul
-        - @bib.error.validation_errors.each do |validation_error| 
-          %li= validation_error.message
+  %div#errors.alert.alert-danger 
+    %span.glyphicon.glyphicon-exclamation-sign 
+    %span#error-heading Sorry, but the LBMC Pilot system encountered a problem.
+    %p.pad_above
+    Here's what the system says about it.  Apologies for the jargon.
+    %p#summary.pad_above= @bib.error.summary
+    %ul
+      - @bib.error.validation_errors.each do |validation_error| 
+        %li= validation_error.message
