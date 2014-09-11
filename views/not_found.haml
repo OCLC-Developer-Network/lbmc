@@ -1,15 +1,8 @@
-%div.alert.alert-warning
+%div.alert.alert-info
   %span.glyphicon.glyphicon-exclamation-sign
-  Page not found  
+  Sorry, but the requested page was not found.  
+  
+  %div.pad_above
+    You might try starting from the 
+    %a{ :href => url('/'), :title => "Visit the LBMC home page" } LBMC home page.
 
-%div.pad_below
-  Sorry, this page isn't available.
-
-%div.pad_below
-  - if session[:token].nil?
-    It doesn't look like you are logged in.  You can log in from the 
-    %a{ :href => url("/") } LBMC home page
-  - else
-    %a#new-record.btn.btn-success{ :href => url("/record/new")} 
-      %span.glyphicon.glyphicon-pencil
-      Create a New Record
