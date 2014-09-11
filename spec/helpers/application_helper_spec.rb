@@ -18,8 +18,7 @@ describe ApplicationHelper do
         :publisher => 'OCLC Press',
         :extent => '190 p.',
         :subject => 'Application Programming Interfaces (APIs)',
-        :publication_date => '2013',
-        :publisher => 'OCLC Press'
+        :publication_date => '2013'
       }
       @record = helpers.marc_record_from_params(@params)
     end
@@ -27,34 +26,50 @@ describe ApplicationHelper do
     it "should have the symbol" do
       expect(@record['040']['a']).to eq('OCPSB')
       expect(@record['040']['c']).to eq('OCPSB')
+      expect(@record['040'].indicator1).to eq(' ') 
+      expect(@record['040'].indicator2).to eq(' ')
     end
     
     it "should add the title" do
       expect(@record['245']['a']).to eq('Testing metadata APIs')
+      expect(@record['245'].indicator1).to eq('1') 
+      expect(@record['245'].indicator2).to eq('0')
     end
   
     it "should add the publisher name" do
       expect(@record['260']['b']).to eq('OCLC Press')
+      expect(@record['260'].indicator1).to eq(' ') 
+      expect(@record['260'].indicator2).to eq(' ')
     end
 
     it "should add the publication date" do
       expect(@record['260']['c']).to eq('2013')
+      expect(@record['260'].indicator1).to eq(' ') 
+      expect(@record['260'].indicator2).to eq(' ')
     end
     
     it "should add the extent" do
       expect(@record['300']['a']).to eq('190 p.')
+      expect(@record['300'].indicator1).to eq(' ') 
+      expect(@record['300'].indicator2).to eq(' ')
     end
     
     it "should add the LBMC note" do
       expect(@record['500']['a']).to eq(LBMC::SOURCE_NOTE)
+      expect(@record['500'].indicator1).to eq(' ') 
+      expect(@record['500'].indicator2).to eq(' ')
     end
 
     it "should add the subject" do
       expect(@record['650']['a']).to eq('Application Programming Interfaces (APIs)')
+      expect(@record['650'].indicator1).to eq('1') 
+      expect(@record['650'].indicator2).to eq('4')
     end
 
     it "should add the author name" do
       expect(@record['100']['a']).to eq('Doe, John')
+      expect(@record['100'].indicator1).to eq('1') 
+      expect(@record['100'].indicator2).to eq(' ')
     end
     
     it "should add an organizational author" do
@@ -64,6 +79,8 @@ describe ApplicationHelper do
       @record = helpers.marc_record_from_params(params)
       expect(@record['100']).to be_nil
       expect(@record['110']['a']).to eq('OCLC Research')
+      expect(@record['110'].indicator1).to eq('2') 
+      expect(@record['110'].indicator2).to eq(' ')
     end
     
     it "should set 245 first indicator to 0 if there isn't an author" do
@@ -72,6 +89,7 @@ describe ApplicationHelper do
       params[:author] = ''
       @record = helpers.marc_record_from_params(params)
       expect(@record['245'].indicator1).to eq('0')
+      expect(@record['245'].indicator2).to eq('0')
     end
     
     it "should set 245 first indicator to 1 if there is an author" do
@@ -80,7 +98,10 @@ describe ApplicationHelper do
       params[:author] = 'OCLC Research'
       @record = helpers.marc_record_from_params(params)
       expect(@record['245'].indicator1).to eq('1')
+      expect(@record['245'].indicator2).to eq('0')
       expect(@record['110']['a']).to eq('OCLC Research')
+      expect(@record['110'].indicator1).to eq('2') 
+      expect(@record['110'].indicator2).to eq(' ')
     end
     
     context "and inspecting the 008 field value" do
@@ -186,14 +207,15 @@ describe ApplicationHelper do
         :publisher => 'OCLC Press',
         :extent => '190 p.',
         :subject => 'Application Programming Interfaces (APIs)',
-        :publication_date => '999',
-        :publisher => 'OCLC Press'
+        :publication_date => '999'
       }
       helpers.update_marc_record_from_params(@record, @params)
     end
     
     it "should update the publisher date and the fixed length data date 1" do
       expect(@record['260']['c']).to eq('999')
+      expect(@record['260'].indicator1).to eq(' ') 
+      expect(@record['260'].indicator2).to eq(' ')
       expect(@record['008'].value[7,4]).to eq('0999')
     end
 
@@ -203,6 +225,7 @@ describe ApplicationHelper do
       params[:author] = ''
       @record = helpers.update_marc_record_from_params(@record, params)
       expect(@record['245'].indicator1).to eq('0')
+      expect(@record['245'].indicator2).to eq('0')
     end
     
     it "should set 245 first indicator to 1 if there is an author" do
@@ -211,7 +234,10 @@ describe ApplicationHelper do
       params[:author] = 'OCLC Research'
       @record = helpers.update_marc_record_from_params(@record, params)
       expect(@record['245'].indicator1).to eq('1')
+      expect(@record['245'].indicator2).to eq('0')
       expect(@record['110']['a']).to eq('OCLC Research')
+      expect(@record['110'].indicator1).to eq('2')
+      expect(@record['110'].indicator2).to eq(' ')
     end
     
   end
@@ -225,11 +251,15 @@ describe ApplicationHelper do
     it "should update the publisher name field alone" do
       helpers.update_field_value(@record, '260', 'b', ' ', ' ', 'OCLC Press')
       expect(@record['260']['b']).to eq('OCLC Press')
+      expect(@record['260'].indicator1).to eq(' ')
+      expect(@record['260'].indicator2).to eq(' ')
     end
 
     it "should update the publication date field alone" do
       helpers.update_field_value(@record, '260', 'c', ' ', ' ', '2014')
       expect(@record['260']['c']).to eq('2014')
+      expect(@record['260'].indicator1).to eq(' ')
+      expect(@record['260'].indicator2).to eq(' ')
     end
     
     it "should update both publication date and publisher fields" do
@@ -237,6 +267,8 @@ describe ApplicationHelper do
       helpers.update_field_value(@record, '260', 'c', ' ', ' ', '2014')
       expect(@record['260']['b']).to eq('OCLC Press')
       expect(@record['260']['c']).to eq('2014')
+      expect(@record['260'].indicator1).to eq(' ')
+      expect(@record['260'].indicator2).to eq(' ')
     end
   end # when testing updates to publication data when none exists
   
@@ -248,18 +280,28 @@ describe ApplicationHelper do
     
     it "should update the publisher name" do
       expect(@record['260']['b']).to eq('OCLC Press')
+      expect(@record['260'].indicator1).to eq(' ')
+      expect(@record['260'].indicator2).to eq(' ')
       helpers.update_field_value(@record, '260', 'b', ' ', ' ', 'Acme University Press')
       expect(@record['260']['b']).to eq('Acme University Press')
+      expect(@record['260'].indicator1).to eq(' ')
+      expect(@record['260'].indicator2).to eq(' ')
     end
 
     it "should add the publication date" do
       expect(@record['260']['c']).to be_nil
+      expect(@record['260'].indicator1).to eq(' ')
+      expect(@record['260'].indicator2).to eq(' ')
       helpers.update_field_value(@record, '260', 'c', ' ', ' ', '2014')
       expect(@record['260']['c']).to eq('2014')
+      expect(@record['260'].indicator1).to eq(' ')
+      expect(@record['260'].indicator2).to eq(' ')
     end
 
     it "should remove the publisher name and the 260 field" do
       expect(@record['260']['b']).to eq('OCLC Press')
+      expect(@record['260'].indicator1).to eq(' ')
+      expect(@record['260'].indicator2).to eq(' ')
       helpers.update_field_value(@record, '260', 'b', ' ', ' ', '')
       expect(@record['260']).to be_nil
     end
@@ -273,26 +315,40 @@ describe ApplicationHelper do
     
     it "should update the publication date" do
       expect(@record['260']['c']).to eq('2014')
+      expect(@record['260'].indicator1).to eq(' ')
+      expect(@record['260'].indicator2).to eq(' ')
       helpers.update_field_value(@record, '260', 'c', ' ', ' ', '2013')
       expect(@record['260']['c']).to eq('2013')
+      expect(@record['260'].indicator1).to eq(' ')
+      expect(@record['260'].indicator2).to eq(' ')
     end
 
     it "should add the publisher name" do
       expect(@record['260']['b']).to be_nil
+      expect(@record['260'].indicator1).to eq(' ')
+      expect(@record['260'].indicator2).to eq(' ')
       helpers.update_field_value(@record, '260', 'b', ' ', ' ', 'OCLC Press')
       expect(@record['260']['b']).to eq('OCLC Press')
+      expect(@record['260'].indicator1).to eq(' ')
+      expect(@record['260'].indicator2).to eq(' ')
     end
 
     it "should remove the publisher name and the 260 field" do
       expect(@record['260']['c']).to eq('2014')
+      expect(@record['260'].indicator1).to eq(' ')
+      expect(@record['260'].indicator2).to eq(' ')
       helpers.update_field_value(@record, '260', 'c', ' ', ' ', '')
       expect(@record['260']).to be_nil
     end
     
     it "should put the imprint subfields alphabetical order" do
       expect(@record['260'].subfields.first.code).to eq('c')
+      expect(@record['260'].indicator1).to eq(' ')
+      expect(@record['260'].indicator2).to eq(' ')
       helpers.update_field_value(@record, '260', 'b', ' ', ' ', 'OCLC Press')
       expect(@record['260'].subfields.first.code).to eq('b')
+      expect(@record['260'].indicator1).to eq(' ')
+      expect(@record['260'].indicator2).to eq(' ')
     end
   end
   
@@ -305,38 +361,56 @@ describe ApplicationHelper do
     it "should update the publication date" do
       expect(@record['260']['b']).to eq('OCLC Press')
       expect(@record['260']['c']).to eq('2014')
+      expect(@record['260'].indicator1).to eq(' ')
+      expect(@record['260'].indicator2).to eq(' ')
       helpers.update_field_value(@record, '260', 'c', ' ', ' ', '2013')
       expect(@record['260']['c']).to eq('2013')
       expect(@record['260']['b']).to eq('OCLC Press')
+      expect(@record['260'].indicator1).to eq(' ')
+      expect(@record['260'].indicator2).to eq(' ')
     end
 
     it "should update the publisher name" do
       expect(@record['260']['b']).to eq('OCLC Press')
       expect(@record['260']['c']).to eq('2014')
+      expect(@record['260'].indicator1).to eq(' ')
+      expect(@record['260'].indicator2).to eq(' ')
       helpers.update_field_value(@record, '260', 'b', ' ', ' ', 'Acme University Press')
       expect(@record['260']['c']).to eq('2014')
       expect(@record['260']['b']).to eq('Acme University Press')
+      expect(@record['260'].indicator1).to eq(' ')
+      expect(@record['260'].indicator2).to eq(' ')
     end
 
     it "should remove the publisher name but not the 260 field" do
       expect(@record['260']['b']).to eq('OCLC Press')
       expect(@record['260']['c']).to eq('2014')
+      expect(@record['260'].indicator1).to eq(' ')
+      expect(@record['260'].indicator2).to eq(' ')
       helpers.update_field_value(@record, '260', 'c', ' ', ' ', '')
       expect(@record['260']['c']).to be_nil
       expect(@record['260']['b']).to eq('OCLC Press')
+      expect(@record['260'].indicator1).to eq(' ')
+      expect(@record['260'].indicator2).to eq(' ')
     end
 
     it "should remove the publication date but not the 260 field" do
       expect(@record['260']['b']).to eq('OCLC Press')
       expect(@record['260']['c']).to eq('2014')
+      expect(@record['260'].indicator1).to eq(' ')
+      expect(@record['260'].indicator2).to eq(' ')
       helpers.update_field_value(@record, '260', 'b', ' ', ' ', '')
       expect(@record['260']['b']).to be_nil
       expect(@record['260']['c']).to eq('2014')
+      expect(@record['260'].indicator1).to eq(' ')
+      expect(@record['260'].indicator2).to eq(' ')
     end
 
     it "should remove the publication date, publisher name and the 260 field" do
       expect(@record['260']['b']).to eq('OCLC Press')
       expect(@record['260']['c']).to eq('2014')
+      expect(@record['260'].indicator1).to eq(' ')
+      expect(@record['260'].indicator2).to eq(' ')
       helpers.update_field_value(@record, '260', 'b', ' ', ' ', '')
       helpers.update_field_value(@record, '260', 'c', ' ', ' ', '')
       expect(@record['260']).to be_nil
