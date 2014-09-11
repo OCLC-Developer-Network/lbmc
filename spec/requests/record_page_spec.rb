@@ -80,6 +80,16 @@ describe "the record page" do
       xpath = "//a[@id='marc-view-link']"
       expect(@doc.xpath(xpath).size).to eq(1)
     end
+
+    it "should have a link to the home page" do
+      xpath = "//a[@id='home']"
+      expect(@doc.xpath(xpath).size).to eq(1)
+    end
+    
+    it "should have a link to create a new record" do
+      xpath = "//a[@id='create']"
+      expect(@doc.xpath(xpath).size).to eq(1)
+    end
     
     it "should have a link to logoff" do
       xpath = "//a[@id='logoff']"
@@ -250,6 +260,16 @@ describe "the record page" do
       expect(@doc.xpath(xpath).size).to eq(1)
     end
     
+    it "should have a link to the home page" do
+      xpath = "//a[@id='home']"
+      expect(@doc.xpath(xpath).size).to eq(1)
+    end
+    
+    it "should have a link to create a new record" do
+      xpath = "//a[@id='create']"
+      expect(@doc.xpath(xpath).size).to eq(1)
+    end
+    
     it "should have a link to logoff" do
       xpath = "//a[@id='logoff']"
       expect(@doc.xpath(xpath).size).to eq(1)
@@ -317,6 +337,16 @@ describe "the record page" do
     
     it "should have a link to download MARC XML" do
       xpath = "//a[@id='marc-view-link']"
+      expect(@doc.xpath(xpath).size).to eq(1)
+    end
+    
+    it "should have a link to the home page" do
+      xpath = "//a[@id='home']"
+      expect(@doc.xpath(xpath).size).to eq(1)
+    end
+    
+    it "should have a link to create a new record" do
+      xpath = "//a[@id='create']"
       expect(@doc.xpath(xpath).size).to eq(1)
     end
     
