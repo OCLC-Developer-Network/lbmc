@@ -81,11 +81,6 @@ describe "the record page" do
       expect(@doc.xpath(xpath).size).to eq(1)
     end
     
-    it "should have a link to download MARC21" do
-      xpath = "//a[@id='marc-marc21-link']"
-      expect(@doc.xpath(xpath).size).to eq(1)
-    end
-    
     it "should have a link to logoff" do
       xpath = "//a[@id='logoff']"
       expect(@doc.xpath(xpath).size).to eq(1)
@@ -95,12 +90,6 @@ describe "the record page" do
       marc_xml_link = @doc.xpath("//a[@id='marc-xml-link']").first
       uri = URI.parse(marc_xml_link.attr('href'))
       expect(uri.path).to eq('/record/883876185.xml')
-    end
-    
-    it "should provide a download link to the MARC21 version" do
-      marc21_link = @doc.xpath("//a[@id='marc-marc21-link']").last
-      uri = URI.parse(marc21_link.attr('href'))
-      expect(uri.path).to eq('/record/883876185.mrc')
     end
     
   end
@@ -168,7 +157,7 @@ describe "the record page" do
           }
       post( '/record/create', params=p, rack_env={ 'rack.session' => {:token => @access_token, :registry_id => 128807} } )
       doc = Nokogiri::HTML(last_response.body)
-      @help_block = doc.xpath("//div[@id='errors']/div[@class='help-block']").first
+      @alert = doc.xpath("//div[@id='errors']").first
     end
     
     it "should not redirect to the record display page" do
@@ -176,25 +165,25 @@ describe "the record page" do
     end
     
     it "should display the error section" do
-      expect(@help_block.xpath("./h3[text()='We Encountered Errors']").size).to eq(1)
+      expect(@alert.xpath("./span[@id='error-heading'][text()='Sorry, but the LBMC Pilot system encountered a problem.']").size).to eq(1)
     end
     
     it "should display the error summary" do
-      summary_paragraph = @help_block.xpath("./p[@id='summary']")
+      summary_paragraph = @alert.xpath("./p[@id='summary']")
       expect(summary_paragraph.size).to eq(1)
-      expect(summary_paragraph.first.text).to eq('Error Summary: Record is invalid')
+      expect(summary_paragraph.first.text).to eq('Record is invalid')
     end
 
     it "should display a list of validation errors" do
-      expect(@help_block.xpath("./ul/li").size).to eq(2)
+      expect(@alert.xpath("./ul/li").size).to eq(2)
     end
     
     it "should display the correct validation message for the first error" do
-      expect(@help_block.xpath("./ul/li").first.text).to eq('$a in 245 or $k in 245 must be present.')
+      expect(@alert.xpath("./ul/li").first.text).to eq('$a in 245 or $k in 245 must be present.')
     end
     
     it "should display the correct validation message for the second error" do
-      expect(@help_block.xpath("./ul/li").last.text).to eq('Invalid code in indicator 2 in 1st 650')
+      expect(@alert.xpath("./ul/li").last.text).to eq('Invalid code in indicator 2 in 1st 650')
     end
   end
   
@@ -258,11 +247,6 @@ describe "the record page" do
     
     it "should have a link to download MARC XML" do
       xpath = "//a[@id='marc-view-link']"
-      expect(@doc.xpath(xpath).size).to eq(1)
-    end
-    
-    it "should have a link to download MARC21" do
-      xpath = "//a[@id='marc-marc21-link']"
       expect(@doc.xpath(xpath).size).to eq(1)
     end
     
@@ -336,11 +320,6 @@ describe "the record page" do
       expect(@doc.xpath(xpath).size).to eq(1)
     end
     
-    it "should have a link to download MARC21" do
-      xpath = "//a[@id='marc-marc21-link']"
-      expect(@doc.xpath(xpath).size).to eq(1)
-    end
-    
     it "should have a link to logoff" do
       xpath = "//a[@id='logoff']"
       expect(@doc.xpath(xpath).size).to eq(1)
@@ -370,29 +349,7 @@ describe "the record page" do
         expect(@record['001'].value).to eq('ocn883876185')
       end
     end
-    
-    context "as MARC21" do
-      before(:all) do
-        stub_request(:get, "http://cataloging-worldcatbib-qa.ent.oclc.org/bib/data/883876185?classificationScheme=LibraryOfCongress").
-          to_return(:status => 200, :body => mock_file_contents("ocn883876185.atomxml"))
-        get '/record/883876185.mrc', params={}, rack_env={ 'rack.session' => {:token => @access_token, :registry_id => 128807} }
-        raw_marc = StringIO.new( last_response.body )
-        @record = MARC::Reader.new(raw_marc).first
-      end
-    
-      it "should have a content type of application/marc" do
-        expect(last_response.header["Content-Type"]).to eq("application/marc")
-      end
-    
-      it "should return a parseable MARC record" do
-        expect(@record).to be_instance_of(MARC::Record)
-      end
-    
-      it "should return a MARC record with the right data" do
-        expect(@record['001'].value).to eq('ocn883876185')
-      end
-      
-    end
+     
   end
   
   context "when trying to display an OCLC number that does not exist" do
@@ -401,11 +358,11 @@ describe "the record page" do
         to_return(:status => 404, :body => mock_file_contents("record_not_found.xml"))
       get '/record/99999999999999', params={}, rack_env={ 'rack.session' => {:token => @access_token, :registry_id => 128807} }
       doc = Nokogiri::HTML(last_response.body)
-      @help_block = doc.xpath("//div[@id='errors']/div[@class='help-block']").first
+      @alert = doc.xpath("//div[@id='errors']").first
     end
 
     it "should display the error section" do
-      expect(@help_block.xpath("./h3[text()='We Encountered Errors']").size).to eq(1)
+      expect(@alert.xpath("./span[@id='error-heading'][text()='Sorry, but the LBMC Pilot system encountered a problem.']").size).to eq(1)
     end
 
   end
