@@ -16,7 +16,7 @@ class Bib
   end
   
   def link
-    if @doc.xpath('/atom:entry/atom:link', 'atom' => 'http://www.w3.org/2005/Atom').first.attr('href')
+    if @doc.xpath('/atom:entry/atom:link', 'atom' => 'http://www.w3.org/2005/Atom').first
       @doc.xpath('/atom:entry/atom:link', 'atom' => 'http://www.w3.org/2005/Atom').first.attr('href')
     else
       nil
