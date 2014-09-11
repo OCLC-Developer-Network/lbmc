@@ -76,6 +76,11 @@ describe "the record page" do
       expect(marc_pre_element.text).to eq(marc_str)
     end
     
+    it "should have a link to view the record in WorldCat" do
+      xpath = "//a[@id='marc-worldcat-link']"
+      expect(@doc.xpath(xpath).size).to eq(1)
+    end
+    
     it "should have a link to download MARC XML" do
       xpath = "//a[@id='marc-view-link']"
       expect(@doc.xpath(xpath).size).to eq(1)
@@ -255,6 +260,11 @@ describe "the record page" do
       expect(marc_pre_element.text).to eq(marc_str)
     end
     
+    it "should have a link to view the record in WorldCat" do
+      xpath = "//a[@id='marc-worldcat-link']"
+      expect(@doc.xpath(xpath).size).to eq(1)
+    end
+    
     it "should have a link to download MARC XML" do
       xpath = "//a[@id='marc-view-link']"
       expect(@doc.xpath(xpath).size).to eq(1)
@@ -333,6 +343,11 @@ describe "the record page" do
       marc_str = mock_file_contents("ocn883880805.marc")
       marc_pre_element = @doc.xpath("//pre[@id='marc-view']").first
       expect(marc_pre_element.text).to eq(marc_str)
+    end
+    
+    it "should have a link to view the record in WorldCat" do
+      xpath = "//a[@id='marc-worldcat-link']"
+      expect(@doc.xpath(xpath).size).to eq(1)
     end
     
     it "should have a link to download MARC XML" do
