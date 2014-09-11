@@ -1,21 +1,11 @@
-%div.alert.alert-warning
-  %span.glyphicon.glyphicon-exclamation-sign
-  LBMC application error  
+- if @bib and @bib.error
 
-= partial :bib_errors
+  = partial :bib_errors
 
-%div.pad_below
-  The error has been logged in the LBMC system and will be reported to the LBMC development team.
+- else
 
-%div.pad_below
-  - if session[:token].nil?
-    It doesn't look like you are logged in.  You can log in from the 
-    %a{ :href => url("/") } LBMC home page
-  - else
-    %a#new-record.btn.btn-success{ :href => url("/record/new")} 
-      %span.glyphicon.glyphicon-pencil
-      Create a New Record
-
-
-%div.pad_below
-  If you continue to see this error, please contact us for help.
+  %div#errors.alert.alert-danger 
+    %span.glyphicon.glyphicon-exclamation-sign 
+    Sorry, but the LBMC Pilot system encountered a problem.
+    %div.pad_above
+      This system error has been logged and reported to the LBMC development team.  We apologize for the disruption and are working on a solution.
