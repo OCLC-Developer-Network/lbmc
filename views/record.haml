@@ -19,7 +19,8 @@
     %h3
       %span.glyphicon.glyphicon-pencil
       Edit Record 
-      %a{ :href => @bib.link, :target => 'blank', :title => "View this record in WorldCat.org" }= @bib.id
+      =@bib.id
+
     = partial :record_form, locals: {action: "/record/update", data: @data }
 
 - else
@@ -27,20 +28,20 @@
   %div.well
     %div.alert.alert-info
       %span.glyphicon.glyphicon-exclamation-sign
-      Sorry, but this record is not available for editing in this application.
+      Sorry, but this record is not available for editing in the LBMC Pilot.
     
     = partial :record_display, locals: {data: @data }
 
 %div.row
   %div.col-md-12
-    %a#marc-view-link.btn.btn-default.btn-sm{ :href => '#', :onClick => '$("#marc-view").toggle()', :title => "View the record in MARC format" }
+    %a#marc-view-link.btn.btn-default.btn-sm{ :href => '#', :onClick => '$("#marc-view").toggle(); return false;', :title => "View the record in MARC format" }
       %span.glyphicon.glyphicon-list
-      MARC Record View
+      View the MARC Record
+    %a#marc-worldcat-link.btn.btn-default.btn-sm{ :href => @bib.link, :target => 'blank', :title => "View the record in WorldCat" }
+      %span.glyphicon.glyphicon-globe
+      View in WorldCat
     %a#marc-xml-link.btn.btn-default.btn-sm{ :href => url('/record/'+@bib.id+'.xml'), :title => "Download the record in MARC XML format" }
       %span.glyphicon.glyphicon-download
-      Download the record in MARC XML
-    %a#marc-marc21-link.btn.btn-default.btn-sm{ :href => url('/record/'+@bib.id+'.mrc'), :title => "Download the record in MARC21 transmission format" }
-      %span.glyphicon.glyphicon-download
-      Download the record in MARC21
+      Download MARC XML
     %div.pad_above
       %pre#marc-view= @bib.marc_record
