@@ -1,4 +1,5 @@
 production:
+  app_url: 'https://yourhost/yourpath'
   base_url: 'https://worldcat.org/bib/data'
   wskey_url: 'https://authn.sd00.worldcat.org/oauth2'
   institutions:
