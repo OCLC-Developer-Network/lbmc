@@ -2,7 +2,7 @@
 
 = partial :bib_errors
 
-%form#record-form.pad_above{ :action => url(action), :method => 'POST', :role => 'form'}
+%form#record-form.pad_above{ :action => APP_URL+action, :method => 'POST', :role => 'form'}
 
   %div
     %input{ :type => 'hidden', :name => 'oclc_symbol', :value => INSTITUTIONS[session[:registry_id].to_i]['symbol'] }
