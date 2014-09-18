@@ -10,13 +10,13 @@
           Are you a pilot tester?  Get started by selecting your institution from the list below.
           %div#get-started.list-group.pad_above
             - INSTITUTIONS.each do |registry_id, info|
-              %a.list-group-item.pilot_list{ :id => "login-to-#{registry_id}", :href => url('/authenticate?registry_id='+registry_id.to_s) }
-                %img.logo_medium{ :src => url("/images/#{info['symbol']}.jpg") }
+              %a.list-group-item.pilot_list{ :id => "login-to-#{registry_id}", :href => APP_URL+'/authenticate?registry_id='+registry_id.to_s }
+                %img.logo_medium{ :src => APP_URL+"/images/#{info['symbol']}.jpg" }
                 %span.pad_left_wide= info['name']
         - else
           Are you a pilot tester?  You can create a new record using a simple web form.  Just select this button to get started.
           %div.pad_above
-            %a#new-record.btn.btn-success{ :href => url("/record/new")} 
+            %a#new-record.btn.btn-success{ :href => APP_URL+"/record/new"} 
               %span.glyphicon.glyphicon-pencil
               Create a New Record
             
