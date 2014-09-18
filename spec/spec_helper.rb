@@ -60,6 +60,7 @@ redirect_uri = wskey_config[settings.environment.to_s]['redirect_uri']
 WSKEY = OCLC::Auth::WSKey.new(key, secret, :services => ['WorldCatMetadataAPI'], :redirect_uri => redirect_uri)
 
 config = YAML::load(File.read("#{File.expand_path(File.dirname(__FILE__))}/../config/lbmc.yml"))
+APP_URL = config[settings.environment.to_s]['app_url']
 BASE_URL = config[settings.environment.to_s]['base_url']
 INSTITUTIONS = config[settings.environment.to_s]['institutions']
 
