@@ -54,6 +54,11 @@ describe "the record page" do
       input = @form_element.xpath(".//input[@name='author']").first
       expect(input.attr('value')).to eq('Meyer, Stephen')
     end
+    
+    it "should have a language select box with the right language selecte" do
+      option = @form_element.xpath(".//option[@selected='selected']").first
+      expect(option.attr('value')).to eq('eng')
+    end
 
     it "should have a publisher input field with the right value" do
       input = @form_element.xpath(".//input[@name='publisher']").first
@@ -68,6 +73,11 @@ describe "the record page" do
     it "should have a subject input field with the right value" do
       input = @form_element.xpath(".//input[@name='subject']").first
       expect(input.attr('value')).to eq('Application Programming Interfaces (APIs)')
+    end
+    
+    it "should have an isbn input field with the right value" do
+      input = @form_element.xpath(".//input[@name='isbn']").first
+      expect(input.attr('value')).to eq('9780060723804')
     end
     
     it "should display the MARC record" do
@@ -118,6 +128,7 @@ describe "the record page" do
 
       p = { 
             :oclc_number => '883876185',
+            :language => 'eng',
             :title => 'Testing metadata APIs',
             :subtitle => 'A comparative analysis',
             :author => 'Meyer, Steve',
@@ -142,6 +153,7 @@ describe "the record page" do
           to_return(:status => 200, :body => mock_file_contents("ocn883876185.atomxml"))
 
       p = { 
+            :language => 'eng',
             :title => 'Testing metadata APIs',
             :subtitle => 'A comparative analysis',
             :author => 'Meyer, Stephen',
@@ -164,6 +176,7 @@ describe "the record page" do
           to_return(:status => 409, :body => mock_file_contents("titleless-input-response.marcxml"))
 
       p = { 
+            :language => 'eng',
             :subtitle => 'A comparative analysis',
             :author => 'Meyer, Stephen',
             :publisher => 'OCLC Press',
@@ -249,9 +262,14 @@ describe "the record page" do
       expect(td.text.strip).to eq('vii, 161 leaves :')
     end
     
-    it "should have a table cell containing the subject" do
-      td = @doc.xpath("//td[@id='subject']").first
-      expect(td.text.strip).to eq('Local transit')
+    it "should have a table cell containing the language" do
+      td = @doc.xpath("//td[@id='language']").first
+      expect(td.text.strip).to eq('English')
+    end
+    
+    it "should have a table cell containing the isbn" do
+      td = @doc.xpath("//td[@id='isbn']").first
+      expect(td.text.strip).to eq('')
     end
     
     it "should display the MARC record" do
@@ -334,9 +352,14 @@ describe "the record page" do
       expect(td.text.strip).to eq('60 p.')
     end
     
-    it "should have a table cell containing the subject" do
-      td = @doc.xpath("//td[@id='subject']").first
-      expect(td.text.strip).to eq('Test Driven Development Practices')
+    it "should have a table cell containing the language" do
+      td = @doc.xpath("//td[@id='language']").first
+      expect(td.text.strip).to eq('English')
+    end
+    
+    it "should have a table cell containing the isbn" do
+      td = @doc.xpath("//td[@id='isbn']").first
+      expect(td.text.strip).to eq('')
     end
     
     it "should display the MARC record view" do
