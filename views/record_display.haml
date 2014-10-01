@@ -47,7 +47,21 @@
   %tr
     %td.field_label
       %div.pull-right
+        Language
+    %td{ :id => 'language' }
+      = MARC_LANGUAGES[data['language']]
+      
+  %tr
+    %td.field_label
+      %div.pull-right
         Topic
     %td{ :id => 'subject' }
       = data['subject']
+      
+  %tr
+    %td.field_label
+      %div.pull-right
+        ISBN
+    %td{ :id => 'isbn' }
+      = data['isbn']
       
