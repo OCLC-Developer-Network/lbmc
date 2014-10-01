@@ -25,6 +25,7 @@ get '/record/new' do
 end
 
 post '/record/create' do
+  session[:marc_language] = params[:language]
   record = marc_record_from_params(params)
   @bib = Bib.new_from_marc(record, session[:token])
   @bib.create
@@ -53,6 +54,7 @@ get '/record/:oclc_number.?:format?' do
 end
 
 post '/record/update' do
+	session[:marc_language] = params[:language]
   @bib = Bib.new(params[:oclc_number], session[:token])
   record = update_marc_record_from_params(@bib.marc_record, params)
   @bib.marc_record = record
