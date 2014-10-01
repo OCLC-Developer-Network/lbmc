@@ -12,13 +12,16 @@ describe ApplicationHelper do
     before(:each) do
       @params = {
         :oclc_symbol => 'OCPSB',
+        :language => 'eng',
         :title => 'Testing metadata APIs',
         :author => 'Doe, John',
         :author_field => '100',
+        :place_of_publication => 'New York, N.Y.',
         :publisher => 'OCLC Press',
         :extent => '190 p.',
         :subject => 'Application Programming Interfaces (APIs)',
-        :publication_date => '2013'
+        :publication_date => '2013',
+        :isbn => '9780060723804'
       }
       @record = helpers.marc_record_from_params(@params)
     end
@@ -34,6 +37,12 @@ describe ApplicationHelper do
       expect(@record['245']['a']).to eq('Testing metadata APIs')
       expect(@record['245'].indicator1).to eq('1') 
       expect(@record['245'].indicator2).to eq('0')
+    end
+    
+    it "should add the place of publication" do
+      expect(@record['260']['a']).to eq('New York, N.Y.')
+      expect(@record['260'].indicator1).to eq(' ') 
+      expect(@record['260'].indicator2).to eq(' ')
     end
   
     it "should add the publisher name" do
@@ -61,9 +70,15 @@ describe ApplicationHelper do
     end
 
     it "should add the subject" do
-      expect(@record['650']['a']).to eq('Application Programming Interfaces (APIs)')
-      expect(@record['650'].indicator1).to eq('1') 
-      expect(@record['650'].indicator2).to eq('4')
+      expect(@record['653']['a']).to eq('Application Programming Interfaces (APIs)')
+      expect(@record['653'].indicator1).to eq('1') 
+      expect(@record['653'].indicator2).to eq('0')
+    end
+    
+    it "should add the isbn" do
+      expect(@record['020']['a']).to eq('9780060723804')
+      expect(@record['020'].indicator1).to eq(' ') 
+      expect(@record['020'].indicator2).to eq(' ')
     end
 
     it "should add the author name" do
@@ -173,7 +188,7 @@ describe ApplicationHelper do
         expect(@flde_value[34]).to eq(' ')
       end
 
-      it "should default to English language materials" do
+      it "should have the language provided by the user" do
         expect(@flde_value[35,3]).to eq('eng')
       end
 
@@ -201,6 +216,7 @@ describe ApplicationHelper do
       @record = MARC::XMLReader.new(raw_marc).first
       @params = {
         :oclc_symbol => 'OCPSB',
+        :language => 'eng',
         :title => 'Testing metadata APIs',
         :author => 'Doe, John',
         :author_field => '100',
@@ -248,6 +264,13 @@ describe ApplicationHelper do
       @record = MARC::XMLReader.new(raw_marc).first
     end
     
+    it "should update the place of publication field alone" do
+      helpers.update_field_value(@record, '260', 'a', ' ', ' ', 'Dublin, OH')
+      expect(@record['260']['a']).to eq('Dublin, OH')
+      expect(@record['260'].indicator1).to eq(' ')
+      expect(@record['260'].indicator2).to eq(' ')
+    end
+    
     it "should update the publisher name field alone" do
       helpers.update_field_value(@record, '260', 'b', ' ', ' ', 'OCLC Press')
       expect(@record['260']['b']).to eq('OCLC Press')
@@ -262,9 +285,11 @@ describe ApplicationHelper do
       expect(@record['260'].indicator2).to eq(' ')
     end
     
-    it "should update both publication date and publisher fields" do
+    it "should update all publication fields" do
+    	helpers.update_field_value(@record, '260', 'a', ' ', ' ', 'Dublin, OH')
       helpers.update_field_value(@record, '260', 'b', ' ', ' ', 'OCLC Press')
       helpers.update_field_value(@record, '260', 'c', ' ', ' ', '2014')
+      expect(@record['260']['a']).to eq('Dublin, OH')
       expect(@record['260']['b']).to eq('OCLC Press')
       expect(@record['260']['c']).to eq('2014')
       expect(@record['260'].indicator1).to eq(' ')
@@ -284,6 +309,16 @@ describe ApplicationHelper do
       expect(@record['260'].indicator2).to eq(' ')
       helpers.update_field_value(@record, '260', 'b', ' ', ' ', 'Acme University Press')
       expect(@record['260']['b']).to eq('Acme University Press')
+      expect(@record['260'].indicator1).to eq(' ')
+      expect(@record['260'].indicator2).to eq(' ')
+    end
+    
+    it "should add the place of publication" do
+      expect(@record['260']['a']).to be_nil
+      expect(@record['260'].indicator1).to eq(' ')
+      expect(@record['260'].indicator2).to eq(' ')
+      helpers.update_field_value(@record, '260', 'a', ' ', ' ', 'Dublin, OH')
+      expect(@record['260']['a']).to eq('Dublin, OH')
       expect(@record['260'].indicator1).to eq(' ')
       expect(@record['260'].indicator2).to eq(' ')
     end
@@ -319,6 +354,16 @@ describe ApplicationHelper do
       expect(@record['260'].indicator2).to eq(' ')
       helpers.update_field_value(@record, '260', 'c', ' ', ' ', '2013')
       expect(@record['260']['c']).to eq('2013')
+      expect(@record['260'].indicator1).to eq(' ')
+      expect(@record['260'].indicator2).to eq(' ')
+    end
+    
+    it "should add the place of publication" do
+      expect(@record['260']['a']).to be_nil
+      expect(@record['260'].indicator1).to eq(' ')
+      expect(@record['260'].indicator2).to eq(' ')
+      helpers.update_field_value(@record, '260', 'a', ' ', ' ', 'Dublin, OH')
+      expect(@record['260']['a']).to eq('Dublin, OH')
       expect(@record['260'].indicator1).to eq(' ')
       expect(@record['260'].indicator2).to eq(' ')
     end
@@ -358,59 +403,83 @@ describe ApplicationHelper do
       @record = MARC::XMLReader.new(raw_marc).first
     end
     
+    it "should update the place of publication" do
+      expect(@record['260']['a']).to eq('Dublin, OH')
+      expect(@record['260']['b']).to eq('OCLC Press')
+      expect(@record['260']['c']).to eq('2014')
+      expect(@record['260'].indicator1).to eq(' ')
+      expect(@record['260'].indicator2).to eq(' ')
+      helpers.update_field_value(@record, '260', 'a', ' ', ' ', 'New York, NY')
+      expect(@record['260']['a']).to eq('New York, NY')
+      expect(@record['260']['b']).to eq('OCLC Press')
+      expect(@record['260']['c']).to eq('2014')
+      expect(@record['260'].indicator1).to eq(' ')
+      expect(@record['260'].indicator2).to eq(' ')
+    end
+    
     it "should update the publication date" do
+      expect(@record['260']['a']).to eq('Dublin, OH')
       expect(@record['260']['b']).to eq('OCLC Press')
       expect(@record['260']['c']).to eq('2014')
       expect(@record['260'].indicator1).to eq(' ')
       expect(@record['260'].indicator2).to eq(' ')
       helpers.update_field_value(@record, '260', 'c', ' ', ' ', '2013')
-      expect(@record['260']['c']).to eq('2013')
+      expect(@record['260']['a']).to eq('Dublin, OH')
       expect(@record['260']['b']).to eq('OCLC Press')
+      expect(@record['260']['c']).to eq('2013')
       expect(@record['260'].indicator1).to eq(' ')
       expect(@record['260'].indicator2).to eq(' ')
     end
 
     it "should update the publisher name" do
+      expect(@record['260']['a']).to eq('Dublin, OH')
       expect(@record['260']['b']).to eq('OCLC Press')
       expect(@record['260']['c']).to eq('2014')
       expect(@record['260'].indicator1).to eq(' ')
       expect(@record['260'].indicator2).to eq(' ')
       helpers.update_field_value(@record, '260', 'b', ' ', ' ', 'Acme University Press')
-      expect(@record['260']['c']).to eq('2014')
+      expect(@record['260']['a']).to eq('Dublin, OH')
       expect(@record['260']['b']).to eq('Acme University Press')
+      expect(@record['260']['c']).to eq('2014')
       expect(@record['260'].indicator1).to eq(' ')
       expect(@record['260'].indicator2).to eq(' ')
     end
-
-    it "should remove the publisher name but not the 260 field" do
+    
+    it "should remove the place of publication but not the 260 field" do
+      expect(@record['260']['a']).to eq('Dublin, OH')
       expect(@record['260']['b']).to eq('OCLC Press')
       expect(@record['260']['c']).to eq('2014')
       expect(@record['260'].indicator1).to eq(' ')
       expect(@record['260'].indicator2).to eq(' ')
-      helpers.update_field_value(@record, '260', 'c', ' ', ' ', '')
-      expect(@record['260']['c']).to be_nil
+      helpers.update_field_value(@record, '260', 'a', ' ', ' ', '')
+      expect(@record['260']['a']).to be_nil
       expect(@record['260']['b']).to eq('OCLC Press')
+      expect(@record['260']['c']).to eq('2014')
       expect(@record['260'].indicator1).to eq(' ')
       expect(@record['260'].indicator2).to eq(' ')
     end
 
     it "should remove the publication date but not the 260 field" do
+      expect(@record['260']['a']).to eq('Dublin, OH')
       expect(@record['260']['b']).to eq('OCLC Press')
       expect(@record['260']['c']).to eq('2014')
       expect(@record['260'].indicator1).to eq(' ')
       expect(@record['260'].indicator2).to eq(' ')
-      helpers.update_field_value(@record, '260', 'b', ' ', ' ', '')
-      expect(@record['260']['b']).to be_nil
-      expect(@record['260']['c']).to eq('2014')
+      helpers.update_field_value(@record, '260', 'c', ' ', ' ', '')
+      expect(@record['260']['a']).to eq('Dublin, OH')
+      expect(@record['260']['b']).to eq('OCLC Press')
+      expect(@record['260']['c']).to be_nil
       expect(@record['260'].indicator1).to eq(' ')
       expect(@record['260'].indicator2).to eq(' ')
     end
 
-    it "should remove the publication date, publisher name and the 260 field" do
+    it "should remove the place of publication, publication date, publisher name and the 260 field" do
+      expect(@record['260']['a']).to eq('Dublin, OH')
       expect(@record['260']['b']).to eq('OCLC Press')
       expect(@record['260']['c']).to eq('2014')
       expect(@record['260'].indicator1).to eq(' ')
       expect(@record['260'].indicator2).to eq(' ')
+      helpers.update_field_value(@record, '260', 'a', ' ', ' ', '')
       helpers.update_field_value(@record, '260', 'b', ' ', ' ', '')
       helpers.update_field_value(@record, '260', 'c', ' ', ' ', '')
       expect(@record['260']).to be_nil
