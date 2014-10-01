@@ -4,6 +4,9 @@
                       <controlfield tag="003">OCoLC</controlfield>
                       <controlfield tag="005">20140814153938.4</controlfield>
                       <controlfield tag="008">140813s2014    xx            000 u eng d</controlfield>
+                      <datafield tag="020" ind1=" " ind2=" ">
+                        <subfield code="a">9780060723804</subfield>
+                      </datafield>
                       <datafield tag="040" ind1=" " ind2=" ">
                         <subfield code="a">OCPSB</subfield>
                         <subfield code="c">OCPSB</subfield>
