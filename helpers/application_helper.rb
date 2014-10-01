@@ -4,6 +4,9 @@ module ApplicationHelper
   def marc_record_from_params(params)
     record = create_book_record
     record << book_fixed_length_data(params)
+    
+    # ISBN
+    update_field_value(record, '020', 'a', ' ', ' ', params[:isbn])
 
     # OCLC Symbol
     update_field_value(record, '040', 'a', ' ', ' ', params[:oclc_symbol])
@@ -26,6 +29,7 @@ module ApplicationHelper
     end
     
     # Publication data
+    update_field_value(record, '260', 'a', ' ', ' ', params[:place_of_publication])
     update_field_value(record, '260', 'b', ' ', ' ', params[:publisher])
     update_field_value(record, '260', 'c', ' ', ' ', params[:publication_date])
     
@@ -36,7 +40,7 @@ module ApplicationHelper
     update_field_value(record, '500', 'a', ' ', ' ', LBMC::SOURCE_NOTE)
 
     # Topic
-    update_field_value(record, '650', 'a', '1', '4', params[:subject])
+    update_field_value(record, '653', 'a', '1', '0', params[:subject])
     
     record
   end
@@ -75,7 +79,7 @@ module ApplicationHelper
     fde.value[31,1] = '0'
     fde.value[33,1] = 'u'
     fde.value[34,1] = ' '
-    fde.value[35,3] = 'eng'
+    fde.value[35,3] = params[:language]
     fde.value[38,1] = ' '
     fde.value[39,1] = 'd'
     fde
@@ -86,6 +90,12 @@ module ApplicationHelper
   end
   
   def update_marc_record_from_params(marc_record, params)
+  
+    # Language
+    update_control_field_value(marc_record, '008', 35, params[:language])
+  
+    # ISBN
+    update_field_value(marc_record, '020', 'a', ' ', ' ', params[:isbn])
   
     # Title
     # Set the first indicator value based on the presence or absence of a 1XX author
@@ -105,27 +115,35 @@ module ApplicationHelper
       update_field_value(marc_record, '100', 'a', '1', ' ', '')
       update_field_value(marc_record, '110', 'a', '2', ' ', params[:author])
     end
+    
+    # Place of Publication
+    update_field_value(marc_record, '260', 'a', ' ', ' ', params[:place_of_publication])
 
     # Publisher
     update_field_value(marc_record, '260', 'b', ' ', ' ', params[:publisher])
     
     # Publication date
     update_field_value(marc_record, '260', 'c', ' ', ' ', params[:publication_date])
-    if publication_date_is_positive_number?(params[:publication_date]) 
-      marc_record['008'].value[7,4] = params[:publication_date].rjust(4,'0')
+    if publication_date_is_positive_number?(params[:publication_date])
+      update_control_field_value(marc_record, '008', 7, params[:publication_date].rjust(4,'0'))
     end
     
     # Extent
     update_field_value(marc_record, '300', 'a', ' ', ' ', params[:extent])
 
     # Subject
-    update_field_value(marc_record, '650', 'a', '1', '4', params[:subject])
+    update_field_value(marc_record, '653', 'a', '1', '0', params[:subject])
     
     marc_record
   end
   
   def sort_subfields(marc_record, data_field_number)
     marc_record[data_field_number].subfields.sort_by! {|subfield| subfield.code}
+  end
+  
+  def update_control_field_value(marc_record, control_field_number, starting_position, new_value)
+    control_field = marc_record[control_field_number]
+    control_field.value[starting_position,new_value.length] = new_value
   end
   
   def update_field_value(marc_record, data_field_number, subfield_code, i1, i2, new_value)
