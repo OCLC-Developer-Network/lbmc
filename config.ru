@@ -20,8 +20,7 @@ enable :sessions
 set :session_secret, '406c8f30ee92'
 set :environment, :development
 set :run, true
-set :raise_errors, false
-set :show_exceptions, false
+set :raise_errors, true
 
 wskey_config = YAML::load(File.read("#{File.expand_path(File.dirname(__FILE__))}/config/wskey.yml"))
 key = wskey_config[settings.environment.to_s]['key']
@@ -30,6 +29,7 @@ redirect_uri = wskey_config[settings.environment.to_s]['redirect_uri']
 WSKEY = OCLC::Auth::WSKey.new(key, secret, :services => ['WorldCatMetadataAPI'], :redirect_uri => redirect_uri)
 
 config = YAML::load(File.read("#{File.expand_path(File.dirname(__FILE__))}/config/lbmc.yml"))
+MARC_LANGUAGES = YAML::load(File.read("#{File.expand_path(File.dirname(__FILE__))}/config/marc_languages.yml"))
 APP_URL = config[settings.environment.to_s]['app_url']
 BASE_URL = config[settings.environment.to_s]['base_url']
 WSKEY_URL = config[settings.environment.to_s]['wskey_url']
