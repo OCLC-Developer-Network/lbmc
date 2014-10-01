@@ -2,15 +2,18 @@
 
 - @data = Hash.new
 - @data['id'] = @bib.id
+- @data['language'] = @bib.marc_record['008'].nil? ? '' : @bib.marc_record['008'].to_s[39,3]
+- @data['isbn'] = @bib.marc_record['020'].nil? ? '' : @bib.marc_record['020']['a']
 - @data['title'] = @bib.marc_record['245']['a'].nil? ? '' : @bib.marc_record['245']['a']
 - @data['author'] = @bib.marc_record['100'].nil? ? '' : @bib.marc_record['100']['a']
 - @data['author'] = @bib.marc_record['110'].nil? ? @data['author'] : @bib.marc_record['110']['a']
 - @data['author_is_person'] = @bib.marc_record['110'].nil? ? true : false
 - @data['author_is_organization'] = @bib.marc_record['110'].nil? ? false : true
+- @data['place_of_publication'] = @bib.marc_record['260'].nil? ? '' : @bib.marc_record['260']['a']
 - @data['publisher'] = @bib.marc_record['260'].nil? ? '' : @bib.marc_record['260']['b']
 - @data['publication_date'] = @bib.marc_record['260'].nil? ? '' : @bib.marc_record['260']['c']
 - @data['extent'] = @bib.marc_record['300'].nil? ? '' : @bib.marc_record['300']['a']
-- @data['subject'] = @bib.marc_record['650'].nil? ? '' : @bib.marc_record['650']['a']
+- @data['subject'] = @bib.marc_record['653'].nil? ? '' : @bib.marc_record['653']['a']
 - @button_label = "Update this Record"
 
 - if @bib.is_app_created? and belongs_to_current_user?(@bib.marc_record, INSTITUTIONS[session[:registry_id].to_i]['symbol'])
