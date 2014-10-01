@@ -22,6 +22,7 @@
     <subfield code="a">Test Driven Development for AuthNZ Enforcement</subfield>
   </datafield>
   <datafield tag="260" ind1=" " ind2=" ">
+    <subfield code="a">Dublin, OH</subfield>
     <subfield code="b">OCLC Press</subfield>
     <subfield code="c">2014</subfield>
   </datafield>
