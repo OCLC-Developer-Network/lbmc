@@ -11,11 +11,6 @@
     %input{ :type => 'hidden', :name => 'oclc_number', :value => data['id'] }
     
   %div.form-group
-    %button.btn.btn-success{ :type => 'submit' } 
-      %span.glyphicon.glyphicon-ok 
-      #{@button_label}
-    
-  %div.form-group
     %label{ :for=>'title' } What is the title?
     %span.hint This is the only required field, the others are optional.
     %input.form-control{ :type => 'text', :id => 'title', :name => 'title', :value => @data['title'] }
@@ -68,3 +63,8 @@
     %label{ :for=>'subject'} Does the book have an ISBN number?
     %span.hint If the book has an ISBN number please enter it here.  For example "1406738859".
     %input.form-control{ :type => 'text', :name => 'isbn', :value => @data['isbn'] }
+    
+  %div.form-group
+    %button.btn.btn-success{ :type => 'submit' } 
+      %span.glyphicon.glyphicon-ok 
+      #{@button_label}
