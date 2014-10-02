@@ -30,7 +30,7 @@ post '/record/create' do
   @bib = Bib.new_from_marc(record, session[:token])
   @bib.create
   if @bib.response_code == '201'
-    redirect "/record/#{@bib.marc_record['001'].value.gsub(/\D/, '')}"
+    redirect url("/record/#{@bib.marc_record['001'].value.gsub(/\D/, '')}")
   else
     haml :new, :layout => :template
   end
@@ -60,7 +60,7 @@ post '/record/update' do
   @bib.marc_record = record
   @bib.update
   if @bib.response_code == '200' or @bib.response_code == '201'
-    redirect "/record/#{@bib.marc_record['001'].value.gsub(/\D/, '')}"
+    redirect url("/record/#{@bib.marc_record['001'].value.gsub(/\D/, '')}")
   else
     haml :record, :layout => :template
   end
