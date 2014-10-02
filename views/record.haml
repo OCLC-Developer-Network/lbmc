@@ -18,6 +18,18 @@
 
 - if @bib.is_app_created? and belongs_to_current_user?(@bib.marc_record, INSTITUTIONS[session[:registry_id].to_i]['symbol'])
 
+  :javascript
+    $(document).ready( function() {
+      var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+      var isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
+      if (isChrome || isSafari) {
+        $('#webkit_message').addClass("alert alert-warning");
+        $('#webkit_message').html("<span class='glyphicon glyphicon-info-sign'></span> Record editing isn't working yet with the Chrome or Safari web browsers.  The LBMC team is working on a solution to that problem.  Until then, please use Firefox or Internet Explorer.  We apologize for your inconvenience.");
+      }
+    });
+
+  %div#webkit_message
+
   %div.well
     %h3
       %span.glyphicon.glyphicon-pencil
@@ -35,9 +47,9 @@
     
     = partial :record_display, locals: {data: @data }
 
-%div.row
+%div.row#marc_views
   %div.col-md-12
-    %a#marc-view-link.btn.btn-default.btn-sm{ :href => '#', :onClick => '$("#marc-view").toggle(); return false;', :title => "View the record in MARC format" }
+    %a#marc-view-link.btn.btn-default.btn-sm{ :href => '#', :onClick => '$("#marc-view").toggle(); $("html, body").animate({ scrollTop: $("#marc_views").offset().top}, 1000); return false;', :title => "View the record in MARC format" }
       %span.glyphicon.glyphicon-list
       View the MARC Record
     %a#marc-worldcat-link.btn.btn-default.btn-sm{ :href => @bib.link, :target => 'blank', :title => "View the record in WorldCat" }
