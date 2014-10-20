@@ -486,6 +486,24 @@ describe ApplicationHelper do
     end
   end
   
+  context "when creating a new MARC record with Japanese vernacular script in the title" do
+    it "should have a 245 field with <> in subfield a" do
+      # something
+    end
+    it "should have the same 245 field with [linking tag]-[occurrence number]/[script identification code]/[field orientation code] in subfield 6" do
+      # something
+    end
+    it "should have an 880 field with vernacular script in subfield a" do
+      # something
+    end
+    it "should have the same 880 field with [linking tag]-[occurrence number]/[script identification code]/[field orientation code] in subfield 6" do
+      # something
+    end
+    it "should have an 041 field with jpn in subfield a" do
+      # something
+    end
+  end
+  
   context "when displaying a MARC record created by my institution" do
   
     before(:each) do
