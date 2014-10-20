@@ -5,6 +5,7 @@
 - @data['language'] = @bib.marc_record['008'].nil? ? '' : @bib.marc_record['008'].to_s[39,3]
 - @data['isbn'] = @bib.marc_record['020'].nil? ? '' : @bib.marc_record['020']['a']
 - @data['title'] = @bib.marc_record['245']['a'].nil? ? '' : @bib.marc_record['245']['a']
+- @data['title_880'] = @bib.marc_record['880'].nil? ? nil : @bib.marc_record['880']['a']
 - @data['author'] = @bib.marc_record['100'].nil? ? '' : @bib.marc_record['100']['a']
 - @data['author'] = @bib.marc_record['110'].nil? ? @data['author'] : @bib.marc_record['110']['a']
 - @data['author_is_person'] = @bib.marc_record['110'].nil? ? true : false
