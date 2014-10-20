@@ -1,5 +1,137 @@
 # encoding: utf-8
 module ApplicationHelper
+
+  def script_identifier
+    {
+      "Arabic" => "(3",
+      "Armenian" => "Armn",
+      "Bengali" => "Beng",
+      "Cyrillic" => "(N",
+      "Devangari" => "Deva",
+      "Ethiopic" => "Ethi",
+      "Greek" => "(S",
+      "Han" => "$1",
+      "Hangul" => "$1",
+      "Hebrew" => "(2",
+      "Hiragana" => "$1",
+      "Katakana" => "$1",
+      "Syriac" => "Syrc",
+      "Tamil" => "Taml",
+      "Thai" => "Thai"
+    }
+  end
+
+  def supported_languages 
+    [ 
+      "Arabic",
+      "Armenian",
+      "Bengali",
+      #"Common",
+      "Cyrillic",
+      "Devangari",
+      "Ethiopic",
+      "Greek",
+      "Han",
+      "Hangul",
+      "Hebrew",
+      "Hiragana",
+      "Katakana",
+      "Latin",
+      "Syriac",
+      "Tamil",
+      "Thai"
+    ]
+  end
+
+  def languages
+    {
+      "Arabic" => /\p{Arabic}/, 
+      "Armenian" => /\p{Armenian}/, 
+      "Balinese" => /\p{Balinese}/, 
+      "Bengali" => /\p{Bengali}/, 
+      "Bopomofo" => /\p{Bopomofo}/, 
+      "Braille" => /\p{Braille}/, 
+      "Buginese" => /\p{Buginese}/, 
+      "Buhid" => /\p{Buhid}/, 
+      "Canadian_Aboriginal" => /\p{Canadian_Aboriginal}/, 
+      "Carian" => /\p{Carian}/, 
+      "Cham" => /\p{Cham}/, 
+      "Cherokee" => /\p{Cherokee}/, 
+      #"Common" => /\p{Common}/, 
+      "Coptic" => /\p{Coptic}/, 
+      "Cuneiform" => /\p{Cuneiform}/, 
+      "Cypriot" => /\p{Cypriot}/, 
+      "Cyrillic" => /\p{Cyrillic}/, 
+      "Deseret" => /\p{Deseret}/, 
+      "Devanagari" => /\p{Devanagari}/, 
+      "Ethiopic" => /\p{Ethiopic}/, 
+      "Georgian" => /\p{Georgian}/, 
+      "Glagolitic" => /\p{Glagolitic}/, 
+      "Gothic" => /\p{Gothic}/, 
+      "Greek" => /\p{Greek}/, 
+      "Gujarati" => /\p{Gujarati}/, 
+      "Gurmukhi" => /\p{Gurmukhi}/, 
+      "Han" => /\p{Han}/, 
+      "Hangul" => /\p{Hangul}/, 
+      "Hanunoo" => /\p{Hanunoo}/, 
+      "Hebrew" => /\p{Hebrew}/, 
+      "Hiragana" => /\p{Hiragana}/, 
+      "Inherited" => /\p{Inherited}/, 
+      "Kannada" => /\p{Kannada}/, 
+      "Katakana" => /\p{Katakana}/, 
+      "Kayah_Li" => /\p{Kayah_Li}/, 
+      "Kharoshthi" => /\p{Kharoshthi}/, 
+      "Khmer" => /\p{Khmer}/, 
+      "Lao" => /\p{Lao}/, 
+      "Latin" => /\p{Latin}/, 
+      "Lepcha" => /\p{Lepcha}/, 
+      "Limbu" => /\p{Limbu}/, 
+      "Linear_B" => /\p{Linear_B}/, 
+      "Lycian" => /\p{Lycian}/, 
+      "Lydian" => /\p{Lydian}/, 
+      "Malayalam" => /\p{Malayalam}/, 
+      "Mongolian" => /\p{Mongolian}/, 
+      "Myanmar" => /\p{Myanmar}/, 
+      "New_Tai_Lue" => /\p{New_Tai_Lue}/, 
+      "Nko" => /\p{Nko}/, 
+      "Ogham" => /\p{Ogham}/, 
+      "Ol_Chiki" => /\p{Ol_Chiki}/, 
+      "Old_Italic" => /\p{Old_Italic}/, 
+      "Old_Persian" => /\p{Old_Persian}/, 
+      "Oriya" => /\p{Oriya}/, 
+      "Osmanya" => /\p{Osmanya}/, 
+      "Phags_Pa" => /\p{Phags_Pa}/, 
+      "Phoenician" => /\p{Phoenician}/, 
+      "Rejang" => /\p{Rejang}/, 
+      "Runic" => /\p{Runic}/, 
+      "Saurashtra" => /\p{Saurashtra}/, 
+      "Shavian" => /\p{Shavian}/, 
+      "Sinhala" => /\p{Sinhala}/, 
+      "Sundanese" => /\p{Sundanese}/, 
+      "Syloti_Nagri" => /\p{Syloti_Nagri}/, 
+      "Syriac" => /\p{Syriac}/, 
+      "Tagalog" => /\p{Tagalog}/, 
+      "Tagbanwa" => /\p{Tagbanwa}/, 
+      "Tai_Le" => /\p{Tai_Le}/, 
+      "Tamil" => /\p{Tamil}/, 
+      "Telugu" => /\p{Telugu}/, 
+      "Thaana" => /\p{Thaana}/, 
+      "Thai" => /\p{Thai}/, 
+      "Tibetan" => /\p{Tibetan}/, 
+      "Tifinagh" => /\p{Tifinagh}/, 
+      "Ugaritic" => /\p{Ugaritic}/, 
+      "Vai" => /\p{Vai}/, 
+      "Yi" => /\p{Yi}/
+    }
+  end
+  
+  def detect_language(str)
+    matches = Array.new
+    languages.each do |lang, lang_regex|
+      matches << lang if str =~ lang_regex
+    end
+    matches
+  end
   
   def marc_record_from_params(params)
     record = create_book_record
@@ -20,12 +152,27 @@ module ApplicationHelper
     end
     
     # Title
+    
     # Set the first indicator value based on the presence or absence of a 1XX author
-    update_field_value(record, '245', 'a', '1', '0', params[:title])
-    if !record['245'].nil?
-      if params[:author].nil? or params[:author].strip == ''
-        record['245'].indicator1 = '0'
-      end
+    indicator1 = '1'
+    if params[:author].nil? or params[:author].strip == ''
+      indicator1 = '0'
+    end
+
+    # Update the title 
+    update_field_value(record, '245', 'a', indicator1, '0', params[:title])
+    
+    # Detect language of the title string
+    title_languages = detect_language(params[:title])
+
+    # If title is all one language and in a supported non-Latin script, do 245/880 stuff
+    if title_languages.length == 1 and title_languages[0] != "Latin" and supported_languages.include?(title_languages[0])
+      update_field_value(record, '066', 'c', ' ', ' ', script_identifier[title_languages[0]])
+      update_field_value(record, '245', 'a', indicator1, '0', '')
+      update_field_value(record, '245', '6', indicator1, '0', '880-01')
+      update_field_value(record, '245', 'a', indicator1, '0', '<>')
+      update_field_value(record, '880', '6', indicator1, '0', '245-01/'+script_identifier[title_languages[0]])
+      update_field_value(record, '880', 'a', indicator1, '0', params[:title])
     end
     
     # Publication data
@@ -91,6 +238,8 @@ module ApplicationHelper
   
   def update_marc_record_from_params(marc_record, params)
   
+    puts ; puts pp params ; puts
+  
     # Language
     update_control_field_value(marc_record, '008', 35, params[:language])
   
@@ -98,10 +247,41 @@ module ApplicationHelper
     update_field_value(marc_record, '020', 'a', ' ', ' ', params[:isbn])
   
     # Title
+    
     # Set the first indicator value based on the presence or absence of a 1XX author
-    update_field_value(marc_record, '245', 'a', '1', '0', params[:title])
+    indicator1 = '1'
     if params[:author].nil? or params[:author].strip == ''
-      marc_record['245'].indicator1 = '0'
+      indicator1 = '0'
+    end
+    
+    # Detect language of the title string
+    title_languages = detect_language(params[:title])
+    if title_languages.length == 1 and title_languages[0] == "Latin"
+      # remove any 066 and 880 fields
+      update_field_value(marc_record, '066', 'c', ' ', ' ', '')
+      update_field_value(marc_record, '245', '6', indicator1, '0', '')
+      update_field_value(marc_record, '880', '6', indicator1, '0', '')
+      update_field_value(marc_record, '880', 'a', indicator1, '0', '')
+    else
+      # params[:title] = title_languages.join(", ")
+      title_languages.each { |x|
+        unless supported_languages.include?(x)
+          # params[:title] += " Language " + x + " is unsupported"
+        end
+      }
+    end
+    
+    # Update the title 
+    update_field_value(marc_record, '245', 'a', indicator1, '0', params[:title])
+
+    # If title is all one language and in a supported non-Latin script, do 245/880 stuff
+    if title_languages.length == 1 and title_languages[0] != "Latin" and supported_languages.include?(title_languages[0])
+      update_field_value(marc_record, '066', 'c', ' ', ' ', script_identifier[title_languages[0]])
+      update_field_value(marc_record, '245', 'a', indicator1, '0', '')
+      update_field_value(marc_record, '245', '6', indicator1, '0', '880-01')
+      update_field_value(marc_record, '245', 'a', indicator1, '0', '<>')
+      update_field_value(marc_record, '880', '6', indicator1, '0', '245-01/'+script_identifier[title_languages[0]])
+      update_field_value(marc_record, '880', 'a', indicator1, '0', params[:title])
     end
     
     # Author
@@ -150,16 +330,15 @@ module ApplicationHelper
     data_field = marc_record[data_field_number]
     
     # Does the data_field currently exist?
-    if data_field.nil?
+    
+    if data_field.nil? # data_field is nil ...
       
-      # if new_value is blank, there is nothing to delete
+      # the data field does not exist yet
       unless new_value.nil? or new_value.strip == ''
-
-        # otherwise, create the data field, add the subfield, add it to the record
         marc_record << MARC::DataField.new(data_field_number, i1, i2, MARC::Subfield.new(subfield_code, new_value))
-
       end
-    else # data_field is not nil...
+      
+    else # data_field is not nil ...
       
       # if new_value is blank, 
       if new_value.nil? or new_value.strip == ''
@@ -189,6 +368,7 @@ module ApplicationHelper
     if data_field_number == '260' and marc_record[data_field_number]
       sort_subfields(marc_record, data_field_number)
     end
+    
   end
   
   # Will respond true if the data field is not null and the given subfield code 
