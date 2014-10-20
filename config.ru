@@ -7,6 +7,7 @@ require 'marc'
 require 'nokogiri'
 require 'json'
 require 'oclc/auth'
+require 'pp'
 
 
 require './helpers/application_helper'
