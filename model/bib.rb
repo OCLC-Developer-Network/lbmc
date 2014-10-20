@@ -32,10 +32,10 @@ class Bib
     resource.post(payload, :authorization => auth, 
         :content_type => LBMC::MARC_XML_MIMETYPE,
         :accept => LBMC::ATOM_WRAPPED_MARC_MIMETYPE) do |response, request, result|
-      # puts ; puts request.inspect ; puts
-      # puts ; puts response ; puts
-      # puts ; puts result.inspect ; puts
-      # puts ; puts response.headers ; puts
+      puts ; puts request.inspect ; puts
+      puts ; puts response ; puts
+      puts ; puts result.inspect ; puts
+      puts ; puts response.headers ; puts
       @response_body = response
       @response_code = result.code
     end
@@ -54,10 +54,10 @@ class Bib
     resource = RestClient::Resource.new(url)
     resource.get(:authorization => auth, 
         :accept => LBMC::ATOM_WRAPPED_MARC_MIMETYPE) do |response, request, result|
-      # puts ; puts request.inspect ; puts
-      # puts ; puts response ; puts
-      # puts ; puts result.inspect ; puts
-      # puts ; puts response.headers ; puts
+      puts ; puts request.inspect ; puts
+      puts ; puts response ; puts
+      puts ; puts result.inspect ; puts
+      puts ; puts response.headers ; puts
       @response_body = response
       @response_code = result.code
     end
@@ -79,10 +79,10 @@ class Bib
     resource.put(payload, :authorization => auth, 
         :content_type => LBMC::MARC_XML_MIMETYPE,
         :accept => LBMC::ATOM_WRAPPED_MARC_MIMETYPE) do |response, request, result|
-      # puts ; puts request.inspect ; puts
-      # puts ; puts response ; puts
-      # puts ; puts result.inspect ; puts
-      # puts ; puts response.headers ; puts
+      puts ; puts request.inspect ; puts
+      puts ; puts response ; puts
+      puts ; puts result.inspect ; puts
+      puts ; puts response.headers ; puts
       @response_body = response
       @response_code = result.code
     end
