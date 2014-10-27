@@ -50,4 +50,8 @@ pre {
 	background-color: #999;
 	color: #FFF;
 }
+.example {
+	color: darkred;
+	font-weight: bold;
+}
 
