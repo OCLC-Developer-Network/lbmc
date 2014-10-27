@@ -14,7 +14,7 @@
       %div.pull-right
         Title
     %td{ :id => 'title' }
-      = data['title']
+      = @data['title_880'].nil? ? @data['title'] : @data['title_880']
       
   %tr
     %td.field_label
@@ -22,11 +22,18 @@
         Author
     %td{ :id => 'author' }
       = data['author']
+
+  %tr
+    %td.field_label
+      %div.pull-right
+        Country of Publication
+    %td{ :id => 'country_of_publication' }
+      = MARC_COUNTRIES[data['country_of_publication']]
       
   %tr
     %td.field_label
       %div.pull-right
-        Place of publication
+        City of publication
     %td{ :id => 'place_of_publication' }
       = data['place_of_publication']
       
@@ -58,12 +65,14 @@
     %td{ :id => 'language' }
       = MARC_LANGUAGES[data['language']]
       
-  %tr
-    %td.field_label
-      %div.pull-right
-        Topic
-    %td{ :id => 'subject' }
-      = data['subject']
+  - if @data['subject'].kind_of?(Array)
+    - @data['subject'].each do |subject|
+      %tr
+        %td.field_label
+          %div.pull-right
+            Topic
+        %td{ :id => 'subject' }
+          = subject['a']
       
   %tr
     %td.field_label
