@@ -16,25 +16,6 @@
 - @data['subject'] = params[:subject].nil? ? '' : params[:subject]
 - @button_label = "Create this Record"
 
-:javascript
-  $(document).ready( function() {
-    var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-    var isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
-    if (isChrome || isSafari) {
-      $('#webkit_message').addClass("alert alert-warning");
-      $('#webkit_message').html("<span class='glyphicon glyphicon-info-sign'></span> Record creation isn't working yet with the Chrome or Safari web browsers.  The LBMC team is working on a solution to that problem.  Until then, please use Firefox or Internet Explorer.  We apologize for your inconvenience!");
-    }
-    $(".add").click(function (e) {
-      n = $(".subjects").size() + 2;
-      $("#subjects").append('<div class="row pad_above" id="row-elem-'+n+'"><div class="col-md-10"><input type="text" name="subject[]" class="form-control"></div><div class="col-md-2"><div class="pull-right"><button id="elem-'+n+'" class="btn btn-sm btn-danger delete"><span class="glyphicon glyphicon-minus-sign"></span> Delete</button></div></div></div>');
-      return false;
-    });
-    $("body").on("click", ".delete", function (e) {
-      $("#row-"+this.id).remove();
-      return false;
-    });
-  });
-
 %div#webkit_message
 
 %div.well
