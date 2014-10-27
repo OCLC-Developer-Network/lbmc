@@ -3,6 +3,7 @@
 - @data = Hash.new
 - @data['id'] = params[:id].nil? ? '' : params[:id].to_s
 - @data['language'] = session[:marc_language].nil? ? '' : session[:marc_language]
+- @data['country_of_publication'] = session[:marc_country].nil? ? '' : session[:marc_country]
 - @data['isbn'] = params[:isbn].nil? ? '' : params[:isbn]
 - @data['title'] = params[:title].nil? ? '' : params[:title]
 - @data['author'] = params[:author].nil? ? '' : params[:author]
@@ -23,6 +24,15 @@
       $('#webkit_message').addClass("alert alert-warning");
       $('#webkit_message').html("<span class='glyphicon glyphicon-info-sign'></span> Record creation isn't working yet with the Chrome or Safari web browsers.  The LBMC team is working on a solution to that problem.  Until then, please use Firefox or Internet Explorer.  We apologize for your inconvenience!");
     }
+    $(".add").click(function (e) {
+      n = $(".subjects").size() + 2;
+      $("#subjects").append('<div class="row pad_above" id="row-elem-'+n+'"><div class="col-md-10"><input type="text" name="subject[]" class="form-control"></div><div class="col-md-2"><div class="pull-right"><button id="elem-'+n+'" class="btn btn-sm btn-danger delete"><span class="glyphicon glyphicon-minus-sign"></span> Delete</button></div></div></div>');
+      return false;
+    });
+    $("body").on("click", ".delete", function (e) {
+      $("#row-"+this.id).remove();
+      return false;
+    });
   });
 
 %div#webkit_message
