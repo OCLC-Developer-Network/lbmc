@@ -137,6 +137,12 @@ module ApplicationHelper
     record = create_book_record
     record << book_fixed_length_data(params)
     
+    # Language
+    update_control_field_value(record, '008', 35, params[:language])
+    
+    # Country of publication
+    update_control_field_value(record, '008', 15, params[:country_of_publication])
+    
     # ISBN
     update_field_value(record, '020', 'a', ' ', ' ', params[:isbn])
 
@@ -154,13 +160,13 @@ module ApplicationHelper
     # Title
     
     # Set the first indicator value based on the presence or absence of a 1XX author
-    indicator1 = '1'
+    title_indicator_1 = '1'
     if params[:author].nil? or params[:author].strip == ''
-      indicator1 = '0'
+      title_indicator_1 = '0'
     end
 
     # Update the title 
-    update_field_value(record, '245', 'a', indicator1, '0', params[:title])
+    update_field_value(record, '245', 'a', title_indicator_1, '0', params[:title])
     
     # Detect language of the title string
     title_languages = detect_language(params[:title])
@@ -168,11 +174,11 @@ module ApplicationHelper
     # If title is all one language and in a supported non-Latin script, do 245/880 stuff
     if title_languages.length == 1 and title_languages[0] != "Latin" and supported_languages.include?(title_languages[0])
       update_field_value(record, '066', 'c', ' ', ' ', script_identifier[title_languages[0]])
-      update_field_value(record, '245', 'a', indicator1, '0', '')
-      update_field_value(record, '245', '6', indicator1, '0', '880-01')
-      update_field_value(record, '245', 'a', indicator1, '0', '<>')
-      update_field_value(record, '880', '6', indicator1, '0', '245-01/'+script_identifier[title_languages[0]])
-      update_field_value(record, '880', 'a', indicator1, '0', params[:title])
+      update_field_value(record, '245', 'a', title_indicator_1, '0', '')
+      update_field_value(record, '245', '6', title_indicator_1, '0', '880-01')
+      update_field_value(record, '245', 'a', title_indicator_1, '0', '<>')
+      update_field_value(record, '880', '6', title_indicator_1, '0', '245-01/'+script_identifier[title_languages[0]])
+      update_field_value(record, '880', 'a', title_indicator_1, '0', params[:title])
     end
     
     # Publication data
@@ -187,7 +193,7 @@ module ApplicationHelper
     update_field_value(record, '500', 'a', ' ', ' ', LBMC::SOURCE_NOTE)
 
     # Topic
-    update_field_value(record, '653', 'a', '1', '0', params[:subject])
+    update_field_array(record, '653', 'a', '1', '0', params[:subject])
     
     record
   end
@@ -242,6 +248,9 @@ module ApplicationHelper
   
     # Language
     update_control_field_value(marc_record, '008', 35, params[:language])
+    
+    # Country of publication
+    update_control_field_value(marc_record, '008', 15, params[:country_of_publication])
   
     # ISBN
     update_field_value(marc_record, '020', 'a', ' ', ' ', params[:isbn])
@@ -249,9 +258,9 @@ module ApplicationHelper
     # Title
     
     # Set the first indicator value based on the presence or absence of a 1XX author
-    indicator1 = '1'
+    title_indicator_1 = '1'
     if params[:author].nil? or params[:author].strip == ''
-      indicator1 = '0'
+      title_indicator_1 = '0'
     end
     
     # Detect language of the title string
@@ -259,29 +268,22 @@ module ApplicationHelper
     if title_languages.length == 1 and title_languages[0] == "Latin"
       # remove any 066 and 880 fields
       update_field_value(marc_record, '066', 'c', ' ', ' ', '')
-      update_field_value(marc_record, '245', '6', indicator1, '0', '')
-      update_field_value(marc_record, '880', '6', indicator1, '0', '')
-      update_field_value(marc_record, '880', 'a', indicator1, '0', '')
-    else
-      # params[:title] = title_languages.join(", ")
-      title_languages.each { |x|
-        unless supported_languages.include?(x)
-          # params[:title] += " Language " + x + " is unsupported"
-        end
-      }
+      update_field_value(marc_record, '245', '6', title_indicator_1, '0', '')
+      update_field_value(marc_record, '880', '6', title_indicator_1, '0', '')
+      update_field_value(marc_record, '880', 'a', title_indicator_1, '0', '')
     end
     
     # Update the title 
-    update_field_value(marc_record, '245', 'a', indicator1, '0', params[:title])
+    update_field_value(marc_record, '245', 'a', title_indicator_1, '0', params[:title])
 
     # If title is all one language and in a supported non-Latin script, do 245/880 stuff
     if title_languages.length == 1 and title_languages[0] != "Latin" and supported_languages.include?(title_languages[0])
       update_field_value(marc_record, '066', 'c', ' ', ' ', script_identifier[title_languages[0]])
-      update_field_value(marc_record, '245', 'a', indicator1, '0', '')
-      update_field_value(marc_record, '245', '6', indicator1, '0', '880-01')
-      update_field_value(marc_record, '245', 'a', indicator1, '0', '<>')
-      update_field_value(marc_record, '880', '6', indicator1, '0', '245-01/'+script_identifier[title_languages[0]])
-      update_field_value(marc_record, '880', 'a', indicator1, '0', params[:title])
+      update_field_value(marc_record, '245', 'a', title_indicator_1, '0', '')
+      update_field_value(marc_record, '245', '6', title_indicator_1, '0', '880-01')
+      update_field_value(marc_record, '245', 'a', title_indicator_1, '0', '<>')
+      update_field_value(marc_record, '880', '6', title_indicator_1, '0', '245-01/'+script_identifier[title_languages[0]])
+      update_field_value(marc_record, '880', 'a', title_indicator_1, '0', params[:title])
     end
     
     # Author
@@ -312,7 +314,7 @@ module ApplicationHelper
     update_field_value(marc_record, '300', 'a', ' ', ' ', params[:extent])
 
     # Subject
-    update_field_value(marc_record, '653', 'a', '1', '0', params[:subject])
+    update_field_array(marc_record, '653', 'a', '1', '0', params[:subject])
     
     marc_record
   end
@@ -354,7 +356,9 @@ module ApplicationHelper
         
       else # new_value is not blank
 
-        # Update or the subfield data
+        # Update or add the subfield data
+        data_field.indicator1 = i1
+        data_field.indicator2 = i2
         subfield = data_field.find_all {|subfield| subfield.code == subfield_code}.first
         if subfield
           subfield.value = new_value
@@ -367,6 +371,27 @@ module ApplicationHelper
     
     if data_field_number == '260' and marc_record[data_field_number]
       sort_subfields(marc_record, data_field_number)
+    end
+    
+  end
+  
+  def update_field_array(marc_record, data_field_number, subfield_code, i1, i2, new_array)
+  
+    data_field = marc_record[data_field_number]
+    
+    # Does at least one occurrence of the data_field currently exist?
+    unless data_field.nil? # data_field is not nil ...
+      # remove all occurrences of data_field from marc_record
+      marc_record.each_by_tag(data_field_number) do |field| 
+        marc_record.fields.delete(field)
+      end
+    end
+    
+    # add new data_fields for non nil and non-empty members of new_array
+    new_array.each do |new_value|
+      unless new_value.nil? or new_value.strip == ''
+        marc_record << MARC::DataField.new(data_field_number, i1, i2, MARC::Subfield.new(subfield_code, new_value))
+      end
     end
     
   end
