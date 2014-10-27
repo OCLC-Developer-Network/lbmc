@@ -3,8 +3,10 @@
     %span.glyphicon.glyphicon-exclamation-sign 
     %span#error-heading Sorry, but the LBMC Pilot system encountered a problem.
     %p.pad_above
-    Here's what the system says about it.  Apologies for the jargon.
-    %p#summary.pad_above= @bib.error.summary
-    %ul
-      - @bib.error.validation_errors.each do |validation_error| 
-        %li= validation_error.message
+    - @bib.error.validation_errors.each do |validation_error| 
+      - if validation_error.message.include? "245"
+        A title is required.
+      - elsif validation_error.message.include? "020"
+        There is a problem with the ISBN.  It needs to be a valid ISBN, either 10 or 13 digits long.  If the problem persists, leave the ISBN field empty.
+      - else
+        = validation_error.message
