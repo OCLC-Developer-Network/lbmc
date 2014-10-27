@@ -11,58 +11,117 @@
     %input{ :type => 'hidden', :name => 'oclc_number', :value => data['id'] }
     
   %div.form-group
-    %label{ :for=>'title' } What is the title?
-    %span.hint This is the only required field, the others are optional.
-    %input.form-control{ :type => 'text', :id => 'title', :name => 'title', :value => @data['title'] }
+    %label{ :for=>'title' } What is the title of the book?
+    %span.example * Required
+    %div.hint This is the only required field, the others are optional.
+    %div.pad_above
+      %input.form-control{ :type => 'text', :id => 'title', :name => 'title', :value => @data['title_880'].nil? ? @data['title'] : @data['title_880'] }
 
   %div.form-group
     %label{ :for=>'author'} Who is the author?
-    %span.hint If the author is a person, enter the last name first, for example "Smith, Jane".  If the book has multiple authors, enter just the first author.
-    %input.form-control{ :type => 'text', :name => 'author', :value => @data['author'] }
-    %label.radio-inline
-      %input{ :type => 'radio', :name => 'author_field', :id => 'author_is_person', :value => '100', :checked => @data['author_is_person'] ? true : nil } The author is a person
-    %label.radio-inline
-      %input{ :type => 'radio', :name => 'author_field', :id => 'author_is_organization', :value => '110', :checked => @data['author_is_organization'] ? true : nil } The author is an organization
-      
-  %div.form-group
-    %label{ :for=>'language'} What is the language of the book?
-    %select.form-control{ :name => 'language' }
-      %option{ :value => 'und' } Select the language of the book from this list
-      - MARC_LANGUAGES.each do |language_hash|
-        = "<option value='"+language_hash[0]+"'"
-        - if language_hash[0].to_s == @data['language']
-          = " selected='selected'"
-        = ">"+language_hash[1]+"</option>"
-
-  %div.form-group
-    %label{ :for=>'publisher' } Where was the book published?
-    %span.hint Please include the city and state/province, if known. For example "Washington, D.C.", "Paris", "Victoria, B.C.", etc.
-    %input.form-control{ :type => 'text', :name => 'place_of_publication', :value => @data['place_of_publication'] }
-    
-  %div.form-group
-    %label{ :for=>'publisher' } Who is the publisher?
-    %span.hint For example "HarperCollins", "Springer-Verlag", etc.
-    %input.form-control{ :type => 'text', :name => 'publisher', :value => @data['publisher'] }
-      
-  %div.form-group
-    %label{ :for=>'publicationdate' } When was the book published?
-    %span.hint Just the year will do.
-    %input.form-control{ :type => 'text', :name => 'publication_date', :value => @data['publication_date'], :maxlength => "4"}
-
-  %div.form-group
-    %label{ :for=>'extent' } How many pages or volumes?
-    %span.hint Please include the type of dimension, for example "245 p." (for pages) or "3 v." (for volumes)
-    %input.form-control{ :type => 'text', :name => 'extent', :value => @data['extent'] }
+    %div.hint If the author is a person, enter the surname first, for example "Smith, Jane".  If the book has multiple authors, enter just the first author.
+    %div.pad_above
+      %input.form-control{ :type => 'text', :name => 'author', :value => @data['author'] }
+      %label.radio-inline
+        %input{ :type => 'radio', :name => 'author_field', :id => 'author_is_person', :value => '100', :checked => @data['author_is_person'] ? true : nil } 
+        The author is a person
+      %label.radio-inline
+        %input{ :type => 'radio', :name => 'author_field', :id => 'author_is_organization', :value => '110', :checked => @data['author_is_organization'] ? true : nil } 
+        The author is an organization
       
   %div.form-group
     %label{ :for=>'subject'} What is the book about?  
-    %span.hint Use general topical keywords, for example "Nuclear Physics" or "Agriculture".  When entering more than one topic, please separate each topic with a semi-colon.
-    %input.form-control{ :type => 'text', :name => 'subject', :value => @data['subject'] }
-    
-  %div.form-group
-    %label{ :for=>'subject'} Does the book have an ISBN number?
-    %span.hint If the book has an ISBN number please enter it here.  For example "1406738859".
-    %input.form-control{ :type => 'text', :name => 'isbn', :value => @data['isbn'] }
+    %div.hint Use general topical keywords, for example "Nuclear Physics", or "Agriculture", or "Wharton, Edith, 1862-1937".  Use a separate field for each topic.
+    %span#exampleXtra
+    %div#subjects
+      - sn = 0
+      - if @data['subject'].kind_of?(Array)
+        - @data['subject'].each do |subject|
+          - sn = sn + 1
+          %div.row.pad_above{ :id => "row-elem-"+sn.to_s }
+            %div.col-md-10.ui-widget
+              %input.form-control.autosubject{ :type => 'text', :name => 'subject[]', :value => subject['a'] } 
+            %div.col-md-2
+              %btn.add.btn.btn-sm.btn-info{ :title => 'Add another topic', :id => 'addelem-'+sn.to_s } 
+                %span.glyphicon.glyphicon-plus-sign
+              - if sn > 1 then
+                %btn.delete.btn.btn-sm.btn-warning{ :title => 'Delete this topic', :id => 'elem-'+sn.to_s } 
+                  %span.glyphicon.glyphicon-minus-sign
+      - else
+        %div.row.pad_above{ :id => "row-elem-1" }
+          %div.col-md-10
+            %input.form-control.autosubject{ :type => 'text', :name => 'subject[]' } 
+          %div.col-md-2  
+            %btn.add.btn.btn-sm.btn-info{ :title => 'Add another topic', :id => 'addelem-1' } 
+              %span.glyphicon.glyphicon-plus-sign   
+
+  %div.well
+    %div.row
+      %div.col-md-12
+        %label Publication Information
+    %div.row
+      %div.col-md-3
+        %label{ :for=>'language'} Country where the book was published? 
+        %div.hint Select the country or state/province from the list
+      %div.col-md-3
+        %label{ :for=>'publisher' } City where it was published?
+        %div.hint For example "New York", "Paris", "Melbourne"
+      %div.col-md-3
+        %label{ :for=>'publisher' } Who published it?
+        %div.hint The publisher's name, for example "HarperCollins", "Springer-Verlag"
+      %div.col-md-3
+        %label{ :for=>'publicationdate' } When was it published?
+        %div.hint If you have dates from multiple calendars, prefer the Western date.
+    %div.row
+      %div.col-md-3
+        %div.form-group
+          %select.form-control{ :name => 'country_of_publication' }
+            %option{ :value => 'xx ' } Select a country
+            - MARC_COUNTRIES.each do |country_hash|
+              - option_selected = ""
+              - if country_hash[0] == @data['country_of_publication'].strip
+                - option_selected = " selected='selected'"
+              = "<option value='"+country_hash[0]+"'"+option_selected+">"+country_hash[1]+"</option>"
+      %div.col-md-3
+        %div.form-group
+          %input.form-control{ :type => 'text', :name => 'place_of_publication', :value => @data['place_of_publication'] }
+      %div.col-md-3
+        %div.form-group
+          %input.form-control{ :type => 'text', :name => 'publisher', :value => @data['publisher'] }
+      %div.col-md-3
+        %div.form-group
+          %input.form-control{ :type => 'text', :name => 'publication_date', :value => @data['publication_date'], :maxlength => "4"}
+
+  %div.well
+    %div.row
+      %div.col-md-12
+        %label Other Details
+    %div.row
+      %div.col-md-4
+        %label{ :for=>'language'} What is the language of the book?
+        %div.hint Select the language from the list
+      %div.col-md-4
+        %label{ :for=>'extent' } How many pages or volumes?
+        %div.hint Please include the type of dimension, for example "245 p." (for pages) or "3 v." (for volumes)
+      %div.col-md-4
+        %label{ :for=>'isbn'} ISBN
+        %div.hint If the book has an ISBN number please enter it here, and enter only one ISBN. For example "9781406738859". Otherwise leave the field blank. 
+    %div.row
+      %div.col-md-4
+        %div.form-group
+          %select.form-control{ :name => 'language' }
+            %option{ :value => 'und' } Select the language
+            - MARC_LANGUAGES.each do |language_hash|
+              - option_selected = ""
+              - if language_hash[0] == @data['language']
+                - option_selected = " selected='selected'"
+              = "<option value='"+language_hash[0]+"'"+option_selected+">"+language_hash[1]+"</option>"
+      %div.col-md-4
+        %div.form-group
+          %input.form-control{ :type => 'text', :name => 'extent', :value => @data['extent'] }
+      %div.col-md-4
+        %div.form-group
+          %input.form-control{ :type => 'text', :name => 'isbn', :value => @data['isbn'], :maxlength => "13" }
     
   %div.form-group
     %button.btn.btn-success{ :type => 'submit' } 
