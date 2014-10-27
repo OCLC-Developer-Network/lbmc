@@ -35,9 +35,9 @@ function bindAutoComplete(classname) {
 	$("." + classname).autocomplete({
 		source: autoSubjectExample, 
 		minLength: 1,
-		select: function(event, ui) {
-			$('#exampleXtra').html("FAST ID <b>" + ui.item.idroot + "</b> Facet <b>"+ getTypeFromTag(ui.item.tag)+ "</b>");
-		},
+		//select: function(event, ui) {
+			//$('#exampleXtra').html("FAST ID <b>" + ui.item.idroot + "</b> Facet <b>"+ getTypeFromTag(ui.item.tag)+ "</b>");
+		//},
 		create: function() {
 			$(this).data("ui-autocomplete")._renderItem = function (ul, item) {
 				var retValue = "<span style=\"font-weight: bold;\">" +item.auth+"</span>";
@@ -51,47 +51,37 @@ function bindAutoComplete(classname) {
 
 // called by autosuggest
 function getTypeFromTag(tag) {
-   switch(tag)
-   {
-   case 100:
-      return "Personal Name";
-      break;
-   case 110:
-      return "Corporate Name";
-      break;
-   case 111:
-      return "Event";
-      break;
-   case 130:
-      return "Uniform Title";
-      break;
-   case 148:
-      return "Period";
-      break;
-   case 150:
-      return "Topic";
-      break;
-   case 151:
-      return "Geographic";
-      break;
-   case 155:
-      return "Form/Genre";
-      break;
-   default:
-      return "unknown";
-   }
+	switch(tag) {
+		case 100:
+			return "Personal Name";
+			break;
+		case 110:
+			return "Corporate Name";
+			break;
+		case 111:
+			return "Event";
+			break;
+		case 130:
+			return "Uniform Title";
+			break;
+		case 148:
+			return "Period";
+			break;
+		case 150:
+			return "Topic";
+			break;
+		case 151:
+			return "Geographic";
+			break;
+		case 155:
+			return "Form/Genre";
+			break;
+		default:
+			return "unknown";
+	}
 } // end getTypeFromTag
 
-function set_home_button() {
-	// change the home button style if on the home pagevar pathname = window.location.pathname;
-	if (window.location.pathname == "/") {
-		if ($("#home").length) {
-				$("#home").removeClass( "btn-primary" ).addClass("btn-default");
-		}
-	}
-} // end set_home_button
-
-// called from setUpPage as the source for the autocomplete
+// called as the source for the autocomplete
 function autoSubjectExample(request, response) {
 	currentSuggestIndex = currentSuggestIndexDefault;
 	autoSubject(request, response, exampleStyle);
@@ -102,3 +92,12 @@ function exampleStyle(res) {
 	//return res["auth"].replace("--",", "); 	
 	return res["auth"];
 }
+
+function set_home_button() {
+	// change the home button style if on the home pagevar pathname = window.location.pathname;
+	if (window.location.pathname == "/") {
+		if ($("#home").length) {
+				$("#home").removeClass( "btn-primary" ).addClass("btn-default");
+		}
+	}
+} // end set_home_button
