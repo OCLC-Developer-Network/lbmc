@@ -35,9 +35,9 @@ function bindAutoComplete(classname) {
 	$("." + classname).autocomplete({
 		source: autoSubjectExample, 
 		minLength: 1,
-		//select: function(event, ui) {
+		select: function(event, ui) {
 			//$('#exampleXtra').html("FAST ID <b>" + ui.item.idroot + "</b> Facet <b>"+ getTypeFromTag(ui.item.tag)+ "</b>");
-		//},
+		},
 		create: function() {
 			$(this).data("ui-autocomplete")._renderItem = function (ul, item) {
 				var retValue = "<span style=\"font-weight: bold;\">" +item.auth+"</span>";
