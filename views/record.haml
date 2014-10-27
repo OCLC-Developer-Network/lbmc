@@ -3,6 +3,7 @@
 - @data = Hash.new
 - @data['id'] = @bib.id
 - @data['language'] = @bib.marc_record['008'].nil? ? '' : @bib.marc_record['008'].to_s[39,3]
+- @data['country_of_publication'] = @bib.marc_record['008'].nil? ? '' : @bib.marc_record['008'].to_s[19,3]
 - @data['isbn'] = @bib.marc_record['020'].nil? ? '' : @bib.marc_record['020']['a']
 - @data['title'] = @bib.marc_record['245']['a'].nil? ? '' : @bib.marc_record['245']['a']
 - @data['title_880'] = @bib.marc_record['880'].nil? ? nil : @bib.marc_record['880']['a']
@@ -14,20 +15,10 @@
 - @data['publisher'] = @bib.marc_record['260'].nil? ? '' : @bib.marc_record['260']['b']
 - @data['publication_date'] = @bib.marc_record['260'].nil? ? '' : @bib.marc_record['260']['c']
 - @data['extent'] = @bib.marc_record['300'].nil? ? '' : @bib.marc_record['300']['a']
-- @data['subject'] = @bib.marc_record['653'].nil? ? '' : @bib.marc_record['653']['a']
+- @data['subject'] = @bib.marc_record['653'].nil? ? '' : @bib.marc_record.fields('653')
 - @button_label = "Update this Record"
 
 - if @bib.is_app_created? and belongs_to_current_user?(@bib.marc_record, INSTITUTIONS[session[:registry_id].to_i]['symbol'])
-
-  :javascript
-    $(document).ready( function() {
-      var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-      var isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
-      if (isChrome || isSafari) {
-        $('#webkit_message').addClass("alert alert-warning");
-        $('#webkit_message').html("<span class='glyphicon glyphicon-info-sign'></span> Record editing isn't working yet with the Chrome or Safari web browsers.  The LBMC team is working on a solution to that problem.  Until then, please use Firefox or Internet Explorer.  We apologize for your inconvenience.");
-      }
-    });
 
   %div#webkit_message
 
