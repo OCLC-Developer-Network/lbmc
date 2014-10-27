@@ -10,7 +10,13 @@
     %link{ :href=>"//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css", :rel=>"stylesheet" }
     %link{ :href=>APP_URL+"/css/layout.css", :rel=>"stylesheet" }
     %script{:src=>"//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"}
+    %script{:src=>"//code.jquery.com/jquery-1.11.0.min.js"}
+    %script{:src=>"//code.jquery.com/jquery-migrate-1.2.1.min.js"}
+    %script{:src=>APP_URL+"/js/assignFASTComplete.js"}
+    %script{:src=>APP_URL+"/js/jquery-ui.min.js"}
+    %link{ :href=>APP_URL+"/css/jquery-ui.min.css", :rel=>"stylesheet" }
     %script{:src=>APP_URL+"/js/app.js"}
+
   %body
     %div.container
       - unless session[:token].nil? or session[:token].expired?
@@ -36,7 +42,6 @@
               %span.header_institution_name
                 = INSTITUTIONS[session[:registry_id].to_i]['name']
               %img.logo_small{ :src => APP_URL+"/images/#{INSTITUTIONS[session[:registry_id].to_i]['symbol']}.jpg" } 
-
 
       %div.row
         %div.col-xs-12.col-sm-12.col-md-12
