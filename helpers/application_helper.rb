@@ -69,7 +69,7 @@ module ApplicationHelper
     update_field_value(record, '500', 'a', ' ', ' ', LBMC::SOURCE_NOTE)
 
     # Topic
-    update_field_array(record, '653', 'a', '1', '0', params[:subject])
+    update_field_array(record, '653', 'a', '0', ' ', params[:subject])
     
     record
   end
@@ -190,7 +190,7 @@ module ApplicationHelper
     update_field_value(marc_record, '300', 'a', ' ', ' ', params[:extent])
 
     # Subject
-    update_field_array(marc_record, '653', 'a', '1', '0', params[:subject])
+    update_field_array(marc_record, '653', 'a', '0', ' ', params[:subject])
     
     marc_record
   end
