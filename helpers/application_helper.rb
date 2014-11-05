@@ -120,7 +120,7 @@ module ApplicationHelper
   
   def update_marc_record_from_params(marc_record, params)
   
-    puts ; puts pp params ; puts
+    # puts ; puts pp params ; puts
   
     # Language
     update_control_field_value(marc_record, '008', 35, params[:language])
