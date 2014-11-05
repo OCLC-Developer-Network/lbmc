@@ -3,63 +3,63 @@
 %table.table{ :id => "record_display" }
 
   %tr
-    %td.field_label
+    %td.field_display_label
       %div.pull-right
         OCLC number
     %td{ :id => 'oclcnum' }
       = data['id']
       
   %tr
-    %td.field_label
+    %td.field_display_label
       %div.pull-right
         Title
     %td{ :id => 'title' }
       = @data['title_880'].nil? ? @data['title'] : @data['title_880']
       
   %tr
-    %td.field_label
+    %td.field_display_label
       %div.pull-right
         Author
     %td{ :id => 'author' }
       = data['author']
 
   %tr
-    %td.field_label
+    %td.field_display_label
       %div.pull-right
         Country of Publication
     %td{ :id => 'country_of_publication' }
       = MARC_COUNTRIES[data['country_of_publication']]
       
   %tr
-    %td.field_label
+    %td.field_display_label
       %div.pull-right
         City of publication
     %td{ :id => 'place_of_publication' }
       = data['place_of_publication']
       
   %tr
-    %td.field_label
+    %td.field_display_label
       %div.pull-right
         Publisher
     %td{ :id => 'publisher' }
       = data['publisher']
       
   %tr
-    %td.field_label
+    %td.field_display_label
       %div.pull-right
         Publication Date
     %td{ :id => 'publication_date' }
       = data['publication_date']
       
   %tr
-    %td.field_label
+    %td.field_display_label
       %div.pull-right
         Extent
     %td{ :id => 'extent' }
       = data['extent']
       
   %tr
-    %td.field_label
+    %td.field_display_label
       %div.pull-right
         Language
     %td{ :id => 'language' }
@@ -68,14 +68,14 @@
   - if @data['subject'].kind_of?(Array)
     - @data['subject'].each do |subject|
       %tr
-        %td.field_label
+        %td.field_display_label
           %div.pull-right
             Topic
         %td{ :id => 'subject' }
           = subject['a']
       
   %tr
-    %td.field_label
+    %td.field_display_label
       %div.pull-right
         ISBN
     %td{ :id => 'isbn' }
