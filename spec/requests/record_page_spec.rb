@@ -71,7 +71,7 @@ describe "the record page" do
     end
 
     it "should have a subject input field with the right value" do
-      input = @form_element.xpath(".//input[@name='subject']").first
+      input = @form_element.xpath(".//input[@name='subject[]']").first
       expect(input.attr('value')).to eq('Application Programming Interfaces (APIs)')
     end
     
@@ -129,12 +129,12 @@ describe "the record page" do
       p = { 
             :oclc_number => '883876185',
             :language => 'eng',
+            :country_of_publication => 'cau',
             :title => 'Testing metadata APIs',
-            :subtitle => 'A comparative analysis',
             :author => 'Meyer, Steve',
             :publisher => 'OCLC Press',
             :extent => '190 p.',
-            :subject => 'Application Programming Interfaces (APIs)'
+            :subject => ['Application Programming Interfaces (APIs)']
           }
       post( '/record/update', params=p, rack_env={ 'rack.session' => {:token => @access_token} } )
     end
@@ -154,12 +154,12 @@ describe "the record page" do
 
       p = { 
             :language => 'eng',
+            :country_of_publication => 'cau',
             :title => 'Testing metadata APIs',
-            :subtitle => 'A comparative analysis',
             :author => 'Meyer, Stephen',
             :publisher => 'OCLC Press',
             :extent => '190 p.',
-            :subject => 'Application Programming Interfaces (APIs)'
+            :subject => ['Application Programming Interfaces (APIs)']
           }
       post( '/record/create', params=p, rack_env={ 'rack.session' => {:token => @access_token, :registry_id => 128807} } )
     end
@@ -177,11 +177,11 @@ describe "the record page" do
 
       p = { 
             :language => 'eng',
-            :subtitle => 'A comparative analysis',
+            :country_of_publication => 'cau',
             :author => 'Meyer, Stephen',
             :publisher => 'OCLC Press',
             :extent => '190 p.',
-            :subject => 'Application Programming Interfaces (APIs)'
+            :subject => ['Application Programming Interfaces (APIs)']
           }
       post( '/record/create', params=p, rack_env={ 'rack.session' => {:token => @access_token, :registry_id => 128807} } )
       doc = Nokogiri::HTML(last_response.body)
@@ -196,23 +196,18 @@ describe "the record page" do
       expect(@alert.xpath("./span[@id='error-heading'][text()='Sorry, but the LBMC Pilot system encountered a problem.']").size).to eq(1)
     end
     
-    it "should display the error summary" do
-      summary_paragraph = @alert.xpath("./p[@id='summary']")
-      expect(summary_paragraph.size).to eq(1)
-      expect(summary_paragraph.first.text).to eq('Record is invalid')
-    end
-
-    it "should display a list of validation errors" do
+   it "should display a list of validation errors" do
       expect(@alert.xpath("./ul/li").size).to eq(2)
     end
     
     it "should display the correct validation message for the first error" do
-      expect(@alert.xpath("./ul/li").first.text).to eq('$a in 245 or $k in 245 must be present.')
+      expect(@alert.xpath("./ul/li").first.text).to eq('A title is required.')
     end
     
     it "should display the correct validation message for the second error" do
       expect(@alert.xpath("./ul/li").last.text).to eq('Invalid code in indicator 2 in 1st 650')
     end
+    
   end
   
   context "when displaying a record not created in the LBMC application" do
@@ -430,7 +425,7 @@ describe "the record page" do
     end
 
     it "should display the error section" do
-      expect(@alert.xpath("./span[@id='error-heading'][text()='Sorry, but the LBMC Pilot system encountered a problem.']").size).to eq(1)
+      expect(@alert.xpath("./span[@id='error-heading'][text()='Sorry, but the requested page was not found.']").size).to eq(1)
     end
 
   end
