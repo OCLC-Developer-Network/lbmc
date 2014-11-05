@@ -54,4 +54,10 @@ pre {
 	color: darkred;
 	font-weight: bold;
 }
+#logo_text {
+	font-weight: bold;
+}
+#logo_subtext {
+	color: #CCC;
+}
 
