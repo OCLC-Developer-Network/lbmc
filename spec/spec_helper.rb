@@ -61,6 +61,7 @@ WSKEY = OCLC::Auth::WSKey.new(key, secret, :services => ['WorldCatMetadataAPI'],
 
 config = YAML::load(File.read("#{File.expand_path(File.dirname(__FILE__))}/../config/lbmc.yml"))
 MARC_LANGUAGES = YAML::load(File.read("#{File.expand_path(File.dirname(__FILE__))}/../config/marc_languages.yml"))
+MARC_COUNTRIES = YAML::load(File.read("#{File.expand_path(File.dirname(__FILE__))}/../config/marc_countries.yml"))
 APP_URL = config[settings.environment.to_s]['app_url']
 BASE_URL = config[settings.environment.to_s]['base_url']
 INSTITUTIONS = config[settings.environment.to_s]['institutions']
