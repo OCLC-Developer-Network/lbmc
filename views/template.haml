@@ -2,8 +2,13 @@
 %html
   %head
     %title
-      = "#{@title} - " if @title
       LBMC Pilot
+      - if @data
+        = " - Record #{@data['id']} - "
+        - if @data['title_880'].nil?
+          = @data['title']
+        - else
+          = @data['title_880']
     %meta{ :name=>"viewport", :content=>"width=device-width, initial-scale=1.0" }
     %link{ :rel=>"icon", :href=> APP_URL+"/images/favicon.ico", :type=>"image/x-icon" }
     %link{ :rel=>"shortcut icon", :href=> APP_URL+"/images/favicon.ico", :type=>"image/x-icon" }
