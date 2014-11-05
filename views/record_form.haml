@@ -11,14 +11,18 @@
     %input{ :type => 'hidden', :name => 'oclc_number', :value => data['id'] }
     
   %div.form-group
-    %label{ :for=>'title' } What is the title of the book?
+    %label{ :for=>'title' } 
+      %span.field_label
+        What is the title of the book?
     %span.example * Required
     %div.hint This is the only required field, the others are optional.
     %div.pad_above
       %input.form-control{ :type => 'text', :id => 'title', :name => 'title', :value => @data['title_880'].nil? ? @data['title'] : @data['title_880'] }
 
   %div.form-group
-    %label{ :for=>'author'} Who is the author?
+    %label{ :for=>'author'}
+      %span.field_label
+        Who is the author?
     %div.hint If the author is a person, enter the surname first, for example "Smith, Jane".  If the book has multiple authors, enter just the first author.
     %div.pad_above
       %input.form-control{ :type => 'text', :name => 'author', :value => @data['author'] }
@@ -30,7 +34,9 @@
         The author is an organization
       
   %div.form-group
-    %label{ :for=>'subject'} What is the book about?  
+    %label{ :for=>'subject'} 
+      %span.field_label
+        What is the book about?
     %div.hint Enter keywords for people, organizations, places, concepts and events that the book is about.  For example, "Gandhi", "Malaysia", "Arabic poetry", "civil war".  The system will prompt you for matching topical phrases.  Use a separate field for each topic.
     %span#exampleXtra
     %div#subjects
@@ -58,7 +64,8 @@
   %div.well
     %div.row
       %div.col-md-12
-        %label Publication Information
+        %span.field_label
+          Publication Information
     %div.row
       %div.col-md-3
         %label{ :for=>'language'} Country where the book was published? 
@@ -95,7 +102,8 @@
   %div.well
     %div.row
       %div.col-md-12
-        %label Other Details
+        %span.field_label
+          Other Details
     %div.row
       %div.col-md-4
         %label{ :for=>'language'} What is the language of the book?
