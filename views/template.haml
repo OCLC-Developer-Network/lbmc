@@ -20,7 +20,10 @@
     %div.container
       - unless session[:token].nil? or session[:token].expired?
         %div.row
-          %div.col-md-12
+          %div.col-md-6
+            %div#logo_subtext
+              %h3 Low Barrier Metadata Creation
+          %div.col-md-6
             %div.pull-right.pad_above
               %a#home.btn.btn-sm.btn-primary{ :href => APP_URL, :title => "Visit the LBMC Pilot home page" } 
                 %span.glyphicon.glyphicon-home
@@ -33,7 +36,7 @@
                 Logoff
       %div.row
         %div.col-xs-12.col-sm-4.col-md-4
-          %h1
+          %h1#logo_text
             %a{ :href => APP_URL+"/", :title => "Visit the LBMC Pilot home page" } LBMC Pilot
         %div.col-xs-12.col-sm-8.col-md-8
           %div.pull-right.pad_above
