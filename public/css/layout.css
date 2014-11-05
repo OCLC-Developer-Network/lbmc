@@ -4,6 +4,12 @@
 .logo_medium {
   height: 60px;
 }
+#logo_text {
+	font-weight: bold;
+}
+#logo_subtext {
+	color: #CCC;
+}
 .powered_by_worldcat {
   width: 88;
   height: 31;
@@ -23,8 +29,8 @@
 .pad_right {
 	padding-right: 1em;
 }
-.hint {
-	color: #666;
+pre {
+	background-color: #FFF;
 }
 .pilot_list {
 	font-size: 14pt; 
@@ -33,31 +39,33 @@
 .header_institution_name {
 	font-size: 12pt;
 }
-.field_label {
-	color: #666;
-	width: 20%;
-}
 #marc-view {
 	display: none;
 }
 #record_display {
 	background-color: #FFF;
 }
-pre {
-	background-color: #FFF;
-}
 .list_heading {
 	background-color: #999;
 	color: #FFF;
+}
+.hint {
+	color: #666;
 }
 .example {
 	color: darkred;
 	font-weight: bold;
 }
-#logo_text {
-	font-weight: bold;
+.field_display_label {
+	color: #4cae4c;
+	width: 20%;
 }
-#logo_subtext {
-	color: #CCC;
+.field_label {
+	font-weight: bold;
+	font-size: 110%;
+	color: #000;
+}
+.record_label {
+	padding-bottom: 1em;
 }
 
