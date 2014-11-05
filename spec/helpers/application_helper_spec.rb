@@ -623,6 +623,51 @@ describe ApplicationHelper do
     end
   end
 
+  context "when creating a new MARC record with Hebrew vernacular script in the title" do
+
+    before(:each) do
+      @params = {
+        :oclc_symbol => 'OCPSB',
+        :language => 'heb',
+        :country_of_publication => 'is ',
+        :title => '‏תל אביב.',
+        :author => 'Doe, John',
+        :author_field => '100',
+        :place_of_publication => 'Tel-Aviv',
+        :publisher => 'OCLC Press',
+        :extent => '',
+        :subject => ['History'],
+        :publication_date => '1942',
+        :isbn => ''
+      }
+      @record = helpers.marc_record_from_params(@params)
+    end
+    
+    it "should have a 245 field with <> in subfield a" do
+      expect(@record['245']['a']).to eq('<>')
+    end
+    it "should have a 245 field with 880-01 in subfield 6" do
+      expect(@record['245']['6']).to eq('880-01')
+    end
+    it "should have 245 indicator values 1 and 0" do
+      expect(@record['245'].indicator1).to eq('1')
+      expect(@record['245'].indicator2).to eq('0')
+    end
+    it "should have a 880 field with vernacular script in subfield a" do
+      expect(@record['880']['a']).to eq('‏תל אביב.')
+    end
+    it "should have a 880 field with 245-01/(2 in subfield 6" do
+      expect(@record['880']['6']).to eq('245-01/(2')
+    end
+    it "should have 880 indicator values 1 and 0" do
+      expect(@record['880'].indicator1).to eq('1')
+      expect(@record['880'].indicator2).to eq('0')
+    end
+    it "should have an 066 field with (2 in subfield c" do
+      expect(@record['066']['c']).to eq('(2')
+    end
+  end
+
   context "when creating a new MARC record with Japanese (Katakana) vernacular script in the title" do
 
     before(:each) do
