@@ -495,7 +495,7 @@ describe ApplicationHelper do
         :oclc_symbol => 'OCPSB',
         :language => 'chi',
         :country_of_publication => 'cau',
-        :title => '北京',
+        :title => '??',
         :author => 'Doe, John',
         :author_field => '100',
         :place_of_publication => 'San Mateo, CA',
@@ -519,7 +519,7 @@ describe ApplicationHelper do
       expect(@record['245'].indicator2).to eq('0')
     end
     it "should have a 880 field with vernacular script in subfield a" do
-      expect(@record['880']['a']).to eq('北京')
+      expect(@record['880']['a']).to eq('??')
     end
     it "should have a 880 field with 245-01/$1 in subfield 6" do
       expect(@record['880']['6']).to eq('245-01/$1')
@@ -540,7 +540,7 @@ describe ApplicationHelper do
         :oclc_symbol => 'OCPSB',
         :language => 'jpn',
         :country_of_publication => 'cau',
-        :title => 'ミンダナオーパプア',
+        :title => '?????????',
         :author => 'Doe, John',
         :author_field => '100',
         :place_of_publication => 'San Mateo, CA',
@@ -564,7 +564,7 @@ describe ApplicationHelper do
       expect(@record['245'].indicator2).to eq('0')
     end
     it "should have a 880 field with vernacular script in subfield a" do
-      expect(@record['880']['a']).to eq('ミンダナオーパプア')
+      expect(@record['880']['a']).to eq('?????????')
     end
     it "should have a 880 field with 245-01/$1 in subfield 6" do
       expect(@record['880']['6']).to eq('245-01/$1')
@@ -585,7 +585,7 @@ describe ApplicationHelper do
         :oclc_symbol => 'OCPSB',
         :language => 'kor',
         :country_of_publication => 'cau',
-        :title => '회 선미술상 수상작가 김범 작품전',
+        :title => '? ???? ???? ?? ???',
         :author => 'Doe, John',
         :author_field => '100',
         :place_of_publication => 'San Mateo, CA',
@@ -609,7 +609,7 @@ describe ApplicationHelper do
       expect(@record['245'].indicator2).to eq('0')
     end
     it "should have a 880 field with vernacular script in subfield a" do
-      expect(@record['880']['a']).to eq('회 선미술상 수상작가 김범 작품전')
+      expect(@record['880']['a']).to eq('? ???? ???? ?? ???')
     end
     it "should have a 880 field with 245-01/$1 in subfield 6" do
       expect(@record['880']['6']).to eq('245-01/$1')
@@ -630,7 +630,7 @@ describe ApplicationHelper do
         :oclc_symbol => 'OCPSB',
         :language => 'heb',
         :country_of_publication => 'cau',
-        :title => '‏תל אביב.',
+        :title => '??? ????.',
         :author => 'Doe, John',
         :author_field => '100',
         :place_of_publication => 'San Mateo, CA',
@@ -654,7 +654,7 @@ describe ApplicationHelper do
       expect(@record['245'].indicator2).to eq('0')
     end
     it "should have a 880 field with vernacular script in subfield a" do
-      expect(@record['880']['a']).to eq('‏תל אביב.')
+      expect(@record['880']['a']).to eq('??? ????.')
     end
     it "should have a 880 field with 245-01/(2 in subfield 6" do
       expect(@record['880']['6']).to eq('245-01/(2')
@@ -675,7 +675,7 @@ describe ApplicationHelper do
         :oclc_symbol => 'OCPSB',
         :language => 'ara',
         :country_of_publication => 'cau',
-        :title => 'كتاب التوحيد : الذي هو حق الله على العبيد',
+        :title => '???? ??????? : ???? ?? ?? ???? ??? ??????',
         :author => 'Doe, John',
         :author_field => '100',
         :place_of_publication => 'San Mateo, CA',
@@ -699,7 +699,7 @@ describe ApplicationHelper do
       expect(@record['245'].indicator2).to eq('0')
     end
     it "should have a 880 field with vernacular script in subfield a" do
-      expect(@record['880']['a']).to eq('كتاب التوحيد : الذي هو حق الله على العبيد')
+      expect(@record['880']['a']).to eq('???? ??????? : ???? ?? ?? ???? ??? ??????')
     end
     it "should have a 880 field with 245-01/(3 in subfield 6" do
       expect(@record['880']['6']).to eq('245-01/(3')
@@ -720,7 +720,7 @@ describe ApplicationHelper do
         :oclc_symbol => 'OCPSB',
         :language => 'ara',
         :country_of_publication => 'cau',
-        :title => 'كتاب التوحيد : الذي هو حق الله على العبيد',
+        :title => '???? ??????? : ???? ?? ?? ???? ??? ??????',
         :author => 'Doe, John',
         :author_field => '100',
         :place_of_publication => 'San Mateo, CA',
@@ -744,7 +744,7 @@ describe ApplicationHelper do
       expect(@record['245'].indicator2).to eq('0')
     end
     it "should have a 880 field with vernacular script in subfield a" do
-      expect(@record['880']['a']).to eq('كتاب التوحيد : الذي هو حق الله على العبيد')
+      expect(@record['880']['a']).to eq('???? ??????? : ???? ?? ?? ???? ??? ??????')
     end
     it "should have a 880 field with 245-01/(4 in subfield 6" do
       expect(@record['880']['6']).to eq('245-01/(4')
@@ -765,7 +765,7 @@ describe ApplicationHelper do
         :oclc_symbol => 'OCPSB',
         :language => 'rus',
         :country_of_publication => 'cau',
-        :title => 'Ленин',
+        :title => '?????',
         :author => 'Doe, John',
         :author_field => '100',
         :place_of_publication => 'San Mateo, CA',
@@ -789,7 +789,7 @@ describe ApplicationHelper do
       expect(@record['245'].indicator2).to eq('0')
     end
     it "should have a 880 field with vernacular script in subfield a" do
-      expect(@record['880']['a']).to eq('Ленин')
+      expect(@record['880']['a']).to eq('?????')
     end
     it "should have a 880 field with 245-01/(N in subfield 6" do
       expect(@record['880']['6']).to eq('245-01/(N')
@@ -810,7 +810,7 @@ describe ApplicationHelper do
         :oclc_symbol => 'OCPSB',
         :language => 'rus',
         :country_of_publication => 'cau',
-        :title => 'Ленин',
+        :title => '?????',
         :author => 'Doe, John',
         :author_field => '100',
         :place_of_publication => 'San Mateo, CA',
@@ -834,7 +834,7 @@ describe ApplicationHelper do
       expect(@record['245'].indicator2).to eq('0')
     end
     it "should have a 880 field with vernacular script in subfield a" do
-      expect(@record['880']['a']).to eq('Ленин')
+      expect(@record['880']['a']).to eq('?????')
     end
     it "should have a 880 field with 245-01/(Q in subfield 6" do
       expect(@record['880']['6']).to eq('245-01/(Q')
@@ -855,7 +855,7 @@ describe ApplicationHelper do
         :oclc_symbol => 'OCPSB',
         :language => 'gre',
         :country_of_publication => 'cau',
-        :title => 'Ελλάδα',
+        :title => '????da',
         :author => 'Doe, John',
         :author_field => '100',
         :place_of_publication => 'San Mateo, CA',
@@ -879,7 +879,7 @@ describe ApplicationHelper do
       expect(@record['245'].indicator2).to eq('0')
     end
     it "should have a 880 field with vernacular script in subfield a" do
-      expect(@record['880']['a']).to eq('Ελλάδα')
+      expect(@record['880']['a']).to eq('????da')
     end
     it "should have a 880 field with 245-01/(S in subfield 6" do
       expect(@record['880']['6']).to eq('245-01/(S')
@@ -900,7 +900,7 @@ describe ApplicationHelper do
         :oclc_symbol => 'OCPSB',
         :language => 'arm',
         :country_of_publication => 'cau',
-        :title => 'Լրաբեր հասարակական գիտությունների',
+        :title => '?????? ??????????? ??????????????',
         :author => 'Doe, John',
         :author_field => '100',
         :place_of_publication => 'San Mateo, CA',
@@ -924,7 +924,7 @@ describe ApplicationHelper do
       expect(@record['245'].indicator2).to eq('0')
     end
     it "should have a 880 field with vernacular script in subfield a" do
-      expect(@record['880']['a']).to eq('Լրաբեր հասարակական գիտությունների')
+      expect(@record['880']['a']).to eq('?????? ??????????? ??????????????')
     end
     it "should have a 880 field with 245-01/Armn in subfield 6" do
       expect(@record['880']['6']).to eq('245-01/Armn')
@@ -945,7 +945,7 @@ describe ApplicationHelper do
         :oclc_symbol => 'OCPSB',
         :language => 'ben',
         :country_of_publication => 'cau',
-        :title => 'মাটির ময়না',
+        :title => '????? ?????',
         :author => 'Doe, John',
         :author_field => '100',
         :place_of_publication => 'San Mateo, CA',
@@ -969,7 +969,7 @@ describe ApplicationHelper do
       expect(@record['245'].indicator2).to eq('0')
     end
     it "should have a 880 field with vernacular script in subfield a" do
-      expect(@record['880']['a']).to eq('মাটির ময়না')
+      expect(@record['880']['a']).to eq('????? ?????')
     end
     it "should have a 880 field with 245-01/Beng in subfield 6" do
       expect(@record['880']['6']).to eq('245-01/Beng')
@@ -990,7 +990,7 @@ describe ApplicationHelper do
         :oclc_symbol => 'OCPSB',
         :language => 'rus',
         :country_of_publication => 'cau',
-        :title => 'Ленин',
+        :title => '?????',
         :author => 'Doe, John',
         :author_field => '100',
         :place_of_publication => 'San Mateo, CA',
@@ -1014,7 +1014,7 @@ describe ApplicationHelper do
       expect(@record['245'].indicator2).to eq('0')
     end
     it "should have a 880 field with vernacular script in subfield a" do
-      expect(@record['880']['a']).to eq('Ленин')
+      expect(@record['880']['a']).to eq('?????')
     end
     it "should have a 880 field with 245-01/Cyrl in subfield 6" do
       expect(@record['880']['6']).to eq('245-01/Cyrl')
@@ -1035,7 +1035,7 @@ describe ApplicationHelper do
         :oclc_symbol => 'OCPSB',
         :language => 'san',
         :country_of_publication => 'cau',
-        :title => 'वाटर',
+        :title => '????',
         :author => 'Doe, John',
         :author_field => '100',
         :place_of_publication => 'San Mateo, CA',
@@ -1059,7 +1059,7 @@ describe ApplicationHelper do
       expect(@record['245'].indicator2).to eq('0')
     end
     it "should have a 880 field with vernacular script in subfield a" do
-      expect(@record['880']['a']).to eq('वाटर')
+      expect(@record['880']['a']).to eq('????')
     end
     it "should have a 880 field with 245-01/Deva in subfield 6" do
       expect(@record['880']['6']).to eq('245-01/Deva')
@@ -1080,7 +1080,7 @@ describe ApplicationHelper do
         :oclc_symbol => 'OCPSB',
         :language => 'eth',
         :country_of_publication => 'cau',
-        :title => 'የኢትዮጵያ ኦርቶዶክስ ተዋሕዶ ቤተ ክርስቲያን',
+        :title => '?????? ?????? ???? ?? ??????',
         :author => 'Doe, John',
         :author_field => '100',
         :place_of_publication => 'San Mateo, CA',
@@ -1104,7 +1104,7 @@ describe ApplicationHelper do
       expect(@record['245'].indicator2).to eq('0')
     end
     it "should have a 880 field with vernacular script in subfield a" do
-      expect(@record['880']['a']).to eq('የኢትዮጵያ ኦርቶዶክስ ተዋሕዶ ቤተ ክርስቲያን')
+      expect(@record['880']['a']).to eq('?????? ?????? ???? ?? ??????')
     end
     it "should have a 880 field with 245-01/Ethi in subfield 6" do
       expect(@record['880']['6']).to eq('245-01/Ethi')
@@ -1125,7 +1125,7 @@ describe ApplicationHelper do
         :oclc_symbol => 'OCPSB',
         :language => 'syr',
         :country_of_publication => 'cau',
-        :title => 'ܓܪܫܘ',
+        :title => '????',
         :author => 'Doe, John',
         :author_field => '100',
         :place_of_publication => 'San Mateo, CA',
@@ -1149,7 +1149,7 @@ describe ApplicationHelper do
       expect(@record['245'].indicator2).to eq('0')
     end
     it "should have a 880 field with vernacular script in subfield a" do
-      expect(@record['880']['a']).to eq('ܓܪܫܘ')
+      expect(@record['880']['a']).to eq('????')
     end
     it "should have a 880 field with 245-01/Syrc in subfield 6" do
       expect(@record['880']['6']).to eq('245-01/Syrc')
@@ -1170,7 +1170,7 @@ describe ApplicationHelper do
         :oclc_symbol => 'OCPSB',
         :language => 'tam',
         :country_of_publication => 'cau',
-        :title => 'எனது அப்பா பெரிய உருவம் கௌண்டவர்',
+        :title => '???? ????? ????? ?????? ????????',
         :author => 'Doe, John',
         :author_field => '100',
         :place_of_publication => 'San Mateo, CA',
@@ -1194,7 +1194,7 @@ describe ApplicationHelper do
       expect(@record['245'].indicator2).to eq('0')
     end
     it "should have a 880 field with vernacular script in subfield a" do
-      expect(@record['880']['a']).to eq('எனது அப்பா பெரிய உருவம் கௌண்டவர்')
+      expect(@record['880']['a']).to eq('???? ????? ????? ?????? ????????')
     end
     it "should have a 880 field with 245-01/Taml in subfield 6" do
       expect(@record['880']['6']).to eq('245-01/Taml')
@@ -1215,7 +1215,7 @@ describe ApplicationHelper do
         :oclc_symbol => 'OCPSB',
         :language => 'tha',
         :country_of_publication => 'ta ',
-        :title => 'ช ช้าง กับ ฅ ฅน',
+        :title => '? ???? ??? ? ??',
         :author => 'Doe, John',
         :author_field => '100',
         :place_of_publication => 'San Mateo, CA',
@@ -1239,7 +1239,7 @@ describe ApplicationHelper do
       expect(@record['245'].indicator2).to eq('0')
     end
     it "should have a 880 field with vernacular script in subfield a" do
-      expect(@record['880']['a']).to eq('ช ช้าง กับ ฅ ฅน')
+      expect(@record['880']['a']).to eq('? ???? ??? ? ??')
     end
     it "should have a 880 field with 245-01/Thai in subfield 6" do
       expect(@record['880']['6']).to eq('245-01/Thai')
