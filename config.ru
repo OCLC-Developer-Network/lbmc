@@ -9,7 +9,6 @@ require 'json'
 require 'oclc/auth'
 require 'pp'
 
-
 require './helpers/application_helper'
 require './lib/constants'
 require './model/bib'
@@ -19,7 +18,7 @@ require './app'
 
 enable :sessions
 set :session_secret, '406c8f30ee92'
-set :environment, :development
+set :environment, :production
 set :run, true
 set :raise_errors, true
 
