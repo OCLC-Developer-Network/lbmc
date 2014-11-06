@@ -1281,7 +1281,7 @@ describe ApplicationHelper do
   end # when displaying a MARC record created by my institution
   
   context "when displaying a MARC record created by another institution" do
-  	
+
     before(:each) do
       raw_marc = StringIO.new( mock_file_contents("ocn883880805.marcxml") )
       @record = MARC::XMLReader.new(raw_marc).first
