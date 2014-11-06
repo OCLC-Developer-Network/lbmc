@@ -6,10 +6,10 @@ $( document ).ready(function() {
 	// browser detection and alerts
 	var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
 	var isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
-	//if (isChrome || isSafari) {
-		//$('#webkit_message').addClass("alert alert-warning");
-		//$('#webkit_message').html("<span class='glyphicon glyphicon-info-sign'></span> Record editing isn't working yet with the Chrome or Safari web browsers.  The LBMC team is working on a solution to that problem.  Until then, please use Firefox or Internet Explorer.  We apologize for your inconvenience.");
-	//}
+	if (isChrome || isSafari) {
+		$('#webkit_message').addClass("alert alert-warning");
+		$('#webkit_message').html("<span class='glyphicon glyphicon-info-sign'></span> Record editing isn't working yet with the Chrome or Safari web browsers.  The LBMC team is working on a solution to that problem.  Until then, please use Firefox or Internet Explorer.  We apologize for your inconvenience.");
+	}
 
 	// adding and deleting topic rows
 	$("body").on("click", ".add", function (e) {
