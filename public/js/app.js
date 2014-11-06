@@ -13,7 +13,7 @@ $( document ).ready(function() {
 
 	// adding and deleting topic rows
 	$("body").on("click", ".add", function (e) {
-		n = $("input[name='subject[]'").size() + 1;
+		n = $("input[name='subject[]']").size() + 1;
 		var subject_row = '<div class="row pad_above" id="row-elem-'+n+'">';
 		subject_row += '<div class="col-md-10">';
 		//subject_row += '<input type="text" name="subject_ind2[]" id="subject_ind2_'+n+'" value=" "/>';
