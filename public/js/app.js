@@ -36,7 +36,7 @@ $( document ).ready(function() {
 
 // set the FAST auto suggest defaults
 var currentSuggestIndexDefault = "suggestall"; 
-var subjectProxy = "http://fast.oclc.org/searchfast/fastsuggest?";
+var subjectProxy = "https://fast.oclc.org/searchfast/fastsuggest?";
 var subjectDB =  "autoSubject";
 
 // bind auto complete to input elements
@@ -45,7 +45,7 @@ function bindAutoComplete(classname,n) {
 		source: autoSubjectExample, 
 		minLength: 1,
 		select: function(event, ui) {
-			$("#subject_ind2_"+n).val(get653IndicatorTwoFromTag(ui.item.tag));
+			//$("#subject_ind2_"+n).val(get653IndicatorTwoFromTag(ui.item.tag));
 		},
 		create: function() {
 			$(this).data("ui-autocomplete")._renderItem = function (ul, item) {
