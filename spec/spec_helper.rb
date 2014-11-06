@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'sinatra'
 require 'sinatra/partial'
 require 'haml'
@@ -66,10 +67,8 @@ APP_URL = config[settings.environment.to_s]['app_url']
 BASE_URL = config[settings.environment.to_s]['base_url']
 INSTITUTIONS = config[settings.environment.to_s]['institutions']
 
-
 RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
-
   config.include Rack::Test::Methods
 end
 
