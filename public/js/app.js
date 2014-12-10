@@ -168,3 +168,22 @@ function set_home_button() {
 		}
 	}
 } // end set_home_button
+
+// Switch the language of the user interface
+function switchLanguage(l) {
+	var wurl = window.location.href;
+	if (wurl.indexOf("?") == -1) {
+		wurl += "?locale="+l;
+	} else {
+		if (wurl.indexOf("locale=") == -1) {
+			wurl += "&locale="+l;
+		} else {
+			var wurlArray = wurl.split("locale=");
+			wurl = wurlArray[0] + "locale=" + l;
+			if (wurlArray[1].indexOf("&") != -1) {
+				wurl += wurlArray[1].substring(wurlArray[1].indexOf("&"));
+			} 
+		}
+	}
+	window.location.href = wurl;
+} // end switchLanguage
