@@ -1,5 +1,10 @@
 require 'spec_helper'
 
+I18n.locale = :en
+I18n.default_locale = :en
+I18n.load_path << Dir[File.join(File.expand_path(File.expand_path(File.dirname(__FILE__)) + '/../config/locales'), '*.yml')]
+I18n.load_path.flatten!
+
 describe "the home page" do
   before do
     get '/'
