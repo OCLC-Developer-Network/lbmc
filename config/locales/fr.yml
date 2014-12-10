@@ -1,0 +1,128 @@
+---
+fr:
+  application:
+    title: "LBMC Pilot"
+    subtitle: "Low Barrier Metadata Creation"
+  link:
+    home:
+      title: "Visitez la page d'accueil LBMC pilote"
+      text: "LBMC"
+    create-menu:
+      title: "Commencez à créer un nouveau record"
+      text: "Créer"
+    create-new:
+      title: "Commencez à créer un nouveau record"
+      text: "Créer"
+    create-submit:
+      title: "Ajouter ce nouveau record"
+      text: "Créer"
+    logoff:
+      title: "Terminez votre séance"
+      text: "Déconnecter"
+    worldcat:
+      title: "Certaines données de la bibliothèque sur ce site est fourni par WorldCat, le plus grand catalogue de bibliothèques au monde [ WorldCat.org ]"
+    language:
+      en:
+        title: "Passer à l'interface de langue anglaise"
+        text: "Anglais"
+      fr:
+        title: "Passer à l'interface de la langue française"
+        text: "Français"
+    view:
+      marcrecord:
+        title: "View the record in MARC format"
+        text: "Voir la fiche en format MARC"
+      worldcat:
+        title: "Voir le dossier dans WorldCat"
+        text: "Voir dans WorldCat"
+      marcxml:
+        title: "Télécharger le dossier au format XML MARC"
+        text: "Télécharger MARC XML"
+  message:
+    info:
+      notfound:
+        title: "Désolé, mais la page demandée n'a pas été trouvée."
+        response: "Vous pourriez essayer de partir de la page d'accueil LBMC."
+      edit:
+        permission: "Désolé , mais ce record ne est pas disponible pour l'édition dans le LBMC pilote."
+    warning:
+      chrome: "Édition d'enregistrement ne fonctionne pas encore avec les navigateurs Web Chrome ou Safari . L'équipe LBMC travaille sur une solution à ce problème . Jusque-là , se il vous plaît utiliser Firefox ou Internet Explorer . Nous nous excusons pour votre désagrément."
+    error:
+      heading: "Désolé , mais le système LBMC pilote a rencontré un problème."
+      no-title: "Un titre est nécessaire."
+      isbn: "Il ya un problème avec l' ISBN . Il doit être valide un ISBN , 10 ou 13 chiffres. Si le problème persiste , laissez le champ vide ISBN."
+      other: "Cette erreur de système a été connecté et signalé à l'équipe de développement LBMC . Nous nous excusons pour l'interruption et nous travaillons sur une solution."
+  home:
+    heading: "Bienvenue!"
+    about: "Le système LBMC (Low Barrier Metadata Creation) est une interface simple pour créer des notices de catalogue dans WorldCat . Bibliothèques pilotes sélectionnés aident OCLC tester ce système."
+    select-institution: "Êtes-vous un pilote essayeur? Commencez par sélectionner votre institution dans la liste ci-dessous."
+    get-started: "Êtes-vous un pilote essayeur? Vous pouvez créer un nouveau record en utilisant un simple formulaire Web. Il suffit de sélectionner ce bouton pour commencer."
+    hints:
+      heading: "Conseils pour les nouveaux utilisateurs"
+      hint1: "Vous serez invité à fournir des informations de base sur un livre: son titre, auteur, informations de publication, nombre de pages, et quoi il se agit."
+      hint2: "Vous ne aurez pas besoin de connaître tous ces détails pour commencer: le seul champ obligatoire dans un enregistrement est le titre."
+      hint3: "Se il ya une erreur dans les informations saisies dans le formulaire, ne vous inquiétez pas, vous verrez le dossier après sa création et peut fixer."
+      hint4: "Un catalogueur examinera l'information après l'enregistrement est créé et peut résoudre tous les problèmes restants alors."
+  record:
+    create:
+      heading: "Créer un nouvel enregistrement"
+    edit:
+      heading: "Modifier un enregistrement"
+    field:
+      required: "Requis"
+      oclcnumber:
+        label: "OCLC nombre record"
+      title:
+        label: "Titre"
+        prompt: "Quel est le titre du livre?"
+        help: "Ce est le seul champ obligatoire , les autres sont facultatives."
+      author:
+        label: "Auteur"
+        prompt: "Qui est l'auteur?"
+        help: "Si l'auteur est une personne, entrez le nom de famille en premier, par exemple \"Smith , Jane\" . Si le livre a plusieurs auteurs, il suffit d'entrer le premier auteur."
+        radio:
+          person: "L'auteur est une personne"
+          organization: "L'auteur est une organisation"
+      subject:
+        label: "Sujet"
+        prompt: "Quel est le livre?"
+        help: "Entrez les mots à des personnes, des organisations , des lieux, des concepts et des événements qui le livre est sur . Par exemple , \"Gandhi\", \"la Malaisie\", \"la poésie arabe\" , \"guerre civile\" . Le système vous demandera correspondant à des phrases d'actualité . Utilisez un champ distinct pour chaque sujet."
+        link:
+          add:
+            title: "Ajouter un autre sujet"
+          delete:
+            title: "Supprimer ce sujet"
+      publisher-information:
+        prompt: "Information sur la publication"
+      publisher-country:
+        label: "Pays de publication"
+        prompt: "Pays où le livre a été publié?"
+        help: "Sélectionnez le pays ou l'état / province dans la liste"
+        option: "Sélectionnez le pays"
+      publisher-city:
+        label: "Ville de publication"
+        prompt: "Ville où il a été publié?"
+        help: "Par exemple, \"New York\" , \"Paris\" , \"Melbourne\""
+      publisher-name:
+        label: "Éditeur"
+        prompt: "Qui l'a publiée?"
+        help: "Le nom de l' éditeur, par exemple \"HarperCollins\", \"Springer -Verlag\""
+      publicationdate:
+        label: "Date de publication"
+        prompt: "Quand at-il publié?"
+        help: "Si vous avez des dates de plusieurs calendriers , préférez la date de l'Ouest."
+      other-details:
+        prompt: "Autres détails"
+      language:
+        label: "Langue"
+        prompt: "Quelle est la langue de l'ouvrage?"
+        help: "Sélectionnez la langue dans la liste"
+        option: "Sélectionnez la langue"
+      extent:
+        label: "Ampleur"
+        prompt: "Combien de pages ou volumes?"
+        help: "Se il vous plaît inclure le type de dimension , par exemple \"245 p.\" (pour les pages ) ou  \"3 v.\" (pour les volumes )"
+      isbn:
+        label: "ISBN"
+        prompt: "ISBN"
+        help: "Si le livre a un numéro d' ISBN se il vous plaît entrer ici, et entrez un seul ISBN. Par exemple \"9781406738859\". Sinon, laissez le champ vide."
