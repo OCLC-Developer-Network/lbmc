@@ -1,0 +1,128 @@
+---
+en:
+  application:
+    title: "LBMC Pilot"
+    subtitle: "Low Barrier Metadata Creation"
+  link:
+    home:
+      title: "Visit the LBMC Pilot home page"
+      text: "LBMC Home"
+    create-menu:
+      title: "Start creating a new record"
+      text: "Create a Record"
+    create-new:
+      title: "Start creating a new record"
+      text: "Create a New Record"
+    create-submit:
+      title: "Add this new record"
+      text: "Create this Record"
+    logoff:
+      title: "End your session"
+      text: "Logoff"
+    worldcat:
+      title: "Some library data on this site is provided by WorldCat, the world's largest library catalog [WorldCat.org]"
+    language:
+      en:
+        title: "Switch to the English language interface"
+        text: "English"
+      fr:
+        title: "Switch to the French language interface"
+        text: "French"
+    view:
+      marcrecord:
+        title: "View the record in MARC format"
+        text: "View the MARC Record"
+      worldcat:
+        title: "View the record in WorldCat"
+        text: "View in WorldCat"
+      marcxml:
+        title: "Download the record in MARC XML format"
+        text: "Download MARC XML"
+  message:
+    info:
+      notfound:
+        title: "Sorry, but the requested page was not found."
+        response: "You might try starting from the LBMC home page."
+      edit:
+        permission: "Sorry, but this record is not available for editing in the LBMC Pilot."
+    warning:
+      chrome: "Record editing isn't working yet with the Chrome or Safari web browsers. The LBMC team is working on a solution to that problem. Until then, please use Firefox or Internet Explorer. We apologize for your inconvenience."
+    error:
+      heading: "Sorry, but the LBMC Pilot system encountered a problem."
+      no-title: "A title is required."
+      isbn: "There is a problem with the ISBN.  It needs to be a valid ISBN, either 10 or 13 digits long.  If the problem persists, leave the ISBN field empty."
+      other: "This system error has been logged and reported to the LBMC development team.  We apologize for the disruption and are working on a solution."
+  home:
+    heading: "Welcome!"
+    about: "The LBMC (Low-Barrier Metadata Creation) system is a simple interface for creating catalog records in WorldCat. Selected pilot libraries are helping OCLC test this system."
+    select-institution: "Are you a pilot tester? Get started by selecting your institution from the list below."
+    get-started: "Are you a pilot tester?  You can create a new record using a simple web form.  Just select this button to get started."
+    hints:
+      heading: "Hints for new users"
+      hint1: "You'll be asked to provide basic information about a book: its title, author, publication information, how many pages, and what it's about."
+      hint2: "You won't need to know all of those details to get started: the only required field in a record is the title."
+      hint3: "If there is an error in the information entered in the form, don't worry, you'll see the record after you create it and can fix it."
+      hint4: "And a cataloger will review the information after the record is created and can resolve any remaining issues then."
+  record:
+    create:
+      heading: "Create a New Record"
+    edit:
+      heading: "Edit Record"
+    field:
+      required: "Required"
+      oclcnumber:
+        label: "OCLC Number"
+      title:
+        label: "Title"
+        prompt: "What is the title of the book?"
+        help: "This is the only required field, the others are optional."
+      author:
+        label: "Author"
+        prompt: "Who is the author?"
+        help: "If the author is a person, enter the surname first, for example \"Smith, Jane\". If the book has multiple authors, enter just the first author."
+        radio:
+          person: "The author is a person"
+          organization: "The author is an organization"
+      subject:
+        label: "Topic"
+        prompt: "What is the book about?"
+        help: "Enter keywords for people, organizations, places, concepts and events that the book is about. For example, \"Gandhi\", \"Malaysia\", \"Arabic poetry\", \"civil war\". The system will prompt you for matching topical phrases. Use a separate field for each topic."
+        link:
+          add:
+            title: "Add another topic"
+          delete:
+            title: "Delete this topic"
+      publisher-information:
+        prompt: "Publication Information"
+      publisher-country:
+        label: "Country of Publication"
+        prompt: "Country where the book was published?"
+        help: "Select the country or state/province from the list"
+        option: "Select the country"
+      publisher-city:
+        label: "City of Publication"
+        prompt: "City where it was published?"
+        help: "For example \"New York\", \"Paris\", \"Melbourne\""
+      publisher-name:
+        label: "Publisher"
+        prompt: "Who published it?"
+        help: "The publisher's name, for example \"HarperCollins\", \"Springer-Verlag\""
+      publicationdate:
+        label: "Publication Date"
+        prompt: "When was it published?"
+        help: "If you have dates from multiple calendars, prefer the Western date."
+      other-details:
+        prompt: "Other Details"
+      language:
+        label: "Language"
+        prompt: "What is the language of the book?"
+        help: "Select the language from the list"
+        option: "Select the language"
+      extent:
+        label: "Extent"
+        prompt: "How many pages or volumes?"
+        help: "Please include the type of dimension, for example \"245 p.\" (for pages) or \"3 v.\" (for volumes)"
+      isbn:
+        label: "ISBN"
+        prompt: "ISBN"
+        help: "If the book has an ISBN number please enter it here, and enter only one ISBN. For example \"9781406738859\". Otherwise leave the field blank."
