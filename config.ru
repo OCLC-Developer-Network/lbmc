@@ -9,6 +9,8 @@ require 'nokogiri'
 require 'json'
 require 'oclc/auth'
 require 'pp'
+require 'i18n'
+require 'i18n/backend/fallbacks'
 
 require './helpers/application_helper'
 require './lib/constants'
@@ -19,7 +21,7 @@ require './app'
 
 enable :sessions
 set :session_secret, '406c8f30ee92'
-set :environment, :production
+set :environment, :development
 set :run, true
 set :raise_errors, true
 
