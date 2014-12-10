@@ -2,6 +2,11 @@ set :public_folder, File.dirname(__FILE__) + '/public'
 set :views, File.dirname(__FILE__) + "/views"
 set :haml, :format => :html5
 
+I18n.locale = :en
+I18n.default_locale = :en
+I18n.load_path << Dir[File.join(File.expand_path(File.dirname(__FILE__) + '/config/locales'), '*.yml')]
+I18n.load_path.flatten!
+
 helpers do
   include ApplicationHelper
 end
@@ -11,6 +16,7 @@ before do
   # The user's session does not yet have an access token in his/her session when the app catches an
   # auth code.
   # puts ; puts "Before do, request.path_info is " + request.path_info; puts
+  set_locale
   pass unless request.path_info =~ /record/
   session[:path] = request.path
   authenticate
@@ -130,5 +136,20 @@ def authenticate
     login_url = WSKEY.login_url(session[:registry_id], session[:registry_id])
     redirect login_url
   end
+end
+
+def set_locale
+  unless params[:locale].nil?
+    session[:locale] = params[:locale]
+  end
+  if session[:locale].nil?
+    if @env["HTTP_ACCEPT_LANGUAGE"].nil?
+      session[:locale] = I18n.default_locale
+    else
+      session[:locale] = @env["HTTP_ACCEPT_LANGUAGE"][0,2]
+    end
+    # session[:locale] = I18n.default_locale
+  end
+  I18n.locale = session[:locale]
 end
 
