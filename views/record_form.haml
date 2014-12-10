@@ -13,31 +13,31 @@
   %div.form-group
     %label{ :for=>'title' } 
       %span.field_label
-        What is the title of the book?
-    %span.example * Required
-    %div.hint This is the only required field, the others are optional.
+        #{I18n.translate 'record.field.title.prompt'}
+    %span.example * #{I18n.translate 'record.field.required'}
+    %div.hint #{I18n.translate 'record.field.title.help'}
     %div.pad_above
       %input.form-control{ :type => 'text', :id => 'title', :name => 'title', :value => @data['title_880'].nil? ? @data['title'] : @data['title_880'] }
 
   %div.form-group
     %label{ :for=>'author'}
       %span.field_label
-        Who is the author?
-    %div.hint If the author is a person, enter the surname first, for example "Smith, Jane".  If the book has multiple authors, enter just the first author.
+        #{I18n.translate 'record.field.author.prompt'}
+    %div.hint #{I18n.translate 'record.field.author.help'}
     %div.pad_above
       %input.form-control{ :type => 'text', :name => 'author', :value => @data['author'] }
       %label.radio-inline
         %input{ :type => 'radio', :name => 'author_field', :id => 'author_is_person', :value => '100', :checked => @data['author_is_person'] ? true : nil } 
-        The author is a person
+        #{I18n.translate 'record.field.author.radio.person'}
       %label.radio-inline
         %input{ :type => 'radio', :name => 'author_field', :id => 'author_is_organization', :value => '110', :checked => @data['author_is_organization'] ? true : nil } 
-        The author is an organization
+        #{I18n.translate 'record.field.author.radio.organization'}
       
   %div.form-group
     %label{ :for=>'subject'} 
       %span.field_label
-        What is the book about?
-    %div.hint Enter keywords for people, organizations, places, concepts and events that the book is about.  For example, "Gandhi", "Malaysia", "Arabic poetry", "civil war".  The system will prompt you for matching topical phrases.  Use a separate field for each topic.
+        #{I18n.translate 'record.field.subject.prompt'}
+    %div.hint #{I18n.translate 'record.field.subject.help'}
     %span#exampleXtra
     %div#subjects
       - sn = 0
@@ -48,42 +48,42 @@
             %div.col-md-10.ui-widget
               %input.form-control.autosubject{ :type => 'text', :name => 'subject[]', :value => subject['a'] } 
             %div.col-md-2
-              %btn.add.btn.btn-sm.btn-info{ :title => 'Add another topic', :id => 'addelem-'+sn.to_s } 
+              %btn.add.btn.btn-sm.btn-info{ :title => "#{I18n.translate 'record.field.subject.link.add.title'}", :id => 'addelem-'+sn.to_s } 
                 %span.glyphicon.glyphicon-plus-sign
               - if sn > 1 then
-                %btn.delete.btn.btn-sm.btn-warning{ :title => 'Delete this topic', :id => 'elem-'+sn.to_s } 
+                %btn.delete.btn.btn-sm.btn-warning{ :title => "#{I18n.translate 'record.field.subject.link.delete.title'}", :id => 'elem-'+sn.to_s } 
                   %span.glyphicon.glyphicon-minus-sign
       - else
         %div.row.pad_above{ :id => "row-elem-1" }
           %div.col-md-10
             %input.form-control.autosubject{ :type => 'text', :name => 'subject[]' } 
           %div.col-md-2  
-            %btn.add.btn.btn-sm.btn-info{ :title => 'Add another topic', :id => 'addelem-1' } 
+            %btn.add.btn.btn-sm.btn-info{ :title => "#{I18n.translate 'record.field.subject.link.add.title'}", :id => 'addelem-1' } 
               %span.glyphicon.glyphicon-plus-sign   
 
   %div.well
     %div.row
       %div.col-md-12
         %span.field_label
-          Publication Information
+          #{I18n.translate 'record.field.publisher-information.prompt'}
     %div.row
       %div.col-md-3
-        %label{ :for=>'language'} Country where the book was published? 
-        %div.hint Select the country or state/province from the list
+        %label{ :for=>'language'} #{I18n.translate 'record.field.publisher-country.prompt'}
+        %div.hint #{I18n.translate 'record.field.publisher-country.help'}
       %div.col-md-3
-        %label{ :for=>'publisher' } City where it was published?
-        %div.hint For example "New York", "Paris", "Melbourne"
+        %label{ :for=>'publisher' } #{I18n.translate 'record.field.publisher-city.prompt'}
+        %div.hint #{I18n.translate 'record.field.publisher-city.help'}
       %div.col-md-3
-        %label{ :for=>'publisher' } Who published it?
-        %div.hint The publisher's name, for example "HarperCollins", "Springer-Verlag"
+        %label{ :for=>'publisher' } #{I18n.translate 'record.field.publisher-name.prompt'}
+        %div.hint #{I18n.translate 'record.field.publisher-name.help'}
       %div.col-md-3
-        %label{ :for=>'publicationdate' } When was it published?
-        %div.hint If you have dates from multiple calendars, prefer the Western date.
+        %label{ :for=>'publicationdate' } #{I18n.translate 'record.field.publicationdate.prompt'}
+        %div.hint #{I18n.translate 'record.field.publicationdate.help'}
     %div.row
       %div.col-md-3
         %div.form-group
           %select.form-control{ :name => 'country_of_publication' }
-            %option{ :value => 'xx ' } Select a country
+            %option{ :value => 'xx ' } #{I18n.translate 'record.field.publisher-country.option'}
             - MARC_COUNTRIES.each do |country_hash|
               - option_selected = ""
               - if country_hash[0] == @data['country_of_publication'].strip
@@ -103,22 +103,22 @@
     %div.row
       %div.col-md-12
         %span.field_label
-          Other Details
+          #{I18n.translate 'record.field.other-details.prompt'}
     %div.row
       %div.col-md-4
-        %label{ :for=>'language'} What is the language of the book?
-        %div.hint Select the language from the list
+        %label{ :for=>'language'} #{I18n.translate 'record.field.language.prompt'}
+        %div.hint #{I18n.translate 'record.field.language.help'}
       %div.col-md-4
-        %label{ :for=>'extent' } How many pages or volumes?
-        %div.hint Please include the type of dimension, for example "245 p." (for pages) or "3 v." (for volumes)
+        %label{ :for=>'extent' } #{I18n.translate 'record.field.extent.prompt'}
+        %div.hint #{I18n.translate 'record.field.extent.help'}
       %div.col-md-4
-        %label{ :for=>'isbn'} ISBN
-        %div.hint If the book has an ISBN number please enter it here, and enter only one ISBN. For example "9781406738859". Otherwise leave the field blank. 
+        %label{ :for=>'isbn'} #{I18n.translate 'record.field.isbn.prompt'}
+        %div.hint #{I18n.translate 'record.field.isbn.help'}
     %div.row
       %div.col-md-4
         %div.form-group
           %select.form-control{ :name => 'language' }
-            %option{ :value => 'und' } Select the language
+            %option{ :value => 'und' } #{I18n.translate 'record.field.language.option'}
             - MARC_LANGUAGES.each do |language_hash|
               - option_selected = ""
               - if language_hash[0] == @data['language']
@@ -132,6 +132,6 @@
           %input.form-control{ :type => 'text', :name => 'isbn', :value => @data['isbn'], :maxlength => "13" }
     
   %div.form-group
-    %button.btn.btn-success{ :type => 'submit' } 
+    %button.btn.btn-success{ :type => 'submit', $title => "#{@button_title}" } 
       %span.glyphicon.glyphicon-ok 
       #{@button_label}

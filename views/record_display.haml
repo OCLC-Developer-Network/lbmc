@@ -5,63 +5,63 @@
   %tr
     %td.field_display_label
       %div.pull-right
-        OCLC number
+        #{I18n.translate 'record.field.oclcnumber.label'}
     %td{ :id => 'oclcnum' }
       = data['id']
       
   %tr
     %td.field_display_label
       %div.pull-right
-        Title
+        #{I18n.translate 'record.field.title.label'}
     %td{ :id => 'title' }
       = @data['title_880'].nil? ? @data['title'] : @data['title_880']
       
   %tr
     %td.field_display_label
       %div.pull-right
-        Author
+        #{I18n.translate 'record.field.author.label'}
     %td{ :id => 'author' }
       = data['author']
 
   %tr
     %td.field_display_label
       %div.pull-right
-        Country of Publication
+        #{I18n.translate 'record.field.publisher-country.label'}
     %td{ :id => 'country_of_publication' }
       = MARC_COUNTRIES[data['country_of_publication']]
       
   %tr
     %td.field_display_label
       %div.pull-right
-        City of publication
+        #{I18n.translate 'record.field.publisher-city.label'}
     %td{ :id => 'place_of_publication' }
       = data['place_of_publication']
       
   %tr
     %td.field_display_label
       %div.pull-right
-        Publisher
+        #{I18n.translate 'record.field.publisher-name.label'}
     %td{ :id => 'publisher' }
       = data['publisher']
       
   %tr
     %td.field_display_label
       %div.pull-right
-        Publication Date
+        #{I18n.translate 'record.field.publicationdate.label'}
     %td{ :id => 'publication_date' }
       = data['publication_date']
       
   %tr
     %td.field_display_label
       %div.pull-right
-        Extent
+        #{I18n.translate 'record.field.extent.label'}
     %td{ :id => 'extent' }
       = data['extent']
       
   %tr
     %td.field_display_label
       %div.pull-right
-        Language
+        #{I18n.translate 'record.field.language.label'}
     %td{ :id => 'language' }
       = MARC_LANGUAGES[data['language']]
       
@@ -70,14 +70,14 @@
       %tr
         %td.field_display_label
           %div.pull-right
-            Topic
+            #{I18n.translate 'record.field.subject.label'}
         %td{ :id => 'subject' }
           = subject['a']
       
   %tr
     %td.field_display_label
       %div.pull-right
-        ISBN
+        #{I18n.translate 'record.field.isbn.label'}
     %td{ :id => 'isbn' }
       = data['isbn']
       

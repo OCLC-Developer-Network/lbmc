@@ -1,12 +1,12 @@
 - if @bib and @bib.error
   %div#errors.alert.alert-danger 
     %span.glyphicon.glyphicon-exclamation-sign 
-    %span#error-heading Sorry, but the LBMC Pilot system encountered a problem.
+    %span#error-heading #{I18n.translate 'message.error.heading'}
     %ul
       - @bib.error.validation_errors.each do |validation_error| 
         - if validation_error.message.include? "245"
-          %li.error-message A title is required.
+          %li.error-message #{I18n.translate 'message.error.no-title'}
         - elsif validation_error.message.include? "020"
-          %li.error-message There is a problem with the ISBN.  It needs to be a valid ISBN, either 10 or 13 digits long.  If the problem persists, leave the ISBN field empty.
+          %li.error-message #{I18n.translate 'message.error.isbn'}
         - else
           %li.error-message= validation_error.message

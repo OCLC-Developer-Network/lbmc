@@ -2,7 +2,7 @@
 %html
   %head
     %title
-      LBMC Pilot
+      #{I18n.translate 'application.title'}
       - if @data
         - if @data['id']
           - unless @data['id'].empty?
@@ -34,22 +34,22 @@
         %div.row
           %div.col-md-6
             %div#logo_subtext
-              %h3 Low Barrier Metadata Creation
+              %h3 #{I18n.translate 'application.subtitle'}
           %div.col-md-6
             %div.pull-right.pad_above
-              %a#home.btn.btn-sm.btn-primary{ :href => APP_URL, :title => "Visit the LBMC Pilot home page" } 
+              %a#home.btn.btn-sm.btn-primary{ :href => APP_URL, :title => "#{I18n.translate 'link.home.title'}" } 
                 %span.glyphicon.glyphicon-home
-                LBMC Home
-              %a#create.btn.btn-sm.btn-primary{ :href => APP_URL+"/record/new", :title => "Start creating a new record" } 
+                #{I18n.translate 'link.home.text'}
+              %a#create.btn.btn-sm.btn-primary{ :href => APP_URL+"/record/new", :title => "#{I18n.translate 'link.create-menu.title'}" } 
                 %span.glyphicon.glyphicon-pencil
-                Create a Record
-              %a#logoff.btn.btn-sm.btn-primary{ :href => APP_URL+"/logoff", :title => "End your session" } 
+                #{I18n.translate 'link.create-menu.text'}
+              %a#logoff.btn.btn-sm.btn-primary{ :href => APP_URL+"/logoff", :title => "#{I18n.translate 'link.logoff.title'}" } 
                 %span.glyphicon.glyphicon-off
-                Logoff
+                #{I18n.translate 'link.logoff.text'}
       %div.row
         %div.col-xs-12.col-sm-4.col-md-4
           %h1#logo_text
-            %a{ :href => APP_URL+"/", :title => "Visit the LBMC Pilot home page" } LBMC Pilot
+            %a{ :href => APP_URL+"/", :title => "#{I18n.translate 'link.home.title'}" } #{I18n.translate 'application.title'}
         %div.col-xs-12.col-sm-8.col-md-8
           %div.pull-right.pad_above
             - unless session[:token].nil? or session[:token].expired?
@@ -64,8 +64,14 @@
       %div.row
         %div.col-xs-12.col-sm-12.col-md-12
           %div.pull-right
-            %a{ :href => "http://worldcat.org", :title => "Some library data on this site is provided by WorldCat, the world's largest library catalog [WorldCat.org]" }
-              %img{ :src=>"https://www.oclc.org/content/dam/developer-network/badges/wc_badge1.png", :class=>"powered_by_worldcat", :alt=>"Some library data on this site is provided by WorldCat, the world's largest library catalog [WorldCat.org]" }
+            %a{ :href => "javascript:switchLanguage('en')", :title => "#{I18n.translate 'link.language.en.title'}"}
+              #{I18n.translate 'link.language.en.text'}
+            |
+            %a{ :href => "javascript:switchLanguage('fr')", :title => "#{I18n.translate 'link.language.fr.title'}"}
+              #{I18n.translate 'link.language.fr.text'}
+            |
+            %a{ :href => "http://worldcat.org", :title => "#{I18n.translate 'link.worldcat.title'}" }
+              %img{ :src=>"https://www.oclc.org/content/dam/developer-network/badges/wc_badge1.png", :class=>"powered_by_worldcat", :alt=>"#{I18n.translate 'link.worldcat.title'}" }
           
         
     %script{:src=>"//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"}

@@ -2,31 +2,30 @@
   %div.col-md-12
     %div.well
       %div.text
-        %h3 Welcome!
-        The LBMC (Low-Barrier Metadata Creation) system is a simple interface for creating catalog records in WorldCat.
-        Selected pilot libraries are helping OCLC test this system.
+        %h3 #{I18n.translate 'home.heading'}
+        #{I18n.translate 'home.about'}
         %div.pad_above
         - if session[:token].nil? or session[:token].expired?
-          Are you a pilot tester?  Get started by selecting your institution from the list below.
+          #{I18n.translate 'home.select-institution'}
           %div#get-started.list-group.pad_above
             - INSTITUTIONS.each do |registry_id, info|
               %a.list-group-item.pilot_list{ :id => "login-to-#{registry_id}", :href => APP_URL+'/authenticate?registry_id='+registry_id.to_s }
                 %img.logo_medium{ :src => APP_URL+"/images/#{info['symbol']}.jpg" }
                 %span.pad_left_wide= info['name']
         - else
-          Are you a pilot tester?  You can create a new record using a simple web form.  Just select this button to get started.
+          #{I18n.translate 'home.get-started'}
           %div.pad_above
-            %a#new-record.btn.btn-success{ :href => APP_URL+"/record/new"} 
+            %a#new-record.btn.btn-success{ :href => APP_URL+"/record/new", :title => "#{I18n.translate 'link.create-new.title'}" } 
               %span.glyphicon.glyphicon-pencil
-              Create a New Record
+              #{I18n.translate 'link.create-new.text'}
             
           %div.pad_above
             %ul.list-group.pad_above
               %li.list-group-item.list_heading 
                 %span.glyphicon.glyphicon-info-sign
-                %span#hints Hints for new users
-              %li.list-group-item You'll be asked to provide basic information about a book: its title, author, publication information, how many pages, and what it's about.
-              %li.list-group-item You won't need to know all of those details to get started: the only required field in a record is the title.
-              %li.list-group-item If there is an error in the information entered in the form, don't worry, you'll see the record after you create it and can fix it.
-              %li.list-group-item And a cataloger will review the information after the record is created and can resolve any remaining issues then.
+                %span#hints #{I18n.translate 'home.hints.heading'}
+              %li.list-group-item #{I18n.translate 'home.hints.hint1'}
+              %li.list-group-item #{I18n.translate 'home.hints.hint2'}
+              %li.list-group-item #{I18n.translate 'home.hints.hint3'}
+              %li.list-group-item #{I18n.translate 'home.hints.hint4'}
     

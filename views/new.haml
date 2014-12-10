@@ -14,7 +14,8 @@
 - @data['publication_date'] = params[:publication_date].nil? ? '' : params[:publication_date]
 - @data['extent'] = params[:extent].nil? ? '' : params[:extent]
 - @data['subject'] = params[:subject].nil? ? '' : params[:subject]
-- @button_label = "Create this Record"
+- @button_title = I18n.translate 'link.create-submit.title'
+- @button_label = I18n.translate 'link.create-submit.text'
 
 %div#webkit_message
 
@@ -22,7 +23,7 @@
 
   %h3
     %span{ :class=>"glyphicon glyphicon-pencil"}
-    Create a New Record 
+    #{I18n.translate 'record.create.heading'} 
 
   %div{ :style => "margin-top: 2em;" }
 

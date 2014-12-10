@@ -16,7 +16,8 @@
 - @data['publication_date'] = @bib.marc_record['260'].nil? ? '' : @bib.marc_record['260']['c']
 - @data['extent'] = @bib.marc_record['300'].nil? ? '' : @bib.marc_record['300']['a']
 - @data['subject'] = @bib.marc_record['653'].nil? ? '' : @bib.marc_record.fields('653')
-- @button_label = "Update this Record"
+- @button_title = I18n.translate 'link.update-submit.title'
+- @button_label = I18n.translate 'link.update-submit.text'
 
 - if @bib.is_app_created? and belongs_to_current_user?(@bib.marc_record, INSTITUTIONS[session[:registry_id].to_i]['symbol'])
 
@@ -25,7 +26,7 @@
   %div.well
     %h3.record_label
       %span.glyphicon.glyphicon-pencil
-      Edit Record 
+      #{I18n.translate 'record.edit.heading'}
       =@bib.id
 
     = partial :record_form, locals: {action: "/record/update", data: @data }
@@ -35,20 +36,20 @@
   %div.well
     %div.alert.alert-info
       %span.glyphicon.glyphicon-exclamation-sign
-      Sorry, but this record is not available for editing in the LBMC Pilot.
+      #{I18n.translate 'message.info.edit.permission'}
     
     = partial :record_display, locals: {data: @data }
 
 %div.row#marc_views
   %div.col-md-12
-    %a#marc-view-link.btn.btn-default.btn-sm{ :href => '#', :onClick => '$("#marc-view").toggle(); $("html, body").animate({ scrollTop: $("#marc_views").offset().top}, 1000); return false;', :title => "View the record in MARC format" }
+    %a#marc-view-link.btn.btn-default.btn-sm{ :href => '#', :onClick => '$("#marc-view").toggle(); $("html, body").animate({ scrollTop: $("#marc_views").offset().top}, 1000); return false;', :title => "#{I18n.translate 'link.view.marcrecord.title'}" }
       %span.glyphicon.glyphicon-list
-      View the MARC Record
-    %a#marc-worldcat-link.btn.btn-default.btn-sm{ :href => @bib.link, :target => 'blank', :title => "View the record in WorldCat" }
+      #{I18n.translate 'link.view.marcrecord.text'}
+    %a#marc-worldcat-link.btn.btn-default.btn-sm{ :href => @bib.link, :target => 'blank', :title => "#{I18n.translate 'link.view.worldcat.title'}" }
       %span.glyphicon.glyphicon-globe
-      View in WorldCat
-    %a#marc-xml-link.btn.btn-default.btn-sm{ :href => url('/record/'+@bib.id+'.xml'), :title => "Download the record in MARC XML format" }
+      #{I18n.translate 'link.view.worldcat.text'}
+    %a#marc-xml-link.btn.btn-default.btn-sm{ :href => url('/record/'+@bib.id+'.xml'), :title => "#{I18n.translate 'link.view.marcxml.title'}" }
       %span.glyphicon.glyphicon-download
-      Download MARC XML
+      #{I18n.translate 'link.view.marcxml.text'}
     %div.pad_above
       %pre#marc-view= @bib.marc_record
