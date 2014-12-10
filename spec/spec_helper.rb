@@ -11,6 +11,8 @@ require 'oclc/auth'
 require 'rspec'
 require 'rack/test'
 require 'webmock/rspec'
+require 'i18n'
+require 'i18n/backend/fallbacks'
 
 require File.join(File.dirname(__FILE__), '..', 'helpers/application_helper.rb')
 require File.join(File.dirname(__FILE__), '..', 'lib/constants.rb')
