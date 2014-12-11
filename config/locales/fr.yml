@@ -121,7 +121,7 @@ fr:
       extent:
         label: "Ampleur"
         prompt: "Combien de pages ou volumes?"
-        help: "Se il vous plaît inclure le type de dimension , par exemple \"245 p.\" (pour les pages ) ou  \"3 v.\" (pour les volumes )"
+        help: "Se il vous plaît inclure le type de dimension, et épeler complètement, par exemple \"245 pages\" ou \"3 volumes\"."
       isbn:
         label: "ISBN"
         prompt: "ISBN"
