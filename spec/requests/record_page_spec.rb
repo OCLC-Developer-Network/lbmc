@@ -51,7 +51,7 @@ describe "the record page" do
     end
 
     it "should have an author input field with the right value" do
-      input = @form_element.xpath(".//input[@name='author']").first
+      input = @form_element.xpath(".//input[@name='author[]']").first
       expect(input.attr('value')).to eq('Meyer, Stephen')
     end
     
@@ -76,7 +76,7 @@ describe "the record page" do
     end
     
     it "should have an isbn input field with the right value" do
-      input = @form_element.xpath(".//input[@name='isbn']").first
+      input = @form_element.xpath(".//input[@name='isbn[]']").first
       expect(input.attr('value')).to eq('9780060723804')
     end
     
@@ -131,7 +131,8 @@ describe "the record page" do
             :language => 'eng',
             :country_of_publication => 'cau',
             :title => 'Testing metadata APIs',
-            :author => 'Meyer, Steve',
+            :author => ['Meyer, Steve'],
+            :author_field_0 => '100',
             :publisher => 'OCLC Press',
             :extent => '190 p.',
             :subject => ['Application Programming Interfaces (APIs)']
@@ -156,7 +157,8 @@ describe "the record page" do
             :language => 'eng',
             :country_of_publication => 'cau',
             :title => 'Testing metadata APIs',
-            :author => 'Meyer, Stephen',
+            :author => ['Meyer, Stephen'],
+            :author_field_0 => '100',
             :publisher => 'OCLC Press',
             :extent => '190 p.',
             :subject => ['Application Programming Interfaces (APIs)']
@@ -178,7 +180,8 @@ describe "the record page" do
       p = { 
             :language => 'eng',
             :country_of_publication => 'cau',
-            :author => 'Meyer, Stephen',
+            :author => ['Meyer, Stephen'],
+            :author_field_0 => '100',
             :publisher => 'OCLC Press',
             :extent => '190 p.',
             :subject => ['Application Programming Interfaces (APIs)']
@@ -239,7 +242,8 @@ describe "the record page" do
     
     it "should have a table cell containing the author" do
       td = @doc.xpath("//td[@id='author']").first
-      expect(td.text.strip).to eq('')
+      expect(td.text.strip).to eq('Southern California Rapid Transit District.
+                  Metro Rail Department.')
     end
     
     it "should have a table cell containing the publisher" do
@@ -262,10 +266,10 @@ describe "the record page" do
       expect(td.text.strip).to eq('English')
     end
     
-    it "should have a table cell containing the isbn" do
-      td = @doc.xpath("//td[@id='isbn']").first
-      expect(td.text.strip).to eq('')
-    end
+    #it "should have a table cell containing the isbn" do
+      #td = @doc.xpath("//td[@id='isbn']").first
+      #expect(td.text.strip).to eq('')
+    #end
     
     it "should display the MARC record" do
       marc_str = mock_file_contents("ocm09999999.marc")
@@ -352,10 +356,10 @@ describe "the record page" do
       expect(td.text.strip).to eq('English')
     end
     
-    it "should have a table cell containing the isbn" do
-      td = @doc.xpath("//td[@id='isbn']").first
-      expect(td.text.strip).to eq('')
-    end
+    #it "should have a table cell containing the isbn" do
+      #td = @doc.xpath("//td[@id='isbn']").first
+      #expect(td.text.strip).to eq('')
+    #end
     
     it "should display the MARC record view" do
       marc_str = mock_file_contents("ocn883880805.marc")
