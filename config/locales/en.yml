@@ -16,6 +16,9 @@ en:
     create-submit:
       title: "Add this new record"
       text: "Create this Record"
+    update-submit:
+      title: "Save your changes to this record"
+      text: "Update this Record"
     logoff:
       title: "End your session"
       text: "Logoff"
@@ -70,6 +73,11 @@ en:
       heading: "Edit Record"
     field:
       required: "Required"
+      repeatable:
+        add:
+          title: "Add another entry"
+        delete:
+          title: "Delete this entry"
       oclcnumber:
         label: "OCLC Number"
       title:
@@ -79,7 +87,7 @@ en:
       author:
         label: "Author"
         prompt: "Who is the author?"
-        help: "If the author is a person, enter the surname first, for example \"Smith, Jane\". If the book has multiple authors, enter just the first author."
+        help: "If the author is a person, enter the surname first, for example \"Smith, Jane\"."
         radio:
           person: "The author is a person"
           organization: "The author is an organization"
@@ -87,11 +95,6 @@ en:
         label: "Topic"
         prompt: "What is the book about?"
         help: "Enter keywords for people, organizations, places, concepts and events that the book is about. For example, \"Gandhi\", \"Malaysia\", \"Arabic poetry\", \"civil war\". The system will prompt you for matching topical phrases. Use a separate field for each topic."
-        link:
-          add:
-            title: "Add another topic"
-          delete:
-            title: "Delete this topic"
       publisher-information:
         prompt: "Publication Information"
       publisher-country:
@@ -110,7 +113,7 @@ en:
       publicationdate:
         label: "Publication Date"
         prompt: "When was it published?"
-        help: "If you have dates from multiple calendars, prefer the Western date."
+        help: "Prefer Western dates, taking from the item or converting. If providing a non-Western date, please label it as such, e.g. A.H."
       other-details:
         prompt: "Other Details"
       language:
@@ -125,4 +128,4 @@ en:
       isbn:
         label: "ISBN"
         prompt: "ISBN"
-        help: "If the book has an ISBN number please enter it here, and enter only one ISBN. For example \"9781406738859\". Otherwise leave the field blank."
+        help: "If the book has an ISBN number please enter it here, and enter only one ISBN. For example \"9781406738858\". Otherwise leave the field blank."

@@ -16,6 +16,9 @@ fr:
     create-submit:
       title: "Ajouter ce nouveau record"
       text: "Créer"
+    update-submit:
+      title: "Enregistrez vos modifications à cette fiche"
+      text: "Mettre à jour cette fiche"
     logoff:
       title: "Terminez votre séance"
       text: "Déconnecter"
@@ -70,6 +73,11 @@ fr:
       heading: "Modifier un enregistrement"
     field:
       required: "Requis"
+      repeatable:
+        add:
+          title: "Ajouter une autre entrée"
+        delete:
+          title: "Supprimer cette entrée"
       oclcnumber:
         label: "OCLC nombre record"
       title:
@@ -79,7 +87,7 @@ fr:
       author:
         label: "Auteur"
         prompt: "Qui est l'auteur?"
-        help: "Si l'auteur est une personne, entrez le nom de famille en premier, par exemple \"Smith , Jane\" . Si le livre a plusieurs auteurs, il suffit d'entrer le premier auteur."
+        help: "Si l'auteur est une personne, entrez le nom de famille en premier, par exemple \"Smith , Jane\" ."
         radio:
           person: "L'auteur est une personne"
           organization: "L'auteur est une organisation"
@@ -110,7 +118,7 @@ fr:
       publicationdate:
         label: "Date de publication"
         prompt: "Quand at-il publié?"
-        help: "Si vous avez des dates de plusieurs calendriers , préférez la date de l'Ouest."
+        help: "Préférez dates occidentaux , en prenant de l'élément ou de la conversion . Si fournir une date non - occidentale , se il vous plaît étiqueter comme tels , par exemple, A.H."
       other-details:
         prompt: "Autres détails"
       language:
@@ -125,4 +133,4 @@ fr:
       isbn:
         label: "ISBN"
         prompt: "ISBN"
-        help: "Si le livre a un numéro d' ISBN se il vous plaît entrer ici, et entrez un seul ISBN. Par exemple \"9781406738859\". Sinon, laissez le champ vide."
+        help: "Si le livre a un numéro d' ISBN se il vous plaît entrer ici, et entrez un seul ISBN. Par exemple \"9781406738858\". Sinon, laissez le champ vide."
