@@ -11,26 +11,68 @@ $( document ).ready(function() {
 		$('#webkit_message').html("<span class='glyphicon glyphicon-info-sign'></span> Record editing isn't working yet with the Chrome or Safari web browsers.  The LBMC team is working on a solution to that problem.  Until then, please use Firefox or Internet Explorer.  We apologize for your inconvenience.");
 	}
 
-	// adding and deleting topic rows
-	$("body").on("click", ".add", function (e) {
-		n = $("input[name='subject[]']").size() + 1;
-		var subject_row = '<div class="row pad_above" id="row-elem-'+n+'">';
-		subject_row += '<div class="col-md-10">';
-		//subject_row += '<input type="text" name="subject_ind2[]" id="subject_ind2_'+n+'" value=" "/>';
-		subject_row += '<input type="text" name="subject[]" class="form-control autosubject"></div>';
-		subject_row += '<div class="col-md-2"><button id="addelem-'+n+'" class="add btn btn-sm btn-info" title="Add another topic"><span class="glyphicon glyphicon-plus-sign"></span></button> <button id="elem-'+n+'" class="btn btn-sm btn-warning delete"><span class="glyphicon glyphicon-minus-sign"></span></button></div>';
-		subject_row += '</div>';
-		$("#subjects").append(subject_row);
+	// adding and deleting rows
+	$("body").on("click", ".add-author", function (e) {
+		n = $("input[name='author[]']").size();
+		var row = '<div class="pad_above" id="row_author_'+n+'">';
+		row += '<div class="row">';
+		row += '<div class="col-md-10">';
+		row += '<input type="text" name="author[]" class="form-control"></div>';
+		row += '<div class="col-md-2"><button id="add_author_'+n+'" class="add-author btn btn-sm btn-info"><span class="glyphicon glyphicon-plus-sign"></span></button> <button id="author_'+n+'" class="btn btn-sm btn-warning delete"><span class="glyphicon glyphicon-minus-sign"></span></button></div>';
+		row += '</div>';
+		row += '<div class="row" id="author_type_'+n+'">';
+		row += '<div class="col-md-12">';
+		row += '<label class="radio-inline">';
+		row += '<input type="radio" name="author_field_'+n+'" id="author_is_person_'+n+'" value="100" checked/>';
+		row += ' The author is a person';
+		row += '</label>';
+		row += '<label class="radio-inline">';
+		row += '<input type="radio" name="author_field_'+n+'" id="author_is_organization_'+n+'" value="110" />';
+		row += ' The author is an organization';
+		row += '</label>';
+		row += '</div>';
+		row += '</div>';
+		$("#authors").append(row);
+		return false;
+	});
+	$("body").on("click", ".add-subject", function (e) {
+		n = $("input[name='subject[]']").size();
+		var row = '<div class="row pad_above" id="row_subject_'+n+'">';
+		row += '<div class="col-md-10">';
+		row += '<input type="text" name="subject[]" id="subject_entry_'+n+'" class="form-control autosubject"  value="">';
+		row += '<input type="hidden" name="subject_type[]" id="subject_entry_'+n+'_type" value="653"/>';
+		row += '<input type="hidden" name="subject_id[]" id="subject_entry_'+n+'_id" value="none"/>';
+		row += '</div>';
+		row += '<div class="col-md-2"><button id="add_subject_'+n+'" class="add-subject btn btn-sm btn-info"><span class="glyphicon glyphicon-plus-sign"></span></button> <button id="subject_'+n+'" class="btn btn-sm btn-warning delete"><span class="glyphicon glyphicon-minus-sign"></span></button></div>';
+		row += '</div>';
+		$("#subjects").append(row);
 		bindAutoComplete("autosubject",n);
 		return false;
 	});
+	$("body").on("click", ".add-isbn", function (e) {
+		n = $("input[name='isbn[]']").size();
+		var row = '<div class="row pad_above" id="row_isbn_'+n+'">';
+		row += '<div class="col-md-8">';
+		row += '<input type="text" name="isbn[]" class="form-control"></div>';
+		row += '<div class="col-md-4"><button id="add_isbn_'+n+'" class="add-isbn btn btn-sm btn-info"><span class="glyphicon glyphicon-plus-sign"></span></button> <button id="isbn_'+n+'" class="btn btn-sm btn-warning delete"><span class="glyphicon glyphicon-minus-sign"></span></button></div>';
+		row += '</div>';
+		$("#isbns").append(row);
+		return false;
+	});
 	$("body").on("click", ".delete", function (e) {
-		$("#row-"+this.id).remove();
+		$("#row_"+this.id).remove();
 		return false;
 	});
 	
 	// bind autocomplete ui to input fields with the class autosubject
 	bindAutoComplete("autosubject",1);
+	
+	// reset subject type and id if user enters data by hand
+	$( ".autosubject" ).keypress(function() {
+		console.log($(this));
+		$("#"+$(this)[0].id+"_type").val('653');
+		$("#"+$(this)[0].id+"_id").val('none');
+	});
 
 }); // end of onready function call
 
@@ -39,13 +81,20 @@ var currentSuggestIndexDefault = "suggestall";
 var subjectProxy = "https://fast.oclc.org/searchfast/fastsuggest?";
 var subjectDB =  "autoSubject";
 
-// bind auto complete to input elements
+// bind auto complete to an input element
 function bindAutoComplete(classname,n) {
 	$("." + classname).autocomplete({
 		source: autoSubjectExample, 
 		minLength: 1,
 		select: function(event, ui) {
-			//$("#subject_ind2_"+n).val(get653IndicatorTwoFromTag(ui.item.tag));
+			var tag = ui.item.tag + "";
+			tag = tag.substring(1);
+			tag = "6"+tag;
+			console.log($(this)[0].id);
+			console.log(ui.item.value);
+			$("#"+$(this)[0].id).val(ui.item.value);
+			$("#"+$(this)[0].id+"_type").val(tag);
+			$("#"+$(this)[0].id+"_id").val("(OCoLC)"+ui.item.idroot);
 		},
 		create: function() {
 			$(this).data("ui-autocomplete")._renderItem = function (ul, item) {
@@ -107,46 +156,6 @@ function autoSubject(request, response, responseStyle) {
 		}
 	});
 } // end autoSubject
-
-// called by autosuggest, based on the tag returned convert to appropriate MARC 653 indicator 2 value
-function get653IndicatorTwoFromTag(tag) {
-	switch(tag) {
-		case 100:
-			// Personal name
-			return "1";
-			break;
-		case 110:
-			// Corporate name
-			return "2";
-			break;
-		case 111:
-			// Meeting name
-			return "3";
-			break;
-		case 130:
-			// Uniform Title
-			return "";
-			break;
-		case 148:
-			// Period
-			return "4";
-			break;
-		case 150:
-			// Topical term
-			return "0";
-			break;
-		case 151:
-			// Geographic
-			return "5";
-			break;
-		case 155:
-			// Form / Genre
-			return "6";
-			break;
-		default:
-			return "";
-	}
-} // end getTypeFromTag
 
 // called as the source for the autocomplete
 function autoSubjectExample(request, response) {
