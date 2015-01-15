@@ -16,12 +16,15 @@
     %td{ :id => 'title' }
       = @data['title_880'].nil? ? @data['title'] : @data['title_880']
       
-  %tr
-    %td.field_display_label
-      %div.pull-right
-        #{I18n.translate 'record.field.author.label'}
-    %td{ :id => 'author' }
-      = data['author']
+  - if @data['author'].kind_of?(Array)
+    - @data['author'].each do |author|
+      %tr
+        %td.field_display_label
+          %div.pull-right
+            #{I18n.translate 'record.field.author.label'}
+        %td{ :id => 'author' }
+          - author.each do |s|
+            #{s.value}
 
   %tr
     %td.field_display_label
@@ -72,12 +75,16 @@
           %div.pull-right
             #{I18n.translate 'record.field.subject.label'}
         %td{ :id => 'subject' }
-          = subject['a']
-      
-  %tr
-    %td.field_display_label
-      %div.pull-right
-        #{I18n.translate 'record.field.isbn.label'}
-    %td{ :id => 'isbn' }
-      = data['isbn']
+          - subject.each do |s|
+            #{s.value}
+
+  - if @data['isbn'].kind_of?(Array)
+    - @data['isbn'].each do |isbn|
+      %tr
+        %td.field_display_label
+          %div.pull-right
+            #{I18n.translate 'record.field.isbn.label'}
+        %td{ :id => 'isbn' }
+          - isbn.each do |s|
+            #{s.value}
       
