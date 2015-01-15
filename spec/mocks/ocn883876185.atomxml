@@ -28,7 +28,7 @@
           <subfield code="a">Testing metadata APIs</subfield>
           <subfield code="b">A comparative analysis</subfield>
         </datafield>
-        <datafield tag="260" ind1=" " ind2=" ">
+        <datafield tag="264" ind1=" " ind2="1">
           <subfield code="b">OCLC Press</subfield>
         </datafield>
         <datafield tag="300" ind1=" " ind2=" ">

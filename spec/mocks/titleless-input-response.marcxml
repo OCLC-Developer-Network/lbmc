@@ -16,7 +16,7 @@
         <datafield tag="100" ind1="1" ind2=" ">
           <subfield code="a">Meyer, Steve</subfield>
         </datafield>
-        <datafield tag="260" ind1=" " ind2=" ">
+        <datafield tag="264" ind1=" " ind2="1">
           <subfield code="b">OCLC Press</subfield>
           <subfield code="c">2013</subfield>
         </datafield>

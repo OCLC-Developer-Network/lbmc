@@ -37,7 +37,7 @@
         <datafield tag="246" ind1="3" ind2=" ">
           <subfield code="a">Los Angeles metro rail project</subfield>
     </datafield>
-        <datafield tag="260" ind1=" " ind2=" ">
+        <datafield tag="264" ind1=" " ind2="1">
           <subfield code="a">[Los Angeles] :</subfield>
           <subfield code="b">Southern California Rapid Transit District,</subfield>
           <subfield code="c">[1981]</subfield>
