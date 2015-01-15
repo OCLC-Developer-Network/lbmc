@@ -4,24 +4,38 @@ module LBMC
   ATOM_WRAPPED_MARC_MIMETYPE = 'application/atom+xml;content="application/vnd.oclc.marc21+xml"'
   MARC_XML_MIMETYPE = 'application/vnd.oclc.marc21+xml'
   
-  SCRIPT_IDENTIFIER = 
+  SCRIPT_CODES = 
     {
-      "Arabic" => "(3",
       "Armenian" => "Armn",
       "Bengali" => "Beng",
-      "Cyrillic" => "(N",
       "Devanagari" => "Deva",
       "Ethiopic" => "Ethi",
-      "Greek" => "(S",
-      "Han" => "$1",
-      "Hangul" => "$1",
-      "Hebrew" => "(2",
-      "Hiragana" => "$1",
-      "Katakana" => "$1",
       "Syriac" => "Syrc",
       "Tamil" => "Taml",
-      "Thai" => "Thai"
+      "Thai" => "Thai",
+      "Latin" => "(B",
+      "CJK" => "$1",
+      "Hebrew" => "(2",
+      "Greek" => "(S",
+      "ARABIC_BAS" => "(3",
+      "ARABIC_EXT" => "(4",
+      "CYRILLIC_BAS" => "(N",
+      "CYRILLIC_EXT" => "(Q",
+      "CYRILLIC_NONMARC" => "Cyrl"
     }
+    
+  NONMARC_LANGUAGES =  
+    [ 
+      "Armenian",
+      "Bengali",
+      "Devanagari",
+      "Ethiopic",
+      "Greek",
+      "Hebrew",
+      "Syriac",
+      "Tamil",
+      "Thai"
+    ]
     
   SUPPORTED_LANGUAGES =  
     [ 
