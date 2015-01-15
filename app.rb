@@ -29,7 +29,8 @@ get '/' do
 end
 
 get '/detect/:term' do
-  JSON.parse(detect_language(params[:term]).inspect).to_json
+  detect_unicode_block(params[:term])
+  #detect_script(params[:term])
 end
 
 get '/record/new' do
