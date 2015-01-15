@@ -4,18 +4,37 @@
 - @data['id'] = @bib.id
 - @data['language'] = @bib.marc_record['008'].nil? ? '' : @bib.marc_record['008'].to_s[39,3]
 - @data['country_of_publication'] = @bib.marc_record['008'].nil? ? '' : @bib.marc_record['008'].to_s[19,3]
-- @data['isbn'] = @bib.marc_record['020'].nil? ? '' : @bib.marc_record['020']['a']
+- @data['isbn'] = @bib.marc_record['020'].nil? ? Array.new : @bib.marc_record.fields('020')
 - @data['title'] = @bib.marc_record['245']['a'].nil? ? '' : @bib.marc_record['245']['a']
 - @data['title_880'] = @bib.marc_record['880'].nil? ? nil : @bib.marc_record['880']['a']
-- @data['author'] = @bib.marc_record['100'].nil? ? '' : @bib.marc_record['100']['a']
-- @data['author'] = @bib.marc_record['110'].nil? ? @data['author'] : @bib.marc_record['110']['a']
-- @data['author_is_person'] = @bib.marc_record['110'].nil? ? true : false
-- @data['author_is_organization'] = @bib.marc_record['110'].nil? ? false : true
-- @data['place_of_publication'] = @bib.marc_record['260'].nil? ? '' : @bib.marc_record['260']['a']
-- @data['publisher'] = @bib.marc_record['260'].nil? ? '' : @bib.marc_record['260']['b']
-- @data['publication_date'] = @bib.marc_record['260'].nil? ? '' : @bib.marc_record['260']['c']
+- @data['author'] = @bib.marc_record['100'].nil? ? Array.new : @bib.marc_record.fields('100')
+- @data['author'] = @bib.marc_record['110'].nil? ? @data['author'] : @bib.marc_record.fields('110')
+- @data['author_is_person_0'] = @bib.marc_record['110'].nil? ? true : false
+- @data['author_is_organization_0'] = @bib.marc_record['110'].nil? ? false : true
+- aeinc = 1
+- @bib.marc_record.fields('700').each do |ae|
+  - @data['author'].push(ae)
+  - @data['author_is_person_'+aeinc.to_s] = true
+  - @data['author_is_organization_'+aeinc.to_s] = false
+  - aeinc += 1
+- @bib.marc_record.fields('710').each do |ae|
+  - @data['author'].push(ae)
+  - @data['author_is_person_'+aeinc.to_s] = false
+  - @data['author_is_organization_'+aeinc.to_s] = true
+  - aeinc += 1
+- @data['place_of_publication'] = @bib.marc_record['264'].nil? ? '' : @bib.marc_record['264']['a']
+- @data['publisher'] = @bib.marc_record['264'].nil? ? '' : @bib.marc_record['264']['b']
+- @data['publication_date'] = @bib.marc_record['264'].nil? ? '' : @bib.marc_record['264']['c']
 - @data['extent'] = @bib.marc_record['300'].nil? ? '' : @bib.marc_record['300']['a']
-- @data['subject'] = @bib.marc_record['653'].nil? ? '' : @bib.marc_record.fields('653')
+- subject_tags = Array.new(['600','610','611','630','648','650','651','653','655'])
+- @data['subject'] = Array.new
+- @data['subject_type'] = Array.new
+- @data['subject_id'] = Array.new
+- subject_tags.each do |st|
+  - @bib.marc_record.fields(st).each do |s|
+    - @data['subject'].push(s)
+    - @data['subject_type'].push(st)
+    - @data['subject_id'].push(s['0'])
 - @button_title = I18n.translate 'link.update-submit.title'
 - @button_label = I18n.translate 'link.update-submit.text'
 
