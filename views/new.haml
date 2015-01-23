@@ -6,7 +6,10 @@
 - @data['country_of_publication'] = session[:marc_country].nil? ? '' : session[:marc_country]
 - @data['isbn'] = params[:isbn].nil? ? Array.new : params[:isbn]
 - @data['title'] = params[:title].nil? ? '' : params[:title]
-- @data['author'] = params[:author].nil? ? Array.new : params[:author]
+- @data['v880'] = params[:v880].nil? ? Array.new : params[:v880]
+- @data['author'] = Array.new
+- @data['author_type'] = Array.new
+- @data['author_type'].push('person')
 - @data['author_is_person_0'] = true
 - @data['author_is_organization_0'] = false
 - @data['place_of_publication'] = params[:place_of_publication].nil? ? '' : params[:place_of_publication]
@@ -14,8 +17,11 @@
 - @data['publication_date'] = params[:publication_date].nil? ? '' : params[:publication_date]
 - @data['extent'] = params[:extent].nil? ? '' : params[:extent]
 - @data['subject'] = params[:subject].nil? ? Array.new : params[:subject]
+- @data['subject_string'] = Array.new
+- @data['subject_raw'] = Array.new
 - @data['subject_type'] = Array.new
 - @data['subject_id'] = Array.new
+- @data['subject_indicator'] = Array.new
 - @button_title = I18n.translate 'link.create-submit.title'
 - @button_label = I18n.translate 'link.create-submit.text'
 
