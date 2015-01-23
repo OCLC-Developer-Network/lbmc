@@ -7,19 +7,20 @@
         - if @data['id']
           - unless @data['id'].empty?
             = " - Record #{@data['id']} - "
-            - if @data['title_880'].nil?
-              = @data['title']
-            - else
-              = @data['title_880']
+            = @data['title']
           - else
             = " - Create"
       - if @bib
         - if @bib.error
           = " - Error"
+    %meta{ :charset=>"utf-8" }
+    %meta{ 'http-equiv'=>"X-UA-Compatible", :content=>"IE=edge" }
     %meta{ :name=>"viewport", :content=>"width=device-width, initial-scale=1.0" }
+    
     %link{ :rel=>"icon", :href=> APP_URL+"/images/favicon.ico", :type=>"image/x-icon" }
     %link{ :rel=>"shortcut icon", :href=> APP_URL+"/images/favicon.ico", :type=>"image/x-icon" }
     %link{ :href=>"//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css", :rel=>"stylesheet" }
+
     %link{ :href=>APP_URL+"/css/layout.css", :rel=>"stylesheet" }
     %script{:src=>"//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"}
     %script{:src=>"//code.jquery.com/jquery-1.11.0.min.js"}
@@ -27,6 +28,8 @@
     %script{:src=>"//code.jquery.com/ui/1.11.1/jquery-ui.min.js"}
     %link{ :href=>APP_URL+"/css/jquery-ui.css", :rel=>"stylesheet" }
     %script{:src=>APP_URL+"/js/app.js"}
+    %script{:src=>APP_URL+"/js/calendar.js"}
+    %script{:src=>APP_URL+"/js/astro.js"}
 
   %body
     %div.container
