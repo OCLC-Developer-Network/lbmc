@@ -16,6 +16,7 @@ before do
   # The user's session does not yet have an access token in his/her session when the app catches an
   # auth code.
   # puts ; puts "Before do, request.path_info is " + request.path_info; puts
+  # puts ; puts session.inspect ; puts
   set_locale
   pass unless request.path_info =~ /record/
   session[:path] = request.path
@@ -41,7 +42,7 @@ end
 post '/record/create' do
   # puts ; puts "get /record/create params[:language]=" + params[:language]; puts
   session[:marc_language] = params[:language]
-  record = marc_record_from_params(params)
+  record = marc_record_from_params('',params)
   @bib = Bib.new_from_marc(record, session[:token])
   @bib.create
   # puts ; puts "get /record/create @bib.response_code is " + @bib.response_code; puts
@@ -84,7 +85,7 @@ post '/record/update' do
   # puts ; puts "get /record/update params[:language]=" + params[:language]; puts
   session[:marc_language] = params[:language]
   @bib = Bib.new(params[:oclc_number], session[:token])
-  record = update_marc_record_from_params(@bib.marc_record, params)
+  record = marc_record_from_params(@bib.marc_record, params)
   @bib.marc_record = record
   @bib.update
   # puts ; puts "get /record/update @bib.response_code is " + @bib.response_code; puts
@@ -114,6 +115,7 @@ get '/catch_auth_code' do
 end
 
 get '/authenticate' do
+  # puts ; puts "authenticating" ; puts
   authenticate
   redirect session[:path]
 end
@@ -127,6 +129,7 @@ error do
 end
 
 def authenticate
+  # puts ; puts "authenticate method" ; puts
   session[:registry_id] = params[:registry_id] if params[:registry_id] 
   if session[:token].nil?
     # puts ; puts "session[:token] is nil" ; puts
