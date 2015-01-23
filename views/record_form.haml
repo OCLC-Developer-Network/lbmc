@@ -10,7 +10,7 @@
   %div
     %input{ :type => 'hidden', :name => 'oclc_number', :value => data['id'] }
     
-  %div.form-group
+  %div.form-group.section
     %label{ :for=>'title' } 
       %span.field_label
         #{I18n.translate 'record.field.title.prompt'}
@@ -18,20 +18,20 @@
     %div.pad_above
       %input.form-control{ :type => 'text', :id => 'title', :name => 'title', :value => @data['title_880'].nil? ? @data['title'] : @data['title_880'] }
 
-  %div.form-group
+  %div.form-group.section
     %label{ :for=>'author'}
       %span.field_label
         #{I18n.translate 'record.field.author.prompt'}
     %div.hint #{I18n.translate 'record.field.author.help'}
     %div#authors
       - an = 0
-      - if @data['author'].length > 0
+      - unless @data['author'].empty?
         - @data['author'].each do |author|
-          %div.pad_above{ :id => "row_author_"+an.to_s }
+          %div.pad_below{ :id => "row_author_"+an.to_s }
             %div.row
-              %div.col-md-10.ui-widget
+              %div.col-xs-6.col-sm-8.col-md-10.ui-widget
                 %input.form-control{ :type => 'text', :name => 'author[]', :value => author['a'] }
-              %div.col-md-2
+              %div.col-xs-6.col-sm-4.col-md-2
                 %btn.add-author.btn.btn-sm.btn-info{ :title => "#{I18n.translate 'record.field.repeatable.add.title'}", :id => 'add_author_'+an.to_s } 
                   %span.glyphicon.glyphicon-plus-sign
                 - if an > 0 then
@@ -40,17 +40,17 @@
             %div.row{ :id => "author_type_"+an.to_s }
               %div.col-md-12
                 %label.radio-inline
-                  %input{ :type => 'radio', :name => 'author_field_'+an.to_s, :id => 'author_is_person_'+an.to_s, :value => '100', :checked => @data['author_is_person_'+an.to_s] ? true : nil } 
+                  %input{ :type => 'radio', :name => 'author_field_'+an.to_s, :id => 'author_is_person_'+an.to_s, :value => '100', :checked => @data['author_type'][an]=='person' ? true : nil } 
                   #{I18n.translate 'record.field.author.radio.person'}
                 %label.radio-inline
-                  %input{ :type => 'radio', :name => 'author_field_'+an.to_s, :id => 'author_is_organization_'+an.to_s, :value => '110', :checked => @data['author_is_organization_'+an.to_s] ? true : nil } 
+                  %input{ :type => 'radio', :name => 'author_field_'+an.to_s, :id => 'author_is_organization_'+an.to_s, :value => '110', :checked => @data['author_type'][an]=='organization' ? true : nil } 
                   #{I18n.translate 'record.field.author.radio.organization'}
           - an = an + 1
       - else
-        %div.row.pad_above{ :id => "row_author_0" }
-          %div.col-md-10
-            %input.form-control.autosubject{ :type => 'text', :name => 'author[]' }
-          %div.col-md-2  
+        %div.row.pad_below{ :id => "row_author_0" }
+          %div.col-xs-6.col-sm-8.col-md-10
+            %input.form-control{ :type => 'text', :name => 'author[]'}
+          %div.col-xs-6.col-sm-4.col-md-2  
             %btn.add-author.btn.btn-sm.btn-info{ :title => "#{I18n.translate 'record.field.repeatable.add.title'}", :id => 'add_author_0' } 
               %span.glyphicon.glyphicon-plus-sign
         %div.row{ :id => "author_type_0" }
@@ -62,7 +62,7 @@
               %input{ :type => 'radio', :name => 'author_field_0', :id => 'author_is_organization_0', :value => '110'} 
               #{I18n.translate 'record.field.author.radio.organization'}
               
-  %div.form-group
+  %div.form-group.section
     %label{ :for=>'subject'} 
       %span.field_label
         #{I18n.translate 'record.field.subject.prompt'}
@@ -72,12 +72,14 @@
       - sn = 0
       - if @data['subject'].length > 0
         - @data['subject'].each do |subject|
-          %div.row.pad_above{ :id => "row_subject_"+sn.to_s }
-            %div.col-md-10.ui-widget
-              %input.form-control.autosubject{ :type => 'text', :name => 'subject[]', :id => 'subject_entry_'+sn.to_s, :value => subject['a'] } 
+          %div.row.pad_below{ :id => "row_subject_"+sn.to_s }
+            %div.col-xs-6.col-sm-8.col-md-10.ui-widget
+              %input.form-control.autosubject{ :type => 'text', :name => 'subject[]', :id => 'subject_entry_'+sn.to_s, :value => @data['subject_string'][sn] } 
+              %input{ :type => 'hidden', :name => 'subject_raw[]', :id => 'subject_entry_'+sn.to_s+'_raw', :value => @data['subject_raw'][sn] }
               %input{ :type => 'hidden', :name => 'subject_type[]', :id => 'subject_entry_'+sn.to_s+'_type', :value => @data['subject_type'][sn] }
               %input{ :type => 'hidden', :name => 'subject_id[]', :id => 'subject_entry_'+sn.to_s+'_id', :value => @data['subject_id'][sn] }
-            %div.col-md-2
+              %input{ :type => 'hidden', :name => 'subject_indicator[]', :id => 'subject_entry_'+sn.to_s+'_indicator', :value => @data['subject_indicator'][sn] }
+            %div.col-xs-6.col-sm-4.col-md-2
               %btn.add-subject.btn.btn-sm.btn-info{ :title => "#{I18n.translate 'record.field.repeatable.add.title'}", :id => 'add_subject_'+sn.to_s } 
                 %span.glyphicon.glyphicon-plus-sign
               - if sn > 0 then
@@ -85,12 +87,14 @@
                   %span.glyphicon.glyphicon-minus-sign
           - sn = sn + 1
       - else
-        %div.row.pad_above{ :id => "row_subject_0" }
-          %div.col-md-10
+        %div.row.pad_below{ :id => "row_subject_0" }
+          %div.col-xs-6.col-sm-8.col-md-10
             %input.form-control.autosubject{ :type => 'text', :name => 'subject[]' }
+            %input{ :type => 'hidden', :name => 'subject_raw[]', :id => 'subject_entry_'+sn.to_s+'_raw', :value => ''}
             %input{ :type => 'hidden', :name => 'subject_type[]', :id => 'subject_entry_'+sn.to_s+'_type', :value => '653'}
             %input{ :type => 'hidden', :name => 'subject_id[]', :id => 'subject_entry_'+sn.to_s+'_id', :value => 'none' }
-          %div.col-md-2  
+            %input{ :type => 'hidden', :name => 'subject_indicator[]', :id => 'subject_entry_'+sn.to_s+'_indicator', :value => ' ' }
+          %div.col-xs-6.col-sm-4.col-md-2  
             %btn.add-subject.btn.btn-sm.btn-info{ :title => "#{I18n.translate 'record.field.repeatable.add.title'}", :id => 'add_subject_0' } 
               %span.glyphicon.glyphicon-plus-sign
 
@@ -135,7 +139,16 @@
           %input.form-control{ :type => 'text', :name => 'publisher', :value => @data['publisher'] }
       %div.col-md-3
         %div.form-group
-          %input.form-control{ :type => 'text', :name => 'publication_date', :value => @data['publication_date'], :maxlength => "4"}
+          %input.form-control{ :type => 'text', :id => 'publication_date', :name => 'publication_date', :value => @data['publication_date']}
+        %div.pad_below
+          %select.form-control{ :id => 'calendar_select', :name => 'calendar_select', :onClick => 'setPublicationDate()' }
+            - CALENDARS.each do |calendar_hash|
+              - option_selected = ""
+              - if calendar_hash[0] == @data['calendar']
+                - option_selected = " selected='selected'"
+              = "<option value='"+calendar_hash[0]+"'"+option_selected+">"+calendar_hash[1]+"</option>"
+        %div#gregorian_date
+        %input{ :type => 'hidden', :id => "pd1", :name => 'pd1', :value => @data['pd1'] }
 
   %div.well
     %div.row
@@ -174,10 +187,10 @@
           - isn = 0
           - if @data['isbn'].length > 0
             - @data['isbn'].each do |isbn|
-              %div.row{ :id => "row_isbn_"+isn.to_s }
-                %div.col-md-8.ui-widget
+              %div.row.pad_below{ :id => "row_isbn_"+isn.to_s }
+                %div.col-sm-6.col-md-8.ui-widget
                   %input.form-control{ :type => 'text', :name => 'isbn[]', :value => isbn['a'], :maxlength => "13"} 
-                %div.col-md-4
+                %div.col-sm-6.col-md-4
                   %btn.add-isbn.btn.btn-sm.btn-info{ :title => "#{I18n.translate 'record.field.repeatable.add.title'}", :id => 'add_isbn_'+isn.to_s } 
                     %span.glyphicon.glyphicon-plus-sign
                   - if isn > 0 then
@@ -185,10 +198,10 @@
                       %span.glyphicon.glyphicon-minus-sign
               - isn = isn + 1
           - else
-            %div.row{ :id => "row_isbn_0" }
-              %div.col-md-8
+            %div.row.pad_below{ :id => "row_isbn_0" }
+              %div.col-sm-6.col-md-8
                 %input.form-control{ :type => 'text', :name => 'isbn[]', :maxlength => "13" } 
-              %div.col-md-4  
+              %div.col-sm-6.col-md-4  
                 %btn.add-isbn.btn.btn-sm.btn-info{ :title => "#{I18n.translate 'record.field.repeatable.add.title'}", :id => 'add_isbn_0' } 
                   %span.glyphicon.glyphicon-plus-sign
     
