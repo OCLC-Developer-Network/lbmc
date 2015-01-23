@@ -22,10 +22,14 @@ describe ApplicationHelper do
         :publisher => 'OCLC Press',
         :extent => '190 p.',
         :subject => ['Application Programming Interfaces (APIs)'],
+        :subject_raw => ['$aApplication Programming Interfaces (APIs)'],
+        :subject_type => ['653'],
+        :subject_id => ['none'],
+        :subject_indicator => [' '],
         :publication_date => '2013',
         :isbn => ['9780060723804']
       }
-      @record = helpers.marc_record_from_params(@params)
+      @record = helpers.marc_record_from_params('',@params)
     end
     
     it "should have the symbol" do
@@ -93,7 +97,7 @@ describe ApplicationHelper do
       params = @params.dup
       params[:author_field_0] = '110'
       params[:author] = ['OCLC Research']
-      @record = helpers.marc_record_from_params(params)
+      @record = helpers.marc_record_from_params('',params)
       expect(@record['100']).to be_nil
       expect(@record['110']['a']).to eq('OCLC Research')
       expect(@record['110'].indicator1).to eq('2') 
@@ -104,7 +108,7 @@ describe ApplicationHelper do
       params = @params.dup
       params[:author_field_0] = '100'
       params[:author] = []
-      @record = helpers.marc_record_from_params(params)
+      @record = helpers.marc_record_from_params('',params)
       expect(@record['245'].indicator1).to eq('0')
       expect(@record['245'].indicator2).to eq('0')
     end
@@ -113,7 +117,7 @@ describe ApplicationHelper do
       params = @params.dup
       params[:author_field_0] = '110'
       params[:author] = ['OCLC Research']
-      @record = helpers.marc_record_from_params(params)
+      @record = helpers.marc_record_from_params('',params)
       expect(@record['245'].indicator1).to eq('1')
       expect(@record['245'].indicator2).to eq('0')
       expect(@record['110']['a']).to eq('OCLC Research')
@@ -205,11 +209,23 @@ describe ApplicationHelper do
       it "should set the year to the current year if the publication date is not a number" do
         params = @params.dup
         params[:publication_date] = '[2013]'
-        record = helpers.marc_record_from_params(params)
+        record = helpers.marc_record_from_params('',params)
         flde_value = record['008'].value
         expect(flde_value[7,4]).to eq(Time.now.year.to_s)
       end
+      
+      it "should set the publication date using pd1 if available and the calendar is not gregorian" do
+        params = @params.dup
+        params[:publication_date] = '1435 Islamic Calendar'
+        params[:calendar_select] = 'islamic'
+        params[:pd1] = '2013'
+        record = helpers.marc_record_from_params('',params)
+        flde_value = record['008'].value
+        expect(flde_value[7,4]).to eq("201u")
+      end
+      
     end
+    
   end
   
   context "when updating a MARC record from params" do
@@ -226,9 +242,13 @@ describe ApplicationHelper do
         :publisher => 'OCLC Press',
         :extent => '190 p.',
         :subject => ['Application Programming Interfaces (APIs)'],
+        :subject_raw => ['$aApplication Programming Interfaces (APIs)'],
+        :subject_type => ['653'],
+        :subject_id => ['none'],
+        :subject_indicator => [' '],
         :publication_date => '999'
       }
-      helpers.update_marc_record_from_params(@record, @params)
+      helpers.marc_record_from_params(@record, @params)
     end
     
     it "should update the publisher date and the fixed length data date 1" do
@@ -240,9 +260,9 @@ describe ApplicationHelper do
 
     it "should set 245 first indicator to 0 if there isn't an author" do
       params = @params.dup
-      params[:author_field] = '100'
+      params[:author_field_0] = '100'
       params[:author] = ''
-      @record = helpers.update_marc_record_from_params(@record, params)
+      @record = helpers.marc_record_from_params(@record, params)
       expect(@record['245'].indicator1).to eq('0')
       expect(@record['245'].indicator2).to eq('0')
     end
@@ -251,7 +271,7 @@ describe ApplicationHelper do
       params = @params.dup
       params[:author_field_0] = '110'
       params[:author] = ['OCLC Research']
-      @record = helpers.update_marc_record_from_params(@record, params)
+      @record = helpers.marc_record_from_params(@record, params)
       expect(@record['245'].indicator1).to eq('1')
       expect(@record['245'].indicator2).to eq('0')
       expect(@record['110']['a']).to eq('OCLC Research')
@@ -268,30 +288,54 @@ describe ApplicationHelper do
     end
     
     it "should update the place of publication field alone" do
-      helpers.update_field_value(@record, '264', 'a', ' ', '1', 'Dublin, OH')
+      field_tag = '264'
+      field_array = Array.new
+      subfield_hash = Hash.new
+      subfield_hash['a'] = 'Dublin, OH'
+      field_hash = helpers.create_field_hash('a', ' ', '1', subfield_hash)
+      field_array.push(field_hash)
+      helpers.update_field(@record, field_tag, field_array)
       expect(@record['264']['a']).to eq('Dublin, OH')
       expect(@record['264'].indicator1).to eq(' ')
       expect(@record['264'].indicator2).to eq('1')
     end
     
     it "should update the publisher name field alone" do
-      helpers.update_field_value(@record, '264', 'b', ' ', '1', 'OCLC Press')
+      field_tag = '264'
+      field_array = Array.new
+      subfield_hash = Hash.new
+      subfield_hash['b'] = 'OCLC Press'
+      field_hash = helpers.create_field_hash('b', ' ', '1', subfield_hash)
+      field_array.push(field_hash)
+      helpers.update_field(@record, field_tag, field_array)
       expect(@record['264']['b']).to eq('OCLC Press')
       expect(@record['264'].indicator1).to eq(' ')
       expect(@record['264'].indicator2).to eq('1')
     end
 
     it "should update the publication date field alone" do
-      helpers.update_field_value(@record, '264', 'c', ' ', '1', '2014')
+      field_tag = '264'
+      field_array = Array.new
+      subfield_hash = Hash.new
+      subfield_hash['c'] = '2014'
+      field_hash = helpers.create_field_hash('c', ' ', '1', subfield_hash)
+      field_array.push(field_hash)
+      helpers.update_field(@record, field_tag, field_array)
       expect(@record['264']['c']).to eq('2014')
       expect(@record['264'].indicator1).to eq(' ')
       expect(@record['264'].indicator2).to eq('1')
     end
     
     it "should update all publication fields" do
-    	helpers.update_field_value(@record, '264', 'a', ' ', '1', 'Dublin, OH')
-      helpers.update_field_value(@record, '264', 'b', ' ', '1', 'OCLC Press')
-      helpers.update_field_value(@record, '264', 'c', ' ', '1', '2014')
+      field_tag = '264'
+      field_array = Array.new
+      subfield_hash = Hash.new
+      subfield_hash['a'] = 'Dublin, OH'
+      subfield_hash['b'] = 'OCLC Press'
+      subfield_hash['c'] = '2014'
+      field_hash = helpers.create_field_hash('a', ' ', '1', subfield_hash)
+      field_array.push(field_hash)
+      helpers.update_field(@record, field_tag, field_array)
       expect(@record['264']['a']).to eq('Dublin, OH')
       expect(@record['264']['b']).to eq('OCLC Press')
       expect(@record['264']['c']).to eq('2014')
@@ -310,7 +354,13 @@ describe ApplicationHelper do
       expect(@record['264']['b']).to eq('OCLC Press')
       expect(@record['264'].indicator1).to eq(' ')
       expect(@record['264'].indicator2).to eq('1')
-      helpers.update_field_value(@record, '264', 'b', ' ', '1', 'Acme University Press')
+      field_tag = '264'
+      field_array = Array.new
+      subfield_hash = Hash.new
+      subfield_hash['b'] = 'Acme University Press'
+      field_hash = helpers.create_field_hash('b', ' ', '1', subfield_hash)
+      field_array.push(field_hash)
+      helpers.update_field(@record, field_tag, field_array)
       expect(@record['264']['b']).to eq('Acme University Press')
       expect(@record['264'].indicator1).to eq(' ')
       expect(@record['264'].indicator2).to eq('1')
@@ -320,7 +370,13 @@ describe ApplicationHelper do
       expect(@record['264']['a']).to be_nil
       expect(@record['264'].indicator1).to eq(' ')
       expect(@record['264'].indicator2).to eq('1')
-      helpers.update_field_value(@record, '264', 'a', ' ', '1', 'Dublin, OH')
+      field_tag = '264'
+      field_array = Array.new
+      subfield_hash = Hash.new
+      subfield_hash['a'] = 'Dublin, OH'
+      field_hash = helpers.create_field_hash('b', ' ', '1', subfield_hash)
+      field_array.push(field_hash)
+      helpers.update_field(@record, field_tag, field_array)
       expect(@record['264']['a']).to eq('Dublin, OH')
       expect(@record['264'].indicator1).to eq(' ')
       expect(@record['264'].indicator2).to eq('1')
@@ -330,7 +386,13 @@ describe ApplicationHelper do
       expect(@record['264']['c']).to be_nil
       expect(@record['264'].indicator1).to eq(' ')
       expect(@record['264'].indicator2).to eq('1')
-      helpers.update_field_value(@record, '264', 'c', ' ', '1', '2014')
+      field_tag = '264'
+      field_array = Array.new
+      subfield_hash = Hash.new
+      subfield_hash['c'] = '2014'
+      field_hash = helpers.create_field_hash('c', ' ', '1', subfield_hash)
+      field_array.push(field_hash)
+      helpers.update_field(@record, field_tag, field_array)
       expect(@record['264']['c']).to eq('2014')
       expect(@record['264'].indicator1).to eq(' ')
       expect(@record['264'].indicator2).to eq('1')
@@ -340,7 +402,12 @@ describe ApplicationHelper do
       expect(@record['264']['b']).to eq('OCLC Press')
       expect(@record['264'].indicator1).to eq(' ')
       expect(@record['264'].indicator2).to eq('1')
-      helpers.update_field_value(@record, '264', 'b', ' ', '1', '')
+      field_tag = '264'
+      field_array = Array.new
+      subfield_hash = Hash.new
+      field_hash = helpers.create_field_hash('', ' ', '1', subfield_hash)
+      field_array.push(field_hash)
+      helpers.update_field(@record, field_tag, field_array)
       expect(@record['264']).to be_nil
     end
   end
@@ -355,7 +422,13 @@ describe ApplicationHelper do
       expect(@record['264']['c']).to eq('2014')
       expect(@record['264'].indicator1).to eq(' ')
       expect(@record['264'].indicator2).to eq('1')
-      helpers.update_field_value(@record, '264', 'c', ' ', '1', '2013')
+      field_tag = '264'
+      field_array = Array.new
+      subfield_hash = Hash.new
+      subfield_hash['c'] = '2013'
+      field_hash = helpers.create_field_hash('c', ' ', '1', subfield_hash)
+      field_array.push(field_hash)
+      helpers.update_field(@record, field_tag, field_array)
       expect(@record['264']['c']).to eq('2013')
       expect(@record['264'].indicator1).to eq(' ')
       expect(@record['264'].indicator2).to eq('1')
@@ -365,7 +438,13 @@ describe ApplicationHelper do
       expect(@record['264']['a']).to be_nil
       expect(@record['264'].indicator1).to eq(' ')
       expect(@record['264'].indicator2).to eq('1')
-      helpers.update_field_value(@record, '264', 'a', ' ', '1', 'Dublin, OH')
+      field_tag = '264'
+      field_array = Array.new
+      subfield_hash = Hash.new
+      subfield_hash['a'] = 'Dublin, OH'
+      field_hash = helpers.create_field_hash('a', ' ', '1', subfield_hash)
+      field_array.push(field_hash)
+      helpers.update_field(@record, field_tag, field_array)
       expect(@record['264']['a']).to eq('Dublin, OH')
       expect(@record['264'].indicator1).to eq(' ')
       expect(@record['264'].indicator2).to eq('1')
@@ -375,7 +454,13 @@ describe ApplicationHelper do
       expect(@record['264']['b']).to be_nil
       expect(@record['264'].indicator1).to eq(' ')
       expect(@record['264'].indicator2).to eq('1')
-      helpers.update_field_value(@record, '264', 'b', ' ', '1', 'OCLC Press')
+      field_tag = '264'
+      field_array = Array.new
+      subfield_hash = Hash.new
+      subfield_hash['b'] = 'OCLC Press'
+      field_hash = helpers.create_field_hash('c', ' ', '1', subfield_hash)
+      field_array.push(field_hash)
+      helpers.update_field(@record, field_tag, field_array)
       expect(@record['264']['b']).to eq('OCLC Press')
       expect(@record['264'].indicator1).to eq(' ')
       expect(@record['264'].indicator2).to eq('1')
@@ -385,7 +470,12 @@ describe ApplicationHelper do
       expect(@record['264']['c']).to eq('2014')
       expect(@record['264'].indicator1).to eq(' ')
       expect(@record['264'].indicator2).to eq('1')
-      helpers.update_field_value(@record, '264', 'c', ' ', '1', '')
+      field_tag = '264'
+      field_array = Array.new
+      subfield_hash = Hash.new
+      field_hash = helpers.create_field_hash('c', ' ', '1', subfield_hash)
+      field_array.push(field_hash)
+      helpers.update_field(@record, field_tag, field_array)
       expect(@record['264']).to be_nil
     end
     
@@ -393,7 +483,13 @@ describe ApplicationHelper do
       expect(@record['264'].subfields.first.code).to eq('c')
       expect(@record['264'].indicator1).to eq(' ')
       expect(@record['264'].indicator2).to eq('1')
-      helpers.update_field_value(@record, '264', 'b', ' ', '1', 'OCLC Press')
+      field_tag = '264'
+      field_array = Array.new
+      subfield_hash = Hash.new
+      subfield_hash['b'] = 'OCLC Press'
+      field_hash = helpers.create_field_hash('b', ' ', '1', subfield_hash)
+      field_array.push(field_hash)
+      helpers.update_field(@record, field_tag, field_array)
       expect(@record['264'].subfields.first.code).to eq('b')
       expect(@record['264'].indicator1).to eq(' ')
       expect(@record['264'].indicator2).to eq('1')
@@ -412,7 +508,15 @@ describe ApplicationHelper do
       expect(@record['264']['c']).to eq('2014')
       expect(@record['264'].indicator1).to eq(' ')
       expect(@record['264'].indicator2).to eq('1')
-      helpers.update_field_value(@record, '264', 'a', ' ', '1', 'New York, NY')
+      field_tag = '264'
+      field_array = Array.new
+      subfield_hash = Hash.new
+      subfield_hash['a'] = 'New York, NY'
+      subfield_hash['b'] = 'OCLC Press'
+      subfield_hash['c'] = '2014'
+      field_hash = helpers.create_field_hash('a', ' ', '1', subfield_hash)
+      field_array.push(field_hash)
+      helpers.update_field(@record, field_tag, field_array)
       expect(@record['264']['a']).to eq('New York, NY')
       expect(@record['264']['b']).to eq('OCLC Press')
       expect(@record['264']['c']).to eq('2014')
@@ -426,7 +530,15 @@ describe ApplicationHelper do
       expect(@record['264']['c']).to eq('2014')
       expect(@record['264'].indicator1).to eq(' ')
       expect(@record['264'].indicator2).to eq('1')
-      helpers.update_field_value(@record, '264', 'c', ' ', '1', '2013')
+      field_tag = '264'
+      field_array = Array.new
+      subfield_hash = Hash.new
+      subfield_hash['a'] = 'Dublin, OH'
+      subfield_hash['b'] = 'OCLC Press'
+      subfield_hash['c'] = '2013'
+      field_hash = helpers.create_field_hash('a', ' ', '1', subfield_hash)
+      field_array.push(field_hash)
+      helpers.update_field(@record, field_tag, field_array)
       expect(@record['264']['a']).to eq('Dublin, OH')
       expect(@record['264']['b']).to eq('OCLC Press')
       expect(@record['264']['c']).to eq('2013')
@@ -440,7 +552,15 @@ describe ApplicationHelper do
       expect(@record['264']['c']).to eq('2014')
       expect(@record['264'].indicator1).to eq(' ')
       expect(@record['264'].indicator2).to eq('1')
-      helpers.update_field_value(@record, '264', 'b', ' ', '1', 'Acme University Press')
+      field_tag = '264'
+      field_array = Array.new
+      subfield_hash = Hash.new
+      subfield_hash['a'] = 'Dublin, OH'
+      subfield_hash['b'] = 'Acme University Press'
+      subfield_hash['c'] = '2014'
+      field_hash = helpers.create_field_hash('a', ' ', '1', subfield_hash)
+      field_array.push(field_hash)
+      helpers.update_field(@record, field_tag, field_array)
       expect(@record['264']['a']).to eq('Dublin, OH')
       expect(@record['264']['b']).to eq('Acme University Press')
       expect(@record['264']['c']).to eq('2014')
@@ -454,7 +574,15 @@ describe ApplicationHelper do
       expect(@record['264']['c']).to eq('2014')
       expect(@record['264'].indicator1).to eq(' ')
       expect(@record['264'].indicator2).to eq('1')
-      helpers.update_field_value(@record, '264', 'a', ' ', '1', '')
+      field_tag = '264'
+      field_array = Array.new
+      subfield_hash = Hash.new
+      subfield_hash['a'] = ''
+      subfield_hash['b'] = 'OCLC Press'
+      subfield_hash['c'] = '2014'
+      field_hash = helpers.create_field_hash('b', ' ', '1', subfield_hash)
+      field_array.push(field_hash)
+      helpers.update_field(@record, field_tag, field_array)
       expect(@record['264']['a']).to be_nil
       expect(@record['264']['b']).to eq('OCLC Press')
       expect(@record['264']['c']).to eq('2014')
@@ -468,7 +596,15 @@ describe ApplicationHelper do
       expect(@record['264']['c']).to eq('2014')
       expect(@record['264'].indicator1).to eq(' ')
       expect(@record['264'].indicator2).to eq('1')
-      helpers.update_field_value(@record, '264', 'c', ' ', '1', '')
+      field_tag = '264'
+      field_array = Array.new
+      subfield_hash = Hash.new
+      subfield_hash['a'] = 'Dublin, OH'
+      subfield_hash['b'] = 'OCLC Press'
+      subfield_hash['c'] = ''
+      field_hash = helpers.create_field_hash('a', ' ', '1', subfield_hash)
+      field_array.push(field_hash)
+      helpers.update_field(@record, field_tag, field_array)
       expect(@record['264']['a']).to eq('Dublin, OH')
       expect(@record['264']['b']).to eq('OCLC Press')
       expect(@record['264']['c']).to be_nil
@@ -482,9 +618,15 @@ describe ApplicationHelper do
       expect(@record['264']['c']).to eq('2014')
       expect(@record['264'].indicator1).to eq(' ')
       expect(@record['264'].indicator2).to eq('1')
-      helpers.update_field_value(@record, '264', 'a', ' ', '1', '')
-      helpers.update_field_value(@record, '264', 'b', ' ', '1', '')
-      helpers.update_field_value(@record, '264', 'c', ' ', '1', '')
+      field_tag = '264'
+      field_array = Array.new
+      subfield_hash = Hash.new
+      subfield_hash['a'] = ''
+      subfield_hash['b'] = ''
+      subfield_hash['c'] = ''
+      field_hash = helpers.create_field_hash('a', ' ', '1', subfield_hash)
+      field_array.push(field_hash)
+      helpers.update_field(@record, field_tag, field_array)
       expect(@record['264']).to be_nil
     end
   end
@@ -506,7 +648,7 @@ describe ApplicationHelper do
         :publication_date => '',
         :isbn => []
       }
-      @record = helpers.marc_record_from_params(@params)
+      @record = helpers.marc_record_from_params('',@params)
     end
     
     it "should have a 245 field with <> in subfield a" do
@@ -551,7 +693,7 @@ describe ApplicationHelper do
         :publication_date => '',
         :isbn => []
       }
-      @record = helpers.marc_record_from_params(@params)
+      @record = helpers.marc_record_from_params('',@params)
     end
     
     it "should have a 245 field with <> in subfield a" do
@@ -596,7 +738,7 @@ describe ApplicationHelper do
         :publication_date => '',
         :isbn => []
       }
-      @record = helpers.marc_record_from_params(@params)
+      @record = helpers.marc_record_from_params('',@params)
     end
     
     it "should have a 245 field with <> in subfield a" do
@@ -641,7 +783,7 @@ describe ApplicationHelper do
         :publication_date => '',
         :isbn => []
       }
-      @record = helpers.marc_record_from_params(@params)
+      @record = helpers.marc_record_from_params('',@params)
     end
     
     it "should have a 245 field with <> in subfield a" do
@@ -686,7 +828,7 @@ describe ApplicationHelper do
         :publication_date => '',
         :isbn => []
       }
-      @record = helpers.marc_record_from_params(@params)
+      @record = helpers.marc_record_from_params('',@params)
     end
     
     it "should have a 245 field with <> in subfield a" do
@@ -731,7 +873,7 @@ describe ApplicationHelper do
         :publication_date => '',
         :isbn => []
       }
-      @record = helpers.marc_record_from_params(@params)
+      @record = helpers.marc_record_from_params('',@params)
     end
     
     it "should have a 245 field with <> in subfield a" do
@@ -776,7 +918,7 @@ describe ApplicationHelper do
         :publication_date => '',
         :isbn => []
       }
-      @record = helpers.marc_record_from_params(@params)
+      @record = helpers.marc_record_from_params('',@params)
     end
     
     it "should have a 245 field with <> in subfield a" do
@@ -821,7 +963,7 @@ describe ApplicationHelper do
         :publication_date => '',
         :isbn => []
       }
-      @record = helpers.marc_record_from_params(@params)
+      @record = helpers.marc_record_from_params('',@params)
     end
     
     it "should have a 245 field with <> in subfield a" do
@@ -866,7 +1008,7 @@ describe ApplicationHelper do
         :publication_date => '',
         :isbn => []
       }
-      @record = helpers.marc_record_from_params(@params)
+      @record = helpers.marc_record_from_params('',@params)
     end
     
     it "should have a 245 field with <> in subfield a" do
@@ -911,7 +1053,7 @@ describe ApplicationHelper do
         :publication_date => '',
         :isbn => []
       }
-      @record = helpers.marc_record_from_params(@params)
+      @record = helpers.marc_record_from_params('',@params)
     end
     
     it "should have a 245 field with <> in subfield a" do
@@ -956,7 +1098,7 @@ describe ApplicationHelper do
         :publication_date => '',
         :isbn => []
       }
-      @record = helpers.marc_record_from_params(@params)
+      @record = helpers.marc_record_from_params('',@params)
     end
     
     it "should have a 245 field with <> in subfield a" do
@@ -1001,7 +1143,7 @@ describe ApplicationHelper do
         :publication_date => '',
         :isbn => []
       }
-      @record = helpers.marc_record_from_params(@params)
+      @record = helpers.marc_record_from_params('',@params)
     end
     
     it "should have a 245 field with <> in subfield a" do
@@ -1046,7 +1188,7 @@ describe ApplicationHelper do
         :publication_date => '',
         :isbn => []
       }
-      @record = helpers.marc_record_from_params(@params)
+      @record = helpers.marc_record_from_params('',@params)
     end
     
     it "should have a 245 field with <> in subfield a" do
@@ -1091,7 +1233,7 @@ describe ApplicationHelper do
         :publication_date => '',
         :isbn => []
       }
-      @record = helpers.marc_record_from_params(@params)
+      @record = helpers.marc_record_from_params('',@params)
     end
     
     it "should have a 245 field with <> in subfield a" do
@@ -1136,7 +1278,7 @@ describe ApplicationHelper do
         :publication_date => '',
         :isbn => []
       }
-      @record = helpers.marc_record_from_params(@params)
+      @record = helpers.marc_record_from_params('',@params)
     end
     
     it "should have a 245 field with <> in subfield a" do
@@ -1181,7 +1323,7 @@ describe ApplicationHelper do
         :publication_date => '',
         :isbn => []
       }
-      @record = helpers.marc_record_from_params(@params)
+      @record = helpers.marc_record_from_params('',@params)
     end
     
     it "should have a 245 field with <> in subfield a" do
