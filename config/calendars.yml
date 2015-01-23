@@ -1,0 +1,5 @@
+# encoding: utf-8
+gregorian: "Gregorian Calendar"
+hebrew: "Hebrew Calendar"
+islamic: "Islamic Calendar"
+persian: "Persian Calendar"
