@@ -2,39 +2,90 @@
 
 - @data = Hash.new
 - @data['id'] = @bib.id
-- @data['language'] = @bib.marc_record['008'].nil? ? '' : @bib.marc_record['008'].to_s[39,3]
+- @data['language'] = @bib.marc_record['008'].nil? ? '   ' : @bib.marc_record['008'].to_s[39,3]
 - @data['country_of_publication'] = @bib.marc_record['008'].nil? ? '' : @bib.marc_record['008'].to_s[19,3]
 - @data['isbn'] = @bib.marc_record['020'].nil? ? Array.new : @bib.marc_record.fields('020')
 - @data['title'] = @bib.marc_record['245']['a'].nil? ? '' : @bib.marc_record['245']['a']
-- @data['title_880'] = @bib.marc_record['880'].nil? ? nil : @bib.marc_record['880']['a']
+- @data['v880'] = @bib.marc_record['880'].nil? ? Array.new : @bib.marc_record.fields('880')
 - @data['author'] = @bib.marc_record['100'].nil? ? Array.new : @bib.marc_record.fields('100')
 - @data['author'] = @bib.marc_record['110'].nil? ? @data['author'] : @bib.marc_record.fields('110')
-- @data['author_is_person_0'] = @bib.marc_record['110'].nil? ? true : false
-- @data['author_is_organization_0'] = @bib.marc_record['110'].nil? ? false : true
-- aeinc = 1
+- @data['author_type'] = Array.new
+- @data['author_type'] = @bib.marc_record['100'].nil? ? @data['author_type'] : @data['author_type'].push('person')
+- @data['author_type'] = @bib.marc_record['110'].nil? ? @data['author_type'] : @data['author_type'].push('organization')
 - @bib.marc_record.fields('700').each do |ae|
   - @data['author'].push(ae)
-  - @data['author_is_person_'+aeinc.to_s] = true
-  - @data['author_is_organization_'+aeinc.to_s] = false
-  - aeinc += 1
+  - @data['author_type'].push('100')
 - @bib.marc_record.fields('710').each do |ae|
   - @data['author'].push(ae)
-  - @data['author_is_person_'+aeinc.to_s] = false
-  - @data['author_is_organization_'+aeinc.to_s] = true
-  - aeinc += 1
+  - @data['author_type'].push('110')
 - @data['place_of_publication'] = @bib.marc_record['264'].nil? ? '' : @bib.marc_record['264']['a']
 - @data['publisher'] = @bib.marc_record['264'].nil? ? '' : @bib.marc_record['264']['b']
 - @data['publication_date'] = @bib.marc_record['264'].nil? ? '' : @bib.marc_record['264']['c']
+- unless @bib.marc_record['260'].nil?
+  - if @data['place_of_publication'].length == 0
+    - @data['place_of_publication'] = @bib.marc_record['260']['a']
+  - if @data['publisher'].length == 0
+    - @data['publisher'] = @bib.marc_record['260']['b']
+  - if @data['publication_date'].length == 0
+    - @data['publication_date'] = @bib.marc_record['260']['c']
+- @data['pd1'] = @bib.marc_record['008'].nil? ? '    ' : @bib.marc_record['008'].to_s[11,4]
 - @data['extent'] = @bib.marc_record['300'].nil? ? '' : @bib.marc_record['300']['a']
 - subject_tags = Array.new(['600','610','611','630','648','650','651','653','655'])
 - @data['subject'] = Array.new
+- @data['subject_string'] = Array.new
+- @data['subject_raw'] = Array.new
 - @data['subject_type'] = Array.new
 - @data['subject_id'] = Array.new
+- @data['subject_indicator'] = Array.new
 - subject_tags.each do |st|
   - @bib.marc_record.fields(st).each do |s|
     - @data['subject'].push(s)
+    - subject_string = ''
+    - subject_raw = ''
+    - subfield_codes = 'abcdefghijklmnopqrstuvwxyz'
+    - subfield_delimiter = '--'
+    - s.each do |sf| 
+      - if subfield_codes.include?(sf.code)
+        - if subject_string.length > 0
+          - subject_string += subfield_delimiter
+        - subject_string += sf.value
+        - subject_raw += "$"+sf.code+sf.value
+    - @data['subject_string'].push(subject_string)
+    - @data['subject_raw'].push(subject_raw)
     - @data['subject_type'].push(st)
-    - @data['subject_id'].push(s['0'])
+    - sid = s['0'].nil? ? "none" : s['0']
+    - @data['subject_id'].push(sid)
+    - @data['subject_indicator'].push(s.indicator1)
+- @data['v880'].each do |v|
+  - if v['6'][0..2] == '245'
+    - @data['title'] = v['a']
+  - elsif v['6'][0..2] == '100' || v['6'][0..2] == '700'
+    - @data['author'] = @data['author'].unshift(v)
+    - @data['author_type'] = @data['author_type'].unshift('person')
+  - elsif v['6'][0..2] == '110' || v['6'][0..2] == '710'
+    - @data['author'] = @data['author'].unshift(v)
+    - @data['author_type'] = @data['author_type'].unshift('organization')
+  - elsif v['6'][0..2] == '264'
+    - if v['a']
+      - @data['place_of_publication'] = v['a']
+    - if v['b']
+      - @data['publisher'] = v['b']
+    - if v['c']
+      - @data['publication_date'] = v['c']
+  - elsif v['6'][0..2] == '300'
+    - @data['extent'] = v['a']
+  - elsif v['6'][0] == '6'
+    - @data['subject'].push(v['a'])
+    - @data['subject_string'].push(v['a'])
+    - @data['subject_raw'].push("$a"+v['a'])
+    - @data['subject_type'].push(v['6'][0..2])
+    - @data['subject_id'].push('none')
+    - @data['subject_indicator'].push(' ')
+- @data['calendar'] = 'gregorian'
+- unless @data['publication_date'].nil?
+  - if @data['publication_date'].include?(' ')
+    - @data['calendar'] = @data['publication_date'].split(' ')[1].downcase
+
 - @button_title = I18n.translate 'link.update-submit.title'
 - @button_label = I18n.translate 'link.update-submit.text'
 
