@@ -55,8 +55,8 @@ describe "the record page" do
       expect(input.attr('value')).to eq('Meyer, Stephen')
     end
     
-    it "should have a language select box with the right language selecte" do
-      option = @form_element.xpath(".//option[@selected='selected']").first
+    it "should have a language select box with the right language selected" do
+      option = @form_element.xpath(".//select[@name='language']/option[@selected='selected']").first
       expect(option.attr('value')).to eq('eng')
     end
 
@@ -135,7 +135,11 @@ describe "the record page" do
             :author_field_0 => '100',
             :publisher => 'OCLC Press',
             :extent => '190 p.',
-            :subject => ['Application Programming Interfaces (APIs)']
+            :subject => ['Application Programming Interfaces (APIs)'],
+            :subject_raw => ['$aApplication Programming Interfaces (APIs)'],
+            :subject_type => ['653'],
+            :subject_id => ['none'],
+            :subject_indicator => [' '],
           }
       post( '/record/update', params=p, rack_env={ 'rack.session' => {:token => @access_token} } )
     end
@@ -161,7 +165,11 @@ describe "the record page" do
             :author_field_0 => '100',
             :publisher => 'OCLC Press',
             :extent => '190 p.',
-            :subject => ['Application Programming Interfaces (APIs)']
+            :subject => ['Application Programming Interfaces (APIs)'],
+            :subject_raw => ['$aApplication Programming Interfaces (APIs)'],
+            :subject_type => ['653'],
+            :subject_id => ['none'],
+            :subject_indicator => [' ']
           }
       post( '/record/create', params=p, rack_env={ 'rack.session' => {:token => @access_token, :registry_id => 128807} } )
     end
@@ -184,7 +192,11 @@ describe "the record page" do
             :author_field_0 => '100',
             :publisher => 'OCLC Press',
             :extent => '190 p.',
-            :subject => ['Application Programming Interfaces (APIs)']
+            :subject => ['Application Programming Interfaces (APIs)'],
+            :subject_raw => ['$aApplication Programming Interfaces (APIs)'],
+            :subject_type => ['653'],
+            :subject_id => ['none'],
+            :subject_indicator => [' ']
           }
       post( '/record/create', params=p, rack_env={ 'rack.session' => {:token => @access_token, :registry_id => 128807} } )
       doc = Nokogiri::HTML(last_response.body)
@@ -243,7 +255,11 @@ describe "the record page" do
     it "should have a table cell containing the author" do
       td = @doc.xpath("//td[@id='author']").first
       expect(td.text.strip).to eq('Southern California Rapid Transit District.
-                  Metro Rail Department.')
+                  Metro Rail Department.
+                  
+                  Barton-Aschman Associates.
+                  
+                  Jefferson Associates.')
     end
     
     it "should have a table cell containing the publisher" do
