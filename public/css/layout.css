@@ -18,7 +18,7 @@
 	padding-top: 1em;
 }
 .pad_below {
-	padding-bottom: 1em;
+	padding-bottom: .5em;
 }
 .pad_left {
 	padding-left: 1em;
@@ -51,6 +51,7 @@ pre {
 }
 .hint {
 	color: #666;
+	padding-bottom: .5em;
 }
 .example {
 	color: darkred;
@@ -67,5 +68,12 @@ pre {
 }
 .record_label {
 	padding-bottom: 1em;
+}
+.section {
+	padding: .5em 0;
+}
+#gregorian_date {
+	color: #666;
+	font-size: 80%;
 }
 
