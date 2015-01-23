@@ -95,11 +95,6 @@ fr:
         label: "Sujet"
         prompt: "Quel est le livre?"
         help: "Entrez les mots à des personnes, des organisations , des lieux, des concepts et des événements qui le livre est sur . Par exemple , \"Gandhi\", \"la Malaisie\", \"la poésie arabe\" , \"guerre civile\" . Le système vous demandera correspondant à des phrases d'actualité . Utilisez un champ distinct pour chaque sujet."
-        link:
-          add:
-            title: "Ajouter un autre sujet"
-          delete:
-            title: "Supprimer ce sujet"
       publisher-information:
         prompt: "Information sur la publication"
       publisher-country:
@@ -118,7 +113,7 @@ fr:
       publicationdate:
         label: "Date de publication"
         prompt: "Quand at-il publié?"
-        help: "Préférez dates occidentaux , en prenant de l'élément ou de la conversion . Si fournir une date non - occidentale , se il vous plaît étiqueter comme tels , par exemple, A.H."
+        help: "Saisissez l'année de publication et sélectionnez un calendrier"
       other-details:
         prompt: "Autres détails"
       language:

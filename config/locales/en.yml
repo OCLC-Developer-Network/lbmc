@@ -113,7 +113,7 @@ en:
       publicationdate:
         label: "Publication Date"
         prompt: "When was it published?"
-        help: "Prefer Western dates, taking from the item or converting. If providing a non-Western date, please label it as such, e.g. A.H."
+        help: "If providing a non-Western date, enter the year and select its calendar"
       other-details:
         prompt: "Other Details"
       language:
