@@ -88,6 +88,7 @@ fr:
         label: "Auteur"
         prompt: "Qui est l'auteur?"
         help: "Si l'auteur est une personne, entrez le nom de famille en premier, par exemple \"Smith , Jane\" ."
+        placeholder: "Si l'auteur est une personne, entrez le nom de famille en premier"
         radio:
           person: "L'auteur est une personne"
           organization: "L'auteur est une organisation"
@@ -125,6 +126,7 @@ fr:
         label: "Ampleur"
         prompt: "Combien de pages ou volumes?"
         help: "Se il vous plaît inclure le type de dimension, et épeler complètement, par exemple \"245 pages\" ou \"3 volumes\"."
+        placeholder: "Par exemple \"245 pages\" ou \"3 volumes\""
       isbn:
         label: "ISBN"
         prompt: "ISBN"
