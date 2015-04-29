@@ -130,13 +130,14 @@ module ApplicationHelper
       # Initialize 008
       marc_record << book_fixed_length_data()
       
-      # Add the client OCLC symbol to the 040
+      # Add the client OCLC symbol to the 040, maintaining conventional subfield order a, b, e, c, [d]
       field_tag = "040"
       field_array = Array.new
       subfield_hash = Hash.new
       subfield_hash["a"] = params[:oclc_symbol]
-      subfield_hash["c"] = params[:oclc_symbol]
+      subfield_hash["b"] = 'eng'
       subfield_hash["e"] = 'rda'
+      subfield_hash["c"] = params[:oclc_symbol]
       field_hash = create_field_hash('a', ' ', ' ', subfield_hash)
       field_array.push(field_hash)
       update_field(marc_record, field_tag, field_array)
@@ -625,7 +626,7 @@ module ApplicationHelper
             # add the field to the record
             marc_record << field
           
-          end # unless has is empty
+          end # unless item['subfield' is empty
           
         end # if item is a hash
         
