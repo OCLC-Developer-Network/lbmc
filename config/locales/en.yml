@@ -88,6 +88,7 @@ en:
         label: "Author"
         prompt: "Who is the author?"
         help: "If the author is a person, enter the surname first, for example \"Smith, Jane\"."
+        placeholder: "Enter personal names with the surname first"
         radio:
           person: "The author is a person"
           organization: "The author is an organization"
@@ -125,6 +126,7 @@ en:
         label: "Extent"
         prompt: "How many pages or volumes?"
         help: "Please include the type of dimension, and spell it out completely, for example \"245 pages\" or \"3 volumes\"."
+        placeholder: "For example \"245 pages\" or \"3 volumes\""
       isbn:
         label: "ISBN"
         prompt: "ISBN"
