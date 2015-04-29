@@ -112,7 +112,7 @@ en:
         help: "The publisher's name, for example \"HarperCollins\", \"Springer-Verlag\""
       publicationdate:
         label: "Publication Date"
-        prompt: "When was it published?"
+        prompt: "What year was it published?"
         help: "If providing a non-Western date, enter the year and select its calendar"
       other-details:
         prompt: "Other Details"
