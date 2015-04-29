@@ -518,6 +518,7 @@ module ApplicationHelper
       field_tag = "020"
       field_array = Array.new
       params[:isbn].each do |isbn|
+        isbn = isbn.tr("-","")
         unless isbn.empty?
           subfield_hash = Hash.new
           subfield_hash["a"] = isbn
