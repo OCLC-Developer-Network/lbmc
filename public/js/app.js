@@ -16,9 +16,9 @@ $( document ).ready(function() {
 		n = $("input[name='author[]']").size();
 		var row = '<div class="pad_below" id="row_author_'+n+'">';
 		row += '<div class="row">';
-		row += '<div class="col-md-10">';
+		row += '<div class="col-xs-6 col-sm-8 col-md-10">';
 		row += '<input type="text" name="author[]" class="form-control"></div>';
-		row += '<div class="col-md-2"><button id="add_author_'+n+'" class="add-author btn btn-sm btn-info"><span class="glyphicon glyphicon-plus-sign"></span></button> <button id="author_'+n+'" class="btn btn-sm btn-warning delete"><span class="glyphicon glyphicon-minus-sign"></span></button></div>';
+		row += '<div class="col-xs-6 col-sm-4 col-md-2"><button id="add_author_'+n+'" class="add-author btn btn-sm btn-info"><span class="glyphicon glyphicon-plus-sign"></span></button> <button id="author_'+n+'" class="btn btn-sm btn-warning delete"><span class="glyphicon glyphicon-minus-sign"></span></button></div>';
 		row += '</div>';
 		row += '<div class="row" id="author_type_'+n+'">';
 		row += '<div class="col-md-12">';
@@ -38,14 +38,14 @@ $( document ).ready(function() {
 	$("body").on("click", ".add-subject", function (e) {
 		n = $("input[name='subject[]']").size();
 		var row = '<div class="row pad_below" id="row_subject_'+n+'">';
-		row += '<div class="col-md-10">';
+		row += '<div class="col-xs-6 col-sm-8 col-md-10">';
 		row += '<input type="text" name="subject[]" id="subject_entry_'+n+'" class="form-control autosubject"  value="">';
 		row += '<input type="hidden" name="subject_raw[]" id="subject_entry_'+n+'_raw" value=""/>';
 		row += '<input type="hidden" name="subject_type[]" id="subject_entry_'+n+'_type" value="653"/>';
 		row += '<input type="hidden" name="subject_id[]" id="subject_entry_'+n+'_id" value="none"/>';
 		row += '<input type="hidden" name="subject_indicator[]" id="subject_entry_'+n+'_indicator" value=" "/>';
 		row += '</div>';
-		row += '<div class="col-md-2"><button id="add_subject_'+n+'" class="add-subject btn btn-sm btn-info"><span class="glyphicon glyphicon-plus-sign"></span></button> <button id="subject_'+n+'" class="btn btn-sm btn-warning delete"><span class="glyphicon glyphicon-minus-sign"></span></button></div>';
+		row += '<div class="col-xs-6 col-sm-4 col-md-2"><button id="add_subject_'+n+'" class="add-subject btn btn-sm btn-info"><span class="glyphicon glyphicon-plus-sign"></span></button> <button id="subject_'+n+'" class="btn btn-sm btn-warning delete"><span class="glyphicon glyphicon-minus-sign"></span></button></div>';
 		row += '</div>';
 		$("#subjects").append(row);
 		bindAutoComplete("autosubject",n);
