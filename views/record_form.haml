@@ -49,7 +49,7 @@
       - else
         %div.row.pad_below{ :id => "row_author_0" }
           %div.col-xs-6.col-sm-8.col-md-10
-            %input.form-control{ :type => 'text', :name => 'author[]'}
+            %input.form-control{ :type => 'text', :name => 'author[]', :placeholder => "#{I18n.translate 'record.field.author.placeholder'}"}
           %div.col-xs-6.col-sm-4.col-md-2  
             %btn.add-author.btn.btn-sm.btn-info{ :title => "#{I18n.translate 'record.field.repeatable.add.title'}", :id => 'add_author_0' } 
               %span.glyphicon.glyphicon-plus-sign
@@ -181,7 +181,7 @@
               = "<option value='"+language_hash[0]+"'"+option_selected+">"+language_hash[1]+"</option>"
       %div.col-md-4
         %div.form-group
-          %input.form-control{ :type => 'text', :name => 'extent', :value => @data['extent'] }
+          %input.form-control{ :type => 'text', :name => 'extent', :value => @data['extent'], :placeholder => "#{I18n.translate 'record.field.extent.placeholder'}" }
       %div.col-md-4
         %div.form-group#isbns
           - isn = 0
