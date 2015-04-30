@@ -19,6 +19,9 @@ fr:
     update-submit:
       title: "Enregistrez vos modifications à cette fiche"
       text: "Mettre à jour cette fiche"
+    edit-submit:
+      title: "Vous pouvez apporter des modifications supplémentaires à ce dossier si vous le souhaitez."
+      text: "Saisissez cette fiche"
     logoff:
       title: "Terminez votre séance"
       text: "Déconnecter"

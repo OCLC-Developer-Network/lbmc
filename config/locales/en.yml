@@ -19,6 +19,9 @@ en:
     update-submit:
       title: "Save your changes to this record"
       text: "Update this Record"
+    edit-submit:
+      title: "You can make additional changes to this record if you'd like."
+      text: "Edit this Record"
     logoff:
       title: "End your session"
       text: "Logoff"
