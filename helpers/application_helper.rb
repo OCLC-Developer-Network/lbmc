@@ -223,11 +223,90 @@ module ApplicationHelper
         ainc += 1
       end
     end
+
+    # AUTHOR ADDED ENTRIES
+    
+    # Delete any existing 700 and 710 entries and any 066s or 880s
+    delete_field(marc_record, ['700','710','066','880'])
+    
+    # If there entries left in the author parameter array ..
+    if params[:author].length > 0
+      aeinc = 0
+      v700s = Array.new
+      v710s = Array.new
+      params[:author].each do |a|
+        unless a.empty?
+          af = "author_field_"+aeinc.to_s
+          if params[af] == "100"
+            v700s.push(a)
+          else
+            v710s.push(a)
+          end
+          aeinc += 1
+        end
+      end
+      if v700s.length > 0
+        field_tag = "700"
+        field_array = Array.new
+        v700s.each do |v700|
+          subfield_hash = Hash.new
+          subfield_hash["a"] = v700
+          author_languages = detect_script(v700)
+          if author_languages.length > 0
+            v066_subfields.concat author_languages
+            # if an author main entry hasn't already been set, swap the field tag
+            if title_indicator_1 == '0'
+              field_tag = "100"
+              title_indicator_1 = '1'
+            else 
+              field_tag = "700"
+            end
+            subfield_hash["6"] = field_tag+'-00/'+author_languages[0]
+            field_hash = create_field_hash('6', '1', ' ', subfield_hash)
+            v880_fields.push(field_hash)
+          else
+            field_hash = create_field_hash('a', '1', ' ', subfield_hash)
+            field_array.push(field_hash)
+          end
+        end
+        if field_array.length > 0
+          update_field(marc_record, field_tag, field_array)
+        end
+      end
+      if v710s.length > 0
+        field_tag = "710"
+        field_array = Array.new
+        v710s.each do |v710|
+          subfield_hash = Hash.new
+          subfield_hash["a"] = v710
+          author_languages = detect_script(v710)
+          if author_languages.length > 0
+            v066_subfields.concat author_languages
+            # if an author main entry hasn't already been set, swap the field tag
+            if title_indicator_1 == '0'
+              field_tag = "110"
+              title_indicator_1 = '1'
+            else 
+              field_tag = "710"
+            end
+            subfield_hash["6"] = field_tag+'-00/'+author_languages[0]
+            field_hash = create_field_hash('6', '2', ' ', subfield_hash)
+            v880_fields.push(field_hash)
+          else
+            field_hash = create_field_hash('a', '2', ' ', subfield_hash)
+            field_array.push(field_hash)
+          end
+        end
+        if field_array.length > 0
+          update_field(marc_record, field_tag, field_array)
+        end
+      end
+    end
   
     # TITLE
 
-    # Remove 245's, 066's and 880's
-    delete_field(marc_record, ['066','245','880'])
+    # Remove 245's
+    delete_field(marc_record, ['245'])
     
     # Detect languages of the title string
     title_languages = detect_script(params[:title])
@@ -269,73 +348,6 @@ module ApplicationHelper
       field_array.push(field_hash)
       update_field(marc_record, field_tag, field_array)
       
-    end
-    
-    # AUTHOR ADDED ENTRIES
-    
-    # Delete any existing 700 and 710 entries
-    delete_field(marc_record, ['700','710'])
-    
-    # If there entries left in the author parameter array ..
-    if params[:author].length > 0
-      aeinc = 0
-      v700s = Array.new
-      v710s = Array.new
-      params[:author].each do |a|
-        unless a.empty?
-          af = "author_field_"+aeinc.to_s
-          if params[af] == "100"
-            v700s.push(a)
-          else
-            v710s.push(a)
-          end
-          aeinc += 1
-        end
-      end
-      if v700s.length > 0
-        field_tag = "700"
-        field_array = Array.new
-        v700s.each do |v700|
-          subfield_hash = Hash.new
-          subfield_hash["a"] = v700
-          author_languages = detect_script(v700)
-          if author_languages.length > 0
-            v066_subfields.concat author_languages
-            # add to 880s
-            subfield_hash["6"] = field_tag+'-00/'+author_languages[0]
-            field_hash = create_field_hash('6', '1', ' ', subfield_hash)
-            v880_fields.push(field_hash)
-          else
-            field_hash = create_field_hash('a', '1', ' ', subfield_hash)
-            field_array.push(field_hash)
-          end
-        end
-        if field_array.length > 0
-          update_field(marc_record, field_tag, field_array)
-        end
-      end
-      if v710s.length > 0
-        field_tag = "710"
-        field_array = Array.new
-        v710s.each do |v710|
-          subfield_hash = Hash.new
-          subfield_hash["a"] = v710
-          author_languages = detect_script(v710)
-          if author_languages.length > 0
-            v066_subfields.concat author_languages
-            # add to 880s
-            subfield_hash["6"] = field_tag+'-00/'+author_languages[0]
-            field_hash = create_field_hash('6', '2', ' ', subfield_hash)
-            v880_fields.push(field_hash)
-          else
-            field_hash = create_field_hash('a', '2', ' ', subfield_hash)
-            field_array.push(field_hash)
-          end
-        end
-        if field_array.length > 0
-          update_field(marc_record, field_tag, field_array)
-        end
-      end
     end
 
     # PUBLICATION DATA
