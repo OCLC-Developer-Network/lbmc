@@ -1,0 +1,25 @@
+- @button_title = I18n.translate 'link.update-submit.title'
+- @button_label = I18n.translate 'link.update-submit.text'
+
+- if @bib.is_app_created? and belongs_to_current_user?(@bib.marc_record, INSTITUTIONS[session[:registry_id].to_i]['symbol'])
+
+  %div#webkit_message
+
+  %div.well
+    %h3.record_label
+      %span.glyphicon.glyphicon-ok
+      =@bib.id
+      Record Updated
+
+  %div
+    %button.btn.btn-success{ :href => '/record/#{@bib.id}', $title => "#{@button_title}" } 
+      %span.glyphicon.glyphicon-ok 
+      #{@button_label}
+
+- else
+  
+  %div.well
+    %div.alert.alert-info
+      %span.glyphicon.glyphicon-exclamation-sign
+      #{I18n.translate 'message.info.edit.permission'}
+    
