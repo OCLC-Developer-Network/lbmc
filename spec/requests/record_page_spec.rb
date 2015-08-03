@@ -144,9 +144,9 @@ describe "the record page" do
       post( '/record/update', params=p, rack_env={ 'rack.session' => {:token => @access_token} } )
     end
     
-    it "should respond with a redirect back to the record display page" do
+    it "should respond with a redirect back to the status updated page" do
       expect(last_response.redirect?)
-      expect(last_response.header['Location']).to eq("http://example.org/record/883876185")
+      expect(last_response.header['Location']).to eq("http://example.org/status/updated/883876185")
     end
   end
   
@@ -174,9 +174,9 @@ describe "the record page" do
       post( '/record/create', params=p, rack_env={ 'rack.session' => {:token => @access_token, :registry_id => 128807} } )
     end
     
-    it "should respond with a redirect to the record display page" do
+    it "should respond with a redirect to the status created page" do
       expect(last_response.redirect?)
-      expect(last_response.header['Location']).to eq("http://example.org/record/883876185")
+      expect(last_response.header['Location']).to eq("http://example.org/status/created/883876185")
     end
   end
 
