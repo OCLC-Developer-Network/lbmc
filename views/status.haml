@@ -1,0 +1,42 @@
+-# status.haml 
+    
+- @button_title = I18n.translate 'link.edit-submit.title'
+- @button_label = I18n.translate 'link.edit-submit.text'
+
+- if @bib.is_app_created? and belongs_to_current_user?(@bib.marc_record, INSTITUTIONS[session[:registry_id].to_i]['symbol'])
+
+  %div#webkit_message
+
+  %div.well
+    %h3.record_label
+      %span.glyphicon.glyphicon-ok
+      Record 
+      =@bib.id
+      =@type
+    %div.pad_below
+      #{@button_title}
+    %div
+      %a.btn.btn-success{ :href => "/record/#{@bib.id}", $title => "#{@button_title}" } 
+        %span.glyphicon.glyphicon-pencil 
+        #{@button_label}
+
+- else
+  
+  %div.well
+    %div.alert.alert-info
+      %span.glyphicon.glyphicon-exclamation-sign
+      #{I18n.translate 'message.info.edit.permission'}
+
+%div.row#marc_views
+  %div.col-md-12
+    %a#marc-view-link.btn.btn-default.btn-sm{ :href => '#', :onClick => '$("#marc-view").toggle(); $("html, body").animate({ scrollTop: $("#marc_views").offset().top}, 1000); return false;', :title => "#{I18n.translate 'link.view.marcrecord.title'}" }
+      %span.glyphicon.glyphicon-list
+      #{I18n.translate 'link.view.marcrecord.text'}
+    %a#marc-worldcat-link.btn.btn-default.btn-sm{ :href => @bib.link, :target => 'blank', :title => "#{I18n.translate 'link.view.worldcat.title'}" }
+      %span.glyphicon.glyphicon-globe
+      #{I18n.translate 'link.view.worldcat.text'}
+    %a#marc-xml-link.btn.btn-default.btn-sm{ :href => url('/record/'+@bib.id+'.xml'), :title => "#{I18n.translate 'link.view.marcxml.title'}" }
+      %span.glyphicon.glyphicon-download
+      #{I18n.translate 'link.view.marcxml.text'}
+    %div.pad_above
+      %pre#marc-view= @bib.marc_record
