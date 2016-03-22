@@ -1,6 +1,8 @@
-# LBMC
+# LBMC -- Low Barrier to Metadata Creation
 
-Low Barrier to Metadata Creation Sample App
+LBMC is a web-based application for creating bibliographic records in OCLC's WorldCat database, specifically designed for use by non-librarians and for creating initial cataloging records describing non-Latin script materials. 
+
+It is a client application that is dependent on OCLC's WorldCat Metadata API, as its means of initiating record creation.  See the API Key Requirements below for more details.
 
 ## Installation
 
