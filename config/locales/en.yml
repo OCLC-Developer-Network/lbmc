@@ -57,6 +57,8 @@ en:
       heading: "Sorry, but the LBMC Pilot system encountered a problem."
       no-title: "A title is required."
       isbn: "There is a problem with the ISBN.  It needs to be a valid ISBN, either 10 or 13 digits long.  If the problem persists, leave the ISBN field empty."
+      authentication: "The WSKey configured for the application is invalid."
+      authorization: "The WSKey configured for the application does not have the proper permission. Please make sure the WSKey is for WorldCat Metadata API"
       other: "This system error has been logged and reported to the LBMC development team.  We apologize for the disruption and are working on a solution."
   home:
     heading: "Welcome!"

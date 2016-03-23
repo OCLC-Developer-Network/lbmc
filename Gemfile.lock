@@ -15,6 +15,7 @@ GEM
     ensure_valid_encoding (0.5.3)
     haml (4.0.5)
       tilt
+    i18n (0.7.0)
     json (1.8.1)
     marc (0.8.1)
       ensure_valid_encoding
@@ -66,6 +67,7 @@ PLATFORMS
 
 DEPENDENCIES
   haml
+  i18n
   json
   marc
   nokogiri
@@ -76,3 +78,6 @@ DEPENDENCIES
   sinatra
   sinatra-partial
   webmock
+
+BUNDLED WITH
+   1.10.6

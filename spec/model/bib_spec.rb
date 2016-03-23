@@ -24,7 +24,7 @@ describe Bib do
   
   context "when loading an error response from the Metadata API" do
     before(:all) do
-      stub_request(:post, "http://cataloging-worldcatbib-qa.ent.oclc.org/bib/data?classificationScheme=LibraryOfCongress").
+      stub_request(:post, "https://worldcat.org/bib/data?classificationScheme=LibraryOfCongress").
           to_return(:status => 409, :body => mock_file_contents("titleless-input-response.marcxml"))
       
       raw_marc = StringIO.new( mock_file_contents("titleless-input.marcxml") )
@@ -70,7 +70,7 @@ describe Bib do
   
   context "when testing a record that did not originate in LBMC" do
     before(:all) do
-      stub_request(:post, "http://cataloging-worldcatbib-qa.ent.oclc.org/bib/data?classificationScheme=LibraryOfCongress").
+      stub_request(:post, "https://worldcat.org/bib/data?classificationScheme=LibraryOfCongress").
           to_return(:status => 200, :body => mock_file_contents("ocm09999999.atomxml"))
       
       raw_marc = StringIO.new( mock_file_contents("ocm9999999.marcxml") )
@@ -86,7 +86,7 @@ describe Bib do
   
   context "when testing a record that did originate in LBMC" do
     before(:all) do
-      stub_request(:post, "http://cataloging-worldcatbib-qa.ent.oclc.org/bib/data?classificationScheme=LibraryOfCongress").
+      stub_request(:post, "https://worldcat.org/bib/data?classificationScheme=LibraryOfCongress").
           to_return(:status => 200, :body => mock_file_contents("ocn883876185.atomxml"))
       
       raw_marc = StringIO.new( mock_file_contents("ocn883876185.marcxml") )

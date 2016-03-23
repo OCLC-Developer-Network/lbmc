@@ -5,7 +5,7 @@
         %h3 #{I18n.translate 'home.heading'}
         #{I18n.translate 'home.about'}
         %div.pad_above
-        - if session[:token].nil? or session[:token].expired?
+        - if INSTITUTIONS.count == 1 and (session[:token].nil? or session[:token].expired?)
           #{I18n.translate 'home.select-institution'}
           %div#get-started.list-group.pad_above
             - INSTITUTIONS.each do |registry_id, info|

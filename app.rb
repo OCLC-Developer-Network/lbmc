@@ -33,9 +33,15 @@ before do
   # puts ; puts "Before do, request.path_info is " + request.path_info; puts
   # puts ; puts session.inspect ; puts
   set_locale
-  pass unless request.path_info =~ /record/
-  session[:path] = request.path
-  authenticate
+  if INSTITUTIONS.count == 1 
+    pass if params[:error]
+    session[:path] = request.path
+    authenticate
+  else  
+    pass unless request.path_info =~ /record/
+    session[:path] = request.path
+    authenticate
+  end
 end
 
 get '/' do
@@ -121,6 +127,8 @@ get '/catch_auth_code' do
   if params and params[:code]
     session[:token] = WSKEY.auth_code_token(params[:code], session[:registry_id], session[:registry_id])
     redirect session[:path]
+  elsif params and params[:error]
+    haml :error, :layout => :template 
   else
     redirect url('/')
   end
@@ -140,7 +148,11 @@ error do
 end
 
 def authenticate
-  session[:registry_id] = params[:registry_id] if params[:registry_id] 
+  if INSTITUTIONS.count == 1
+    session[:registry_id] = INSTITUTIONS.keys.first
+  else
+    session[:registry_id] = params[:registry_id] if params[:registry_id]
+  end 
   if session[:token].nil?
     login_url = WSKEY.login_url(session[:registry_id], session[:registry_id])
     redirect login_url

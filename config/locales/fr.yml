@@ -57,6 +57,8 @@ fr:
       heading: "Désolé , mais le système LBMC pilote a rencontré un problème."
       no-title: "Un titre est nécessaire."
       isbn: "Il ya un problème avec l' ISBN . Il doit être valide un ISBN , 10 ou 13 chiffres. Si le problème persiste , laissez le champ vide ISBN."
+      authentication: ""
+      authorization: ""
       other: "Cette erreur de système a été connecté et signalé à l'équipe de développement LBMC . Nous nous excusons pour l'interruption et nous travaillons sur une solution."
   home:
     heading: "Bienvenue!"

@@ -37,7 +37,7 @@ describe "the record page" do
   
   context "when displaying a record created in the LBMC application by the institution" do
     before(:all) do
-      stub_request(:get, "http://cataloging-worldcatbib-qa.ent.oclc.org/bib/data/883876185?classificationScheme=LibraryOfCongress").
+      stub_request(:get, "https://worldcat.org/bib/data/883876185?classificationScheme=LibraryOfCongress").
         to_return(:status => 200, :body => mock_file_contents("ocn883876185.atomxml"))
       get '/record/883876185', params={}, rack_env={ 'rack.session' => {:token => @access_token, :registry_id => 128807} }
       @doc = Nokogiri::HTML(last_response.body)
@@ -135,9 +135,9 @@ describe "the record page" do
   
   context "when submitting an update to change the author name" do
     before(:all) do
-      stub_request(:put, "http://cataloging-worldcatbib-qa.ent.oclc.org/bib/data?classificationScheme=LibraryOfCongress").
+      stub_request(:put, "https://worldcat.org/bib/data?classificationScheme=LibraryOfCongress").
           to_return(:status => 201, :body => mock_file_contents("ocn883876185-updated.atomxml"))
-      stub_request(:get, "http://cataloging-worldcatbib-qa.ent.oclc.org/bib/data/883876185?classificationScheme=LibraryOfCongress").
+      stub_request(:get, "https://worldcat.org/bib/data/883876185?classificationScheme=LibraryOfCongress").
           to_return(:status => 200, :body => mock_file_contents("ocn883876185-updated.atomxml"))
 
       p = { 
@@ -166,9 +166,9 @@ describe "the record page" do
   
   context "when submitting a new record" do
     before(:all) do
-      stub_request(:post, "http://cataloging-worldcatbib-qa.ent.oclc.org/bib/data?classificationScheme=LibraryOfCongress").
+      stub_request(:post, "https://worldcat.org/bib/data?classificationScheme=LibraryOfCongress").
           to_return(:status => 201, :body => mock_file_contents("ocn883876185.atomxml"))
-      stub_request(:get, "http://cataloging-worldcatbib-qa.ent.oclc.org/bib/data/883876185?classificationScheme=LibraryOfCongress").
+      stub_request(:get, "https://worldcat.org/bib/data/883876185?classificationScheme=LibraryOfCongress").
           to_return(:status => 200, :body => mock_file_contents("ocn883876185.atomxml"))
 
       p = { 
@@ -196,7 +196,7 @@ describe "the record page" do
 
   context "when trying to create a new record without a title" do
     before(:all) do
-      stub_request(:post, "http://cataloging-worldcatbib-qa.ent.oclc.org/bib/data?classificationScheme=LibraryOfCongress").
+      stub_request(:post, "https://worldcat.org/bib/data?classificationScheme=LibraryOfCongress").
           to_return(:status => 409, :body => mock_file_contents("titleless-input-response.marcxml"))
 
       p = { 
@@ -241,7 +241,7 @@ describe "the record page" do
   
   context "when displaying a record not created in the LBMC application" do
     before(:all) do
-      stub_request(:get, "http://cataloging-worldcatbib-qa.ent.oclc.org/bib/data/9999999?classificationScheme=LibraryOfCongress").
+      stub_request(:get, "https://worldcat.org/bib/data/9999999?classificationScheme=LibraryOfCongress").
         to_return(:status => 200, :body => mock_file_contents("ocm09999999.atomxml"))
       get '/record/9999999', params={}, rack_env={ 'rack.session' => {:token => @access_token, :registry_id => 128807} }
       @doc = Nokogiri::HTML(last_response.body)
@@ -336,7 +336,7 @@ describe "the record page" do
   
   context "when displaying a record created in the LBMC application by another institution" do
     before(:all) do
-      stub_request(:get, "http://cataloging-worldcatbib-qa.ent.oclc.org/bib/data/883880805?classificationScheme=LibraryOfCongress").
+      stub_request(:get, "https://worldcat.org/bib/data/883880805?classificationScheme=LibraryOfCongress").
         to_return(:status => 200, :body => mock_file_contents("ocn883880805.atomxml"))
       get '/record/883880805', params={}, rack_env={ 'rack.session' => {:token => @access_token, :registry_id => 128807} }
       @doc = Nokogiri::HTML(last_response.body)
@@ -427,7 +427,7 @@ describe "the record page" do
   context "when downloading a MARC record" do  
     context "as MARC/XML" do
       before(:all) do
-        stub_request(:get, "http://cataloging-worldcatbib-qa.ent.oclc.org/bib/data/883876185?classificationScheme=LibraryOfCongress").
+        stub_request(:get, "https://worldcat.org/bib/data/883876185?classificationScheme=LibraryOfCongress").
           to_return(:status => 200, :body => mock_file_contents("ocn883876185.atomxml"))
         get '/record/883876185.xml', params={}, rack_env={ 'rack.session' => {:token => @access_token, :registry_id => 128807} }
         raw_marc = StringIO.new( last_response.body )
@@ -451,7 +451,7 @@ describe "the record page" do
   
   context "when trying to display an OCLC number that does not exist" do
     before(:all) do
-      stub_request(:get, "http://cataloging-worldcatbib-qa.ent.oclc.org/bib/data/99999999999999?classificationScheme=LibraryOfCongress").
+      stub_request(:get, "https://worldcat.org/bib/data/99999999999999?classificationScheme=LibraryOfCongress").
         to_return(:status => 404, :body => mock_file_contents("record_not_found.xml"))
       get '/record/99999999999999', params={}, rack_env={ 'rack.session' => {:token => @access_token, :registry_id => 128807} }
       doc = Nokogiri::HTML(last_response.body)
