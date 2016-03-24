@@ -33,7 +33,7 @@ before do
   # puts ; puts "Before do, request.path_info is " + request.path_info; puts
   # puts ; puts session.inspect ; puts
   set_locale
-  if INSTITUTIONS.count == 1 
+  if $institutions.count == 1 
     pass if params[:error] || params[:code]
     session[:path] = request.path
     authenticate
@@ -148,8 +148,8 @@ error do
 end
 
 def authenticate
-  if INSTITUTIONS.count == 1
-    session[:registry_id] = INSTITUTIONS.keys.first
+  if $institutions.count == 1
+    session[:registry_id] = $institutions.keys.first
   else
     session[:registry_id] = params[:registry_id] if params[:registry_id]
   end 

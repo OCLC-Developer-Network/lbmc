@@ -1,0 +1,22 @@
+production:
+  app_url: 'http://localhost:9292'
+  base_url: 'https://worldcat.org/bib/data'
+  wskey_url: 'https://authn.sd00.worldcat.org/oauth2'
+  institutions:
+    128807: 
+      symbol: OCPSB
+      name: "OCLC WorldShare Platform Sandbox Institution"
+    91475: 
+      symbol: OCWMS
+      name: "OCLC WorldShare Management Services - Library"
+development:
+  app_url: 'http://localhost:9292'
+  base_url: 'https://worldcat.org/bib/data'
+  wskey_url: 'https://authn.sd00.worldcat.org/oauth2'
+  institutions:
+    128807: 
+      symbol: OCPSB
+      name: "OCLC WorldShare Platform Sandbox Institution"
+    91475: 
+      symbol: OCWMS
+      name: "OCLC WorldShare Management Services - Library"        

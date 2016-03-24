@@ -96,9 +96,11 @@ MARC_LANGUAGES = YAML::load(File.read("#{File.expand_path(File.dirname(__FILE__)
 MARC_COUNTRIES = YAML::load(File.read("#{File.expand_path(File.dirname(__FILE__))}/../config/marc_countries.yml"))
 config = YAML::load(File.read("#{File.expand_path(File.dirname(__FILE__))}/../config/lbmc.yml"))
 CALENDARS = YAML::load(File.read("#{File.expand_path(File.dirname(__FILE__))}/../config/calendars.yml"))
-APP_URL = config[settings.environment.to_s]['app_url']
-BASE_URL = config[settings.environment.to_s]['base_url']
-INSTITUTIONS = config[settings.environment.to_s]['institutions']
+$app_url = config[settings.environment.to_s]['app_url']
+$base_url = config[settings.environment.to_s]['base_url']
+$institutions = config[settings.environment.to_s]['institutions']
+  
+$environment = settings.environment.to_s
 
 RSpec.configure do |config|
   config.run_all_when_everything_filtered = true

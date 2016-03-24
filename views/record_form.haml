@@ -16,10 +16,10 @@
 
 = partial :bib_errors
 
-%form#record-form{ :action => APP_URL+action, :method => 'POST', :role => 'form'}
+%form#record-form{ :action => $app_url+action, :method => 'POST', :role => 'form'}
 
   %div
-    %input{ :type => 'hidden', :name => 'oclc_symbol', :value => INSTITUTIONS[session[:registry_id].to_i]['symbol'] }
+    %input{ :type => 'hidden', :name => 'oclc_symbol', :value => $institutions[session[:registry_id].to_i]['symbol'] }
 
   %div
     %input{ :type => 'hidden', :name => 'oclc_number', :value => data['id'] }

@@ -35,9 +35,9 @@ config = YAML::load(File.read("#{File.expand_path(File.dirname(__FILE__))}/confi
 MARC_LANGUAGES = YAML::load(File.read("#{File.expand_path(File.dirname(__FILE__))}/config/marc_languages.yml"))
 MARC_COUNTRIES = YAML::load(File.read("#{File.expand_path(File.dirname(__FILE__))}/config/marc_countries.yml"))
 CALENDARS = YAML::load(File.read("#{File.expand_path(File.dirname(__FILE__))}/config/calendars.yml"))
-APP_URL = config[settings.environment.to_s]['app_url']
-BASE_URL = config[settings.environment.to_s]['base_url']
 WSKEY_URL = config[settings.environment.to_s]['wskey_url']
-INSTITUTIONS = config[settings.environment.to_s]['institutions']
+$app_url = config[settings.environment.to_s]['app_url']
+$base_url = config[settings.environment.to_s]['base_url']
+$institutions = config[settings.environment.to_s]['institutions']
 
 run Sinatra::Application

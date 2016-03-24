@@ -119,7 +119,7 @@ class Bib
   protected
   
   def base_url
-    BASE_URL
+    $base_url
   end
   
   def parse_marc

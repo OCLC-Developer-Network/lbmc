@@ -31,19 +31,19 @@
     %meta{ 'http-equiv'=>"X-UA-Compatible", :content=>"IE=edge" }
     %meta{ :name=>"viewport", :content=>"width=device-width, initial-scale=1.0" }
     
-    %link{ :rel=>"icon", :href=> APP_URL+"/images/favicon.ico", :type=>"image/x-icon" }
-    %link{ :rel=>"shortcut icon", :href=> APP_URL+"/images/favicon.ico", :type=>"image/x-icon" }
+    %link{ :rel=>"icon", :href=> $app_url+"/images/favicon.ico", :type=>"image/x-icon" }
+    %link{ :rel=>"shortcut icon", :href=> $app_url+"/images/favicon.ico", :type=>"image/x-icon" }
     %link{ :href=>"//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css", :rel=>"stylesheet" }
 
-    %link{ :href=>APP_URL+"/css/layout.css", :rel=>"stylesheet" }
+    %link{ :href=>$app_url+"/css/layout.css", :rel=>"stylesheet" }
     %script{:src=>"//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"}
     %script{:src=>"//code.jquery.com/jquery-1.11.0.min.js"}
     %script{:src=>"//code.jquery.com/jquery-migrate-1.2.1.min.js"}
     %script{:src=>"//code.jquery.com/ui/1.11.1/jquery-ui.min.js"}
-    %link{ :href=>APP_URL+"/css/jquery-ui.css", :rel=>"stylesheet" }
-    %script{:src=>APP_URL+"/js/app.js"}
-    %script{:src=>APP_URL+"/js/calendar.js"}
-    %script{:src=>APP_URL+"/js/astro.js"}
+    %link{ :href=>$app_url+"/css/jquery-ui.css", :rel=>"stylesheet" }
+    %script{:src=>$app_url+"/js/app.js"}
+    %script{:src=>$app_url+"/js/calendar.js"}
+    %script{:src=>$app_url+"/js/astro.js"}
 
   %body
     %div.container
@@ -54,25 +54,25 @@
               %h3 #{I18n.translate 'application.subtitle'}
           %div.col-md-6
             %div.pull-right.pad_above
-              %a#home.btn.btn-sm.btn-primary{ :href => APP_URL, :title => "#{I18n.translate 'link.home.title'}" } 
+              %a#home.btn.btn-sm.btn-primary{ :href => $app_url, :title => "#{I18n.translate 'link.home.title'}" } 
                 %span.glyphicon.glyphicon-home
                 #{I18n.translate 'link.home.text'}
-              %a#create.btn.btn-sm.btn-primary{ :href => APP_URL+"/record/new", :title => "#{I18n.translate 'link.create-menu.title'}" } 
+              %a#create.btn.btn-sm.btn-primary{ :href => $app_url+"/record/new", :title => "#{I18n.translate 'link.create-menu.title'}" } 
                 %span.glyphicon.glyphicon-pencil
                 #{I18n.translate 'link.create-menu.text'}
-              %a#logoff.btn.btn-sm.btn-primary{ :href => APP_URL+"/logoff", :title => "#{I18n.translate 'link.logoff.title'}" } 
+              %a#logoff.btn.btn-sm.btn-primary{ :href => $app_url+"/logoff", :title => "#{I18n.translate 'link.logoff.title'}" } 
                 %span.glyphicon.glyphicon-off
                 #{I18n.translate 'link.logoff.text'}
       %div.row
         %div.col-xs-12.col-sm-4.col-md-4
           %h1#logo_text
-            %a{ :href => APP_URL+"/", :title => "#{I18n.translate 'link.home.title'}" } #{I18n.translate 'application.title'}
+            %a{ :href => $app_url+"/", :title => "#{I18n.translate 'link.home.title'}" } #{I18n.translate 'application.title'}
         %div.col-xs-12.col-sm-8.col-md-8
           %div.pull-right.pad_above
             - unless session[:token].nil? or session[:token].expired?
               %span.header_institution_name
-                = INSTITUTIONS[session[:registry_id].to_i]['name']
-              %img.logo_small{ :src => APP_URL+"/images/#{INSTITUTIONS[session[:registry_id].to_i]['symbol']}.jpg" } 
+                = $institutions[session[:registry_id].to_i]['name']
+              %img.logo_small{ :src => $app_url+"/images/#{$institutions[session[:registry_id].to_i]['symbol']}.jpg" } 
 
       %div.row
         %div.col-xs-12.col-sm-12.col-md-12

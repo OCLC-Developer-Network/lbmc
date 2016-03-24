@@ -22,14 +22,14 @@
         - if session[:token].nil? or session[:token].expired?
           #{I18n.translate 'home.select-institution'}
           %div#get-started.list-group.pad_above
-            - INSTITUTIONS.each do |registry_id, info|
-              %a.list-group-item.pilot_list{ :id => "login-to-#{registry_id}", :href => APP_URL+'/authenticate?registry_id='+registry_id.to_s }
-                %img.logo_medium{ :src => APP_URL+"/images/#{info['symbol']}.jpg" }
+            - $institutions.each do |registry_id, info|
+              %a.list-group-item.pilot_list{ :id => "login-to-#{registry_id}", :href => $app_url+'/authenticate?registry_id='+registry_id.to_s }
+                %img.logo_medium{ :src => $app_url+"/images/#{info['symbol']}.jpg" }
                 %span.pad_left_wide= info['name']
         - else
           #{I18n.translate 'home.get-started'}
           %div.pad_above
-            %a#new-record.btn.btn-success{ :href => APP_URL+"/record/new", :title => "#{I18n.translate 'link.create-new.title'}" } 
+            %a#new-record.btn.btn-success{ :href => $app_url+"/record/new", :title => "#{I18n.translate 'link.create-new.title'}" } 
               %span.glyphicon.glyphicon-pencil
               #{I18n.translate 'link.create-new.text'}
             

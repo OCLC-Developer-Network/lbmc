@@ -19,23 +19,51 @@ I18n.default_locale = :en
 I18n.load_path << Dir[File.join(File.expand_path(File.expand_path(File.dirname(__FILE__)) + '/../config/locales'), '*.yml')]
 I18n.load_path.flatten!
 
-describe "the home page" do
+describe "the home page", multi_institutions: true do
+  before do
+    config = YAML::load(File.read("#{File.expand_path(File.dirname(__FILE__))}/../../config/lbmc_multi_institutions.yml"))
+    $app_url = config[$environment]['app_url']
+    $base_url = config[$environment]['base_url']
+    $institutions = config[$environment]['institutions']
+    get '/'
+    @doc = Nokogiri::HTML(last_response.body)
+  end
+
+  it "should welcome the user" do
+    xpath = "//h3[text()='Welcome!']"
+    expect(@doc.xpath(xpath)).not_to be_empty
+  end
   
   describe "before logging in" do
-    before do
-      config = YAML::load(File.read("#{File.expand_path(File.dirname(__FILE__))}/../../config/lbmc.yml"))
-      $app_url = config[$environment]['app_url']
-      $base_url = config[$environment]['base_url']
-      $institutions = config[$environment]['institutions']
-      get '/'
-      @doc = Nokogiri::HTML(last_response.body)
-    end
-    it "should redirect to login" do
-      get '/'
-      @oauth_url = 'https://authn.sd00.worldcat.org/oauth2/authorizeCode?authenticatingInstitutionId=128807&client_id=' + WSKEY.key + '&contextInstitutionId=128807'
-      @oauth_url += '&redirect_uri=' + Rack::Utils.escape($app_url + '/catch_auth_code') + '&response_type=code&scope=WorldCatMetadataAPI'
-      expect(last_response).to be_redirect
-      expect(last_response.location).to eql(@oauth_url) 
+    context "the list to login users" do
+      before do
+        list_xpath = "//div[@id='get-started']"
+        @inst_list_wrapper = @doc.xpath(list_xpath)
+        login_links = @inst_list_wrapper.xpath(".//a[@class='list-group-item pilot_list']")
+        @ocpsb_login = login_links.find {|element| element if element.attr('id') == 'login-to-128807'}
+        @ocwms_login = login_links.find {|element| element if element.attr('id') == 'login-to-91475'}
+      end
+      
+      it "should be present only once" do
+        expect(@inst_list_wrapper).not_to be_nil
+        expect(@inst_list_wrapper.size).to eq(1)
+      end
+
+      it "should let the user select the right institutions" do
+        expect(@ocpsb_login).to_not be_nil
+        expect(@ocpsb_login.xpath(".//span").text).to eq('OCLC WorldShare Platform Sandbox Institution')
+        expect(@ocwms_login).to_not be_nil
+        expect(@ocwms_login.xpath(".//span").text).to eq('OCLC WorldShare Management Services - Library')
+      end
+
+      it "should have links that log users in to the correct institutions" do
+        uri = URI.parse(@ocpsb_login.attr('href'))
+        expect(uri.path).to eq("/authenticate")
+        expect(uri.query).to eq("registry_id=128807")
+        uri = URI.parse(@ocwms_login.attr('href'))
+        expect(uri.path).to eq("/authenticate")
+        expect(uri.query).to eq("registry_id=91475")
+      end
     end
   end
 
@@ -47,11 +75,6 @@ describe "the home page" do
 
       get '/', params={}, rack_env={ 'rack.session' => {:token => access_token, :registry_id => 128807} }
       @doc = Nokogiri::HTML(last_response.body)
-    end
-    
-    it "should welcome the user" do
-      xpath = "//h3[text()='Welcome!']"
-      expect(@doc.xpath(xpath)).not_to be_empty
     end
 
     it "should have a link to create a new record" do

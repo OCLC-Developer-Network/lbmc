@@ -15,7 +15,7 @@
 - @button_title = I18n.translate 'link.update-submit.title'
 - @button_label = I18n.translate 'link.update-submit.text'
 
-- if @bib.is_app_created? and belongs_to_current_user?(@bib.marc_record, INSTITUTIONS[session[:registry_id].to_i]['symbol'])
+- if @bib.is_app_created? and belongs_to_current_user?(@bib.marc_record, $institutions[session[:registry_id].to_i]['symbol'])
 
   %div#webkit_message
 
