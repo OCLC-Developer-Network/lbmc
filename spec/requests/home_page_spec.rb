@@ -26,8 +26,8 @@ describe "the home page" do
       get '/'
       @oauth_url = 'https://authn.sd00.worldcat.org/oauth2/authorizeCode?authenticatingInstitutionId=128807&client_id=' + WSKEY.key + '&contextInstitutionId=128807'
       @oauth_url += '&redirect_uri=' + Rack::Utils.escape(APP_URL + '/catch_auth_code') + '&response_type=code&scope=WorldCatMetadataAPI'
-      last_response.should be_redirect
-      last_response.location.should == @oauth_url 
+      expect(last_response).to be_redirect
+      expect(last_response.location).to eql(@oauth_url) 
     end
   end
 

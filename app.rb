@@ -34,7 +34,7 @@ before do
   # puts ; puts session.inspect ; puts
   set_locale
   if INSTITUTIONS.count == 1 
-    pass if params[:error]
+    pass if params[:error] || params[:code]
     session[:path] = request.path
     authenticate
   else  
