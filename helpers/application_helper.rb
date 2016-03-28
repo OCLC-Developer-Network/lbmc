@@ -171,15 +171,6 @@ module ApplicationHelper
       field_array.push(field_hash)
       update_field(marc_record, field_tag, field_array)
       
-      # Add the application note
-      field_tag = "500"
-      field_array = Array.new
-      subfield_hash = Hash.new
-      subfield_hash["a"] = LBMC::SOURCE_NOTE
-      field_hash = create_field_hash('a', ' ', ' ', subfield_hash)
-      field_array.push(field_hash)
-      update_field(marc_record, field_tag, field_array)
-      
     end
   
     # CONTROL FIELDS
