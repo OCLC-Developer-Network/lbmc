@@ -98,12 +98,6 @@ describe ApplicationHelper do
       expect(@record['300'].indicator2).to eq(' ')
     end
     
-    it "should add the LBMC note" do
-      expect(@record['500']['a']).to eq(LBMC::SOURCE_NOTE)
-      expect(@record['500'].indicator1).to eq(' ') 
-      expect(@record['500'].indicator2).to eq(' ')
-    end
-
     it "should add the subject" do
       expect(@record['653']['a']).to eq('Application Programming Interfaces (APIs)')
       expect(@record['653'].indicator1).to eq('0') 
