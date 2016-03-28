@@ -45,7 +45,8 @@ class Bib
     resource = RestClient::Resource.new(url)
     resource.post(payload, :authorization => auth, 
         :content_type => LBMC::MARC_XML_MIMETYPE,
-        :accept => LBMC::ATOM_WRAPPED_MARC_MIMETYPE) do |response, request, result|
+        :accept => LBMC::ATOM_WRAPPED_MARC_MIMETYPE,
+        :user_agent => 'Low Barrier to Metadata Creation Application') do |response, request, result|
       # puts ; puts request.inspect ; puts
       # puts ; puts response ; puts
       # puts ; puts result.inspect ; puts
@@ -67,7 +68,8 @@ class Bib
     
     resource = RestClient::Resource.new(url)
     resource.get(:authorization => auth, 
-        :accept => LBMC::ATOM_WRAPPED_MARC_MIMETYPE) do |response, request, result|
+        :accept => LBMC::ATOM_WRAPPED_MARC_MIMETYPE,
+        :user_agent => 'Low Barrier to Metadata Creation Application') do |response, request, result|
       # puts ; puts request.inspect ; puts
       # puts ; puts response ; puts
       # puts ; puts result.inspect ; puts
@@ -92,7 +94,8 @@ class Bib
     resource = RestClient::Resource.new(url)
     resource.put(payload, :authorization => auth, 
         :content_type => LBMC::MARC_XML_MIMETYPE,
-        :accept => LBMC::ATOM_WRAPPED_MARC_MIMETYPE) do |response, request, result|
+        :accept => LBMC::ATOM_WRAPPED_MARC_MIMETYPE,
+        :user_agent => 'Low Barrier to Metadata Creation Application') do |response, request, result|
       # puts ; puts request.inspect ; puts
       # puts ; puts response ; puts
       # puts ; puts result.inspect ; puts
