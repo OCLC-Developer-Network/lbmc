@@ -8,7 +8,8 @@ gem "marc"
 gem "rest_client"
 gem "nokogiri"
 gem "json"
-gem "oclc-auth", '0.1.1', :path => "vendor/gems/oclc-auth-0.1.1"
+gem "oclc-auth", '0.3.0', :path => "vendor/gems/oclc-auth-0.3.0"
+gem "i18n"
 
 group :test do
   gem 'rspec'

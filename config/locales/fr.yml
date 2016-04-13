@@ -1,12 +1,12 @@
 ---
 fr:
   application:
-    title: "LBMC Pilot"
+    title: "Bib It"
     subtitle: "Low Barrier Metadata Creation"
   link:
     home:
-      title: "Visitez la page d'accueil LBMC pilote"
-      text: "LBMC"
+      title: "Visitez la page d'accueil Bib It"
+      text: "Bib It"
     create-menu:
       title: "Commencez à créer un nouveau record"
       text: "Créer"
@@ -48,21 +48,23 @@ fr:
     info:
       notfound:
         title: "Désolé, mais la page demandée n'a pas été trouvée."
-        response: "Vous pourriez essayer de partir de la page d'accueil LBMC."
+        response: "Vous pourriez essayer de partir de la page d'accueil Bib It."
       edit:
-        permission: "Désolé , mais ce record ne est pas disponible pour l'édition dans le LBMC pilote."
+        permission: "Désolé , mais ce record ne est pas disponible pour l'édition dans le Bib It."
     warning:
-      chrome: "Édition d'enregistrement ne fonctionne pas encore avec les navigateurs Web Chrome ou Safari . L'équipe LBMC travaille sur une solution à ce problème . Jusque-là , se il vous plaît utiliser Firefox ou Internet Explorer . Nous nous excusons pour votre désagrément."
+      chrome: "Édition d'enregistrement ne fonctionne pas encore avec les navigateurs Web Chrome ou Safari . L'équipe Bib It travaille sur une solution à ce problème . Jusque-là , se il vous plaît utiliser Firefox ou Internet Explorer . Nous nous excusons pour votre désagrément."
     error:
-      heading: "Désolé , mais le système LBMC pilote a rencontré un problème."
+      heading: "Désolé , mais le système Bib It a rencontré un problème."
       no-title: "Un titre est nécessaire."
       isbn: "Il ya un problème avec l' ISBN . Il doit être valide un ISBN , 10 ou 13 chiffres. Si le problème persiste , laissez le champ vide ISBN."
-      other: "Cette erreur de système a été connecté et signalé à l'équipe de développement LBMC . Nous nous excusons pour l'interruption et nous travaillons sur une solution."
+      authentication: "Le WSKey qui est configure pour l'application est de nul effet."
+      authorization: "Le WSKey qui est configure pour l'application n'a pas les permis exacts. S'il vous plait, soyez sur de WSKey est pour WorldCat Metadata API"
+      other: "Cette erreur de système a été connecté et signalé à l'équipe de développement Bib It . Nous nous excusons pour l'interruption et nous travaillons sur une solution."
   home:
     heading: "Bienvenue!"
-    about: "Le système LBMC (Low Barrier Metadata Creation) est une interface simple pour créer des notices de catalogue dans WorldCat . Bibliothèques pilotes sélectionnés aident OCLC tester ce système."
-    select-institution: "Êtes-vous un pilote essayeur? Commencez par sélectionner votre institution dans la liste ci-dessous."
-    get-started: "Êtes-vous un pilote essayeur? Vous pouvez créer un nouveau record en utilisant un simple formulaire Web. Il suffit de sélectionner ce bouton pour commencer."
+    about: "Le système Bib Itd est une interface simple pour créer des notices de catalogue dans WorldCat ."
+    select-institution: "Commencez par sélectionner votre institution dans la liste ci-dessous."
+    get-started: "Vous pouvez créer un nouveau record en utilisant un simple formulaire Web. Il suffit de sélectionner ce bouton pour commencer."
     hints:
       heading: "Conseils pour les nouveaux utilisateurs"
       hint1: "Vous serez invité à fournir des informations de base sur un livre: son titre, auteur, informations de publication, nombre de pages, et quoi il se agit."

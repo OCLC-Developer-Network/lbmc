@@ -52,7 +52,7 @@ module OCLC
       
       # The default URL for the OCLC OAuth server.
       def self.production_url
-        "#{WSKEY_URL}/authorizeCode"
+        'https://authn.sd00.worldcat.org/oauth2/authorizeCode'
       end
       
       # The login URL to redirect a user's web browser to to request an authorization code.
@@ -70,7 +70,7 @@ module OCLC
           "redirect_uri" => redirect_uri, 
           "response_type" => 'code',
           "scope" => scope
-        }  
+        }        
         params.map { |name,value| "#{CGI.escape name}=#{CGI.escape value}" }.sort.join("&")
       end
       

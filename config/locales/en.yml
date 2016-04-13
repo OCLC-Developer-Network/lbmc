@@ -1,12 +1,12 @@
 ---
 en:
   application:
-    title: "LBMC Pilot"
+    title: "Bib It"
     subtitle: "Low Barrier Metadata Creation"
   link:
     home:
-      title: "Visit the LBMC Pilot home page"
-      text: "LBMC Home"
+      title: "Visit the Bib It home page"
+      text: "Bib It Home"
     create-menu:
       title: "Start creating a new record"
       text: "Create a Record"
@@ -48,21 +48,23 @@ en:
     info:
       notfound:
         title: "Sorry, but the requested page was not found."
-        response: "You might try starting from the LBMC home page."
+        response: "You might try starting from the Bib It home page."
       edit:
-        permission: "Sorry, but this record is not available for editing in the LBMC Pilot."
+        permission: "Sorry, but this record is not available for editing in Bib It."
     warning:
-      chrome: "Record editing isn't working yet with the Chrome or Safari web browsers. The LBMC team is working on a solution to that problem. Until then, please use Firefox or Internet Explorer. We apologize for your inconvenience."
+      chrome: "Record editing isn't working yet with the Chrome or Safari web browsers. Please use Firefox or Internet Explorer. We apologize for your inconvenience."
     error:
-      heading: "Sorry, but the LBMC Pilot system encountered a problem."
+      heading: "Sorry, but the Bib It encountered a problem."
       no-title: "A title is required."
       isbn: "There is a problem with the ISBN.  It needs to be a valid ISBN, either 10 or 13 digits long.  If the problem persists, leave the ISBN field empty."
+      authentication: "The WSKey configured for the application is invalid."
+      authorization: "The WSKey configured for the application does not have the proper permissions. Please make sure the WSKey is for WorldCat Metadata API"
       other: "This system error has been logged and reported to the LBMC development team.  We apologize for the disruption and are working on a solution."
   home:
     heading: "Welcome!"
-    about: "The LBMC (Low-Barrier Metadata Creation) system is a simple interface for creating catalog records in WorldCat. Selected pilot libraries are helping OCLC test this system."
-    select-institution: "Are you a pilot tester? Get started by selecting your institution from the list below."
-    get-started: "Are you a pilot tester?  You can create a new record using a simple web form.  Just select this button to get started."
+    about: "Bib It is a simple interface for creating catalog records in WorldCat."
+    select-institution: "Get started by selecting your institution from the list below."
+    get-started: "You can create a new record using a simple web form.  Just select this button to get started."
     hints:
       heading: "Hints for new users"
       hint1: "You'll be asked to provide basic information about a book: its title, author, publication information, how many pages, and what it's about."

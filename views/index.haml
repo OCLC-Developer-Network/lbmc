@@ -1,3 +1,17 @@
+-# Copyright 2016 OCLC
+-#
+-# Licensed under the Apache License, Version 2.0 (the "License");
+-# you may not use this file except in compliance with the License.
+-# You may obtain a copy of the License at
+-#
+-# http://www.apache.org/licenses/LICENSE-2.0
+-#
+-# Unless required by applicable law or agreed to in writing, software
+-# distributed under the License is distributed on an "AS IS" BASIS,
+-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-# See the License for the specific language governing permissions and
+-# limitations under the License.
+
 %div.row 
   %div.col-md-12
     %div.well
@@ -8,14 +22,14 @@
         - if session[:token].nil? or session[:token].expired?
           #{I18n.translate 'home.select-institution'}
           %div#get-started.list-group.pad_above
-            - INSTITUTIONS.each do |registry_id, info|
-              %a.list-group-item.pilot_list{ :id => "login-to-#{registry_id}", :href => APP_URL+'/authenticate?registry_id='+registry_id.to_s }
-                %img.logo_medium{ :src => APP_URL+"/images/#{info['symbol']}.jpg" }
+            - $institutions.each do |registry_id, info|
+              %a.list-group-item.pilot_list{ :id => "login-to-#{registry_id}", :href => $app_url+'/authenticate?registry_id='+registry_id.to_s }
+                %img.logo_medium{ :src => $app_url+"/images/#{info['symbol']}.jpg" }
                 %span.pad_left_wide= info['name']
         - else
           #{I18n.translate 'home.get-started'}
           %div.pad_above
-            %a#new-record.btn.btn-success{ :href => APP_URL+"/record/new", :title => "#{I18n.translate 'link.create-new.title'}" } 
+            %a#new-record.btn.btn-success{ :href => $app_url+"/record/new", :title => "#{I18n.translate 'link.create-new.title'}" } 
               %span.glyphicon.glyphicon-pencil
               #{I18n.translate 'link.create-new.text'}
             

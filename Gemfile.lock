@@ -1,7 +1,7 @@
 PATH
-  remote: vendor/gems/oclc-auth-0.1.1
+  remote: vendor/gems/oclc-auth-0.3.0
   specs:
-    oclc-auth (0.1.1)
+    oclc-auth (0.3.0)
       json (~> 1.8, >= 1.8.1)
       rest-client (~> 1.6, >= 1.6.7)
 
@@ -12,14 +12,19 @@ GEM
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
     diff-lcs (1.2.5)
+    domain_name (0.5.25)
+      unf (>= 0.0.5, < 1.0.0)
     ensure_valid_encoding (0.5.3)
     haml (4.0.5)
       tilt
+    http-cookie (1.0.2)
+      domain_name (~> 0.5)
+    i18n (0.7.0)
     json (1.8.1)
     marc (0.8.1)
       ensure_valid_encoding
       unf
-    mime-types (2.3)
+    mime-types (2.99)
     mini_portile (0.6.0)
     netrc (0.7.7)
     nokogiri (1.6.3.1)
@@ -29,7 +34,8 @@ GEM
       rack
     rack-test (0.6.2)
       rack (>= 1.0)
-    rest-client (1.7.2)
+    rest-client (1.8.0)
+      http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
     rest_client (1.7.3)
@@ -66,13 +72,17 @@ PLATFORMS
 
 DEPENDENCIES
   haml
+  i18n
   json
   marc
   nokogiri
-  oclc-auth (= 0.1.1)!
+  oclc-auth (= 0.3.0)!
   rack-test
   rest_client
   rspec
   sinatra
   sinatra-partial
   webmock
+
+BUNDLED WITH
+   1.10.6

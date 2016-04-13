@@ -1,3 +1,17 @@
+# Copyright 2016 OCLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 # encoding: utf-8
 
 # Copyright 2016 OCLC
@@ -72,22 +86,26 @@ def session
 end
 
 wskey_config = YAML::load(File.read("#{File.expand_path(File.dirname(__FILE__))}/../config/wskey.yml"))
+  
 key = wskey_config[settings.environment.to_s]['key']
 secret = wskey_config[settings.environment.to_s]['secret']
 redirect_uri = wskey_config[settings.environment.to_s]['redirect_uri']
 WSKEY = OCLC::Auth::WSKey.new(key, secret, :services => ['WorldCatMetadataAPI'], :redirect_uri => redirect_uri)
 
-config = YAML::load(File.read("#{File.expand_path(File.dirname(__FILE__))}/../config/lbmc.yml"))
 MARC_LANGUAGES = YAML::load(File.read("#{File.expand_path(File.dirname(__FILE__))}/../config/marc_languages.yml"))
 MARC_COUNTRIES = YAML::load(File.read("#{File.expand_path(File.dirname(__FILE__))}/../config/marc_countries.yml"))
+config = YAML::load(File.read("#{File.expand_path(File.dirname(__FILE__))}/../config/lbmc.yml"))
 CALENDARS = YAML::load(File.read("#{File.expand_path(File.dirname(__FILE__))}/../config/calendars.yml"))
-APP_URL = config[settings.environment.to_s]['app_url']
-BASE_URL = config[settings.environment.to_s]['base_url']
-INSTITUTIONS = config[settings.environment.to_s]['institutions']
+$app_url = config[settings.environment.to_s]['app_url']
+$base_url = config[settings.environment.to_s]['base_url']
+$institutions = config[settings.environment.to_s]['institutions']
+  
+$environment = settings.environment.to_s
 
 RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
   config.include Rack::Test::Methods
+  config.expect_with(:rspec)
 end
 
 def mock_file_contents(filename)
