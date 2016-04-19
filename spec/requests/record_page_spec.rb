@@ -222,7 +222,7 @@ describe "the record page" do
     end
     
     it "should display the error section" do
-      expect(@alert.xpath("./span[@id='error-heading'][text()='Sorry, but the LBMC Pilot system encountered a problem.']").size).to eq(1)
+      expect(@alert.xpath("./span[@id='error-heading'][text()='Sorry, but Bib It encountered a problem.']").size).to eq(1)
     end
     
    it "should display a list of validation errors" do

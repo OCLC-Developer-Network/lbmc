@@ -2,7 +2,7 @@
 en:
   application:
     title: "Bib It"
-    subtitle: "Low Barrier Metadata Creation"
+    subtitle: ""
   link:
     home:
       title: "Visit the Bib It home page"
@@ -54,7 +54,7 @@ en:
     warning:
       chrome: "Record editing isn't working yet with the Chrome or Safari web browsers. Please use Firefox or Internet Explorer. We apologize for your inconvenience."
     error:
-      heading: "Sorry, but the Bib It encountered a problem."
+      heading: "Sorry, but Bib It encountered a problem."
       no-title: "A title is required."
       isbn: "There is a problem with the ISBN.  It needs to be a valid ISBN, either 10 or 13 digits long.  If the problem persists, leave the ISBN field empty."
       authentication: "The WSKey configured for the application is invalid."

@@ -79,9 +79,6 @@ describe Bib do
       @bib.create
     end
     
-    it "should not indicate it is LBMC app created" do
-      expect(@bib.is_app_created?).to be_nil
-    end
   end
   
   context "when testing a record that did originate in LBMC" do
@@ -95,9 +92,6 @@ describe Bib do
       @bib.create
     end
     
-    it "should indicate it is LBMC app created" do
-      expect(@bib.is_app_created?).to be true
-    end
   end
   
 end
