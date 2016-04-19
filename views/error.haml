@@ -24,9 +24,9 @@
       #{I18n.translate 'message.error.heading'}
     %div.pad_above
     - if @params.error_cod == '401'
-        #{I18n.translate 'message.error.authentication'}
+      #{I18n.translate 'message.error.authentication'}
     - elsif @params.error_cod == '403'
-        #{I18n.translate 'message.error.authorization'}
+      #{I18n.translate 'message.error.authorization'}
     - else
         #{I18n.translate 'message.error.other'}
       
