@@ -67,31 +67,4 @@ describe Bib do
       end
     end
   end
-  
-  context "when testing a record that did not originate in LBMC" do
-    before(:all) do
-      stub_request(:post, "https://worldcat.org/bib/data?classificationScheme=LibraryOfCongress").
-          to_return(:status => 200, :body => mock_file_contents("ocm09999999.atomxml"))
-      
-      raw_marc = StringIO.new( mock_file_contents("ocm9999999.marcxml") )
-      record = MARC::XMLReader.new(raw_marc).first
-      @bib = Bib.new_from_marc(record, @access_token)
-      @bib.create
-    end
-    
-  end
-  
-  context "when testing a record that did originate in LBMC" do
-    before(:all) do
-      stub_request(:post, "https://worldcat.org/bib/data?classificationScheme=LibraryOfCongress").
-          to_return(:status => 200, :body => mock_file_contents("ocn883876185.atomxml"))
-      
-      raw_marc = StringIO.new( mock_file_contents("ocn883876185.marcxml") )
-      record = MARC::XMLReader.new(raw_marc).first
-      @bib = Bib.new_from_marc(record, @access_token)
-      @bib.create
-    end
-    
-  end
-  
 end
