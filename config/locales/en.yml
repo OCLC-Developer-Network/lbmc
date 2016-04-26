@@ -60,6 +60,8 @@ en:
       authentication: "The WSKey configured for the application is invalid."
       authorization: "The WSKey configured for the application does not have the proper permissions. Please make sure the WSKey is for WorldCat Metadata API"
       other: "This system error has been logged and reported to the LBMC development team.  We apologize for the disruption and are working on a solution."
+      access_token_invalid: "The Access Token is invalid"
+      access_token_wrong_scope: "The Access Token is for the wrong scope"
   home:
     heading: "Welcome!"
     about: "Bib It is a simple interface for creating catalog records in WorldCat."

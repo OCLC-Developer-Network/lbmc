@@ -47,7 +47,7 @@ describe "the record page" do
     end
 
     it "should have a session variable records_created" do
-      expect(session[:records_created]).not_to be_nil
+      expect(last_request.env['rack.session'][:records_created]).to include(883876185)
     end
     
     it "should display a form" do
