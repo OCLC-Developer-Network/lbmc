@@ -40,16 +40,22 @@ describe "the record page" do
       stub_request(:get, "https://worldcat.org/bib/data/883876185?classificationScheme=LibraryOfCongress").
         to_return(:status => 200, :body => mock_file_contents("ocn883876185.atomxml"))
       @record_created = Array.new
-      @record_created.push(883876185)
+      @record_created.push("883876185")
       get '/record/883876185', params={}, rack_env={ 'rack.session' => {:token => @access_token, :registry_id => 128807, :records_created => @record_created} }
       @doc = Nokogiri::HTML(last_response.body)
       @form_element = @doc.xpath("//form[@id='record-form']").first
     end
 
     it "should have a session variable records_created" do
-      expect(last_request.env['rack.session'][:records_created]).to include(883876185)
+      puts @doc
+      expect(last_request.env['rack.session'][:records_created]).to include("883876185")
     end
-    
+   
+    it "should not have an alert message" do
+      xpath = "//div[@class='alert alert-info']"
+      expect(@doc.xpath(xpath).first).to be_nil
+    end
+     
     it "should display a form" do
       expect(@form_element).not_to be_nil
     end
