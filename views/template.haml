@@ -66,7 +66,8 @@
       %div.row
         %div.col-xs-12.col-sm-4.col-md-4
           %h1#logo_text
-            %a{ :href => $app_url+"/", :title => "#{I18n.translate 'link.home.title'}" } #{I18n.translate 'application.title'}
+            %a{ :href => $app_url+"/", :title => "#{I18n.translate 'link.home.title'}" } 
+              %img.logo_default{ :src => $app_url+"/images/bibit-logo.png" }
         %div.col-xs-12.col-sm-8.col-md-8
           %div.pull-right.pad_above
             - unless session[:token].nil? or session[:token].expired?

@@ -47,7 +47,6 @@ describe "the record page" do
     end
 
     it "should have a session variable records_created" do
-      puts @doc
       expect(last_request.env['rack.session'][:records_created]).to include("883876185")
     end
    
