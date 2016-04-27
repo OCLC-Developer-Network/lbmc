@@ -67,6 +67,12 @@ post '/record/create' do
   if @bib.response_code == '201'
     #redirect url("/record/#{@bib.marc_record['001'].value.gsub(/\D/, '')}")
     redirect url("/status/created/#{@bib.marc_record['001'].value.gsub(/\D/, '')}")
+    if session[:record_created].nil
+      record_created = Array.new
+      session[:record_created] = record_created.push(@bib.marc_record['001'].value.gsub(/\D/, ''))
+    else
+      session[:record_created] = session[:record_created].push(@bib.marc_record['001'].value.gsub(/\D/, ''))
+    end
   else
     # puts ; puts "get /record/create apply new layout"; puts
     haml :new, :layout => :template

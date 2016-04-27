@@ -685,6 +685,13 @@ module ApplicationHelper
     oclc_symbol == marc_record['040']['a']
   end
   
+  # will response true if the id is in the session[:record_created] array
+  def is_app_created(id)
+    if session[:records_created] and session[:records_created].include?(id)
+       result = true
+    end
+  end
+  
   # Escapes HTML
   def h(text)
     Rack::Utils.escape_html(text)

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<error xmlns="http://worldcat.org/xmlschemas/response">
+  <code type="http">403</code>
+  <message>AccessToken {tk_faux_token} does not have access to service {WorldCatMetadataAPI}</message>
+  <detail>Authorization header: Bearer tk_faux_token</detail>
+</error>

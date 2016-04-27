@@ -35,15 +35,26 @@ describe "the record page" do
     end
   end
   
-  context "when displaying a record created in the LBMC application by the institution" do
+  context "when displaying a record created in the LBMC application by the institution in this session" do
     before(:all) do
       stub_request(:get, "https://worldcat.org/bib/data/883876185?classificationScheme=LibraryOfCongress").
         to_return(:status => 200, :body => mock_file_contents("ocn883876185.atomxml"))
-      get '/record/883876185', params={}, rack_env={ 'rack.session' => {:token => @access_token, :registry_id => 128807} }
+      @record_created = Array.new
+      @record_created.push("883876185")
+      get '/record/883876185', params={}, rack_env={ 'rack.session' => {:token => @access_token, :registry_id => 128807, :records_created => @record_created} }
       @doc = Nokogiri::HTML(last_response.body)
       @form_element = @doc.xpath("//form[@id='record-form']").first
     end
 
+    it "should have a session variable records_created" do
+      expect(last_request.env['rack.session'][:records_created]).to include("883876185")
+    end
+   
+    it "should not have an alert message" do
+      xpath = "//div[@class='alert alert-info']"
+      expect(@doc.xpath(xpath).first).to be_nil
+    end
+     
     it "should display a form" do
       expect(@form_element).not_to be_nil
     end
@@ -239,7 +250,7 @@ describe "the record page" do
     
   end
   
-  context "when displaying a record not created in the LBMC application" do
+  context "when displaying a record not created in the LBMC application in this session" do
     before(:all) do
       stub_request(:get, "https://worldcat.org/bib/data/9999999?classificationScheme=LibraryOfCongress").
         to_return(:status => 200, :body => mock_file_contents("ocm09999999.atomxml"))

@@ -111,14 +111,6 @@ class Bib
     end
   end
   
-  def is_app_created?
-    @marc_record.fields('500').reduce(false) do |result, element|
-      if element['a'] == LBMC::SOURCE_NOTE
-        result = true
-      end
-    end
-  end
-  
   protected
   
   def base_url
